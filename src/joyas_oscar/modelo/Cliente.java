@@ -10,9 +10,6 @@ public class Cliente { //Ya completo
     private String telefono;
     private String direccion;
 
-    public Cliente() {
-    }
-
     public Cliente(int idCliente, String nombre, String apellido, String telefono, String direccion) {
         this.idCliente = idCliente;
         this.nombre = nombre;
