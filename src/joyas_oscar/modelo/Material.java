@@ -13,9 +13,6 @@ public class Material {
     private String tipoJoya;
    
 
-    public Material() {
-    }
-
     public Material(int idMaterial, double peso, int stock, double precio, double precioTotal, String nombre, String tipoJOya) {
         this.idMaterial = idMaterial;
         this.peso = peso;
