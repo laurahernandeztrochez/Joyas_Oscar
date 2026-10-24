@@ -9,17 +9,20 @@ package joyas_oscar;
  */
 import joyas_oscar.modelo.Cliente;
 import joyas_oscar.modelo.Joya;
+import joyas_oscar.modelo.Material;
 public class Joyas_Oscar {
 
     
     public static void main(String[] args) {
         //Pruebas
+        //clase cliente
        Cliente cliente1 = new Cliente(1, "Juan", "Perez", "3108235971", "33d #76-28");
        System.out.println(cliente1);
        
-       Joya joya1 = new Joya(1,"anillo Laura","plata",28000.0,7);
-      
        
+       //Clase joya
+       Joya joya1 = new Joya(1,"anillo Laura","plata",28000.0,7);
+
        System.out.println("--- Probando venta ---");
     
     if (joya1.registrarVenta(3)) {
@@ -27,9 +30,16 @@ public class Joyas_Oscar {
     } else {
         System.out.println("No hay stock suficiente");
     }
-
     System.out.println(joya1);
+    
+    //clase material
+    Material material1 = new Material(1,"joya 23","Oro",57000.0);
+    material1.setStock(10);
+    material1.registrarMaterial("joya 23","oro",2.5,57000.0);
+    System.out.println(material1);
 }
+    
+    
     }
     
 
