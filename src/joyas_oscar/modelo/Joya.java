@@ -8,12 +8,12 @@ public class Joya {
     private String nombre;
     private String material;
     private Double precio;
-    private String stock;
+    private int stock;
 
     public Joya() {
     }
 
-    public Joya(int idJoya, String nombre, String material, Double precio, String stock) {
+    public Joya(int idJoya, String nombre, String material, Double precio, int stock) {
         this.idJoya = idJoya;
         this.nombre = nombre;
         this.material = material;
@@ -53,13 +53,42 @@ public class Joya {
         this.precio = precio;
     }
 
-    public String getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(String stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
+    
+    //Metodo obtenerDescripcion
+    public String getDescripcion(){
+        return "Nombre: "+nombre+", material: "+material+",precio: "+precio;
+    }
+    
+    //Metodo validarStock
+    public boolean validarStock(int cantidad) {
+        if(cantidad>0 && cantidad <= this.stock){
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+    
+    //Metodo registrarVenta
+    public boolean registrarVenta(int cantidad) {
+        if (validarStock(cantidad)) {
+            this.stock -= cantidad;
+            return true;
+        }
+        return false;
+    }
+    
+    public String toString () {
+        return "id: "+ idJoya + ", Descripcion: " + getDescripcion() + ",Stock: " + getStock();
+    }
+
 }
     
 
