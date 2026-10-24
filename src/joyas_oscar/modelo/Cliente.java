@@ -2,7 +2,7 @@
 package joyas_oscar.modelo;
 
 
-public class Cliente {
+public class Cliente { //Ya completo
    // Atributos
     private int idCliente;
     private String nombre;
