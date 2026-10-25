@@ -6,43 +6,39 @@ public class Material {
     
     private int idMaterial;
     private double peso;
-    private int stock;
-    private double precio;
-    private double precioTotal;
+    private double stock;
     private String nombre;
-    private String tipoJoya;
+    private String tipoMaterial;
+    private double precio;
    
 
-    public Material(int idMaterial, double peso, int stock, double precio, double precioTotal, String nombre, String tipoJOya) {
+    public Material(int idMaterial, double peso, double stock,String nombre, String tipoMaterial, double precio) {
         this.idMaterial = idMaterial;
         this.peso = peso;
         this.stock = stock;
-        this.precio = precio;
-        this.precioTotal = precioTotal;
         this.nombre = nombre;
-        this.tipoJoya = tipoJoya;
+        this.tipoMaterial = tipoMaterial;
+        this.precio = precio;
     }
-        
-    public Material(int idMaterial, String nombre, String tipoJoya, double precio){
+    
+    public Material(int idMaterial,String nombre, String tipoMaterial, double precio) {
         this.idMaterial = idMaterial;
         this.peso = 0;
         this.stock = 0;
-        this.precio = precio;
-        this.precioTotal = 0;
         this.nombre = nombre;
-        this.tipoJoya = tipoJoya;
-    
-    
+        this.tipoMaterial = tipoMaterial;
+        this.precio = precio;
     }
-    public int getIdJoya() {
+       
+    public int getIdMaterial() {
         return idMaterial;
     }
 
-    public void setMaterial(int idMaterial) {
+    public void setIdMaterial(int idMaterial) {
         this.idMaterial = idMaterial;
     }
 
-    public double peso() {
+    public double getPeso() {
         return peso;
     }
 
@@ -50,28 +46,12 @@ public class Material {
         this.peso = peso;
     }
 
-    public int getStock() {
+    public double getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(double stock) {
         this.stock = stock;
-    }
-
-    public Double getPrecio() {
-        return precio ;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
-    public double getPrecioTotal() {
-        return precioTotal;
-    }
-
-    public void setPrecioTotal(double precioTotal) {
-        this.precioTotal = precioTotal;
     }
     
      public String getNombre() {
@@ -82,12 +62,20 @@ public class Material {
         this.nombre = nombre;
     }
     
-     public String getTipoJoya() {
-        return tipoJoya;
+     public String getTipoMaterial() {
+        return tipoMaterial;
     }
 
-    public void setTipoJoya(String tipoJoya) {
-        this.tipoJoya = tipoJoya;
+    public void setTipoMaterial(String tipoMaterial) {
+        this.tipoMaterial = tipoMaterial;
+    }
+    
+    public double getPrecio () {
+        return precio;
+    }
+    
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
     
     //Metodo validarStock
@@ -106,13 +94,13 @@ public class Material {
     }
     
     //Metodo registrarMateria
-    public boolean registrarMaterial(String nombre, String tipoJoya, double peso, double precio){
+    public boolean registrarMaterial(String nombre, String tipoMaterial, double peso, double precio){
       if (validarStock(peso)) {
         this.nombre = nombre;
-        this.tipoJoya = tipoJoya;
+        this.tipoMaterial = tipoMaterial;
         this.peso = peso;
         this.precio = precio;
-        this.precioTotal = calcularTotal();
+        double precioTotal = calcularTotal();
       return true;
     } else {
           return false;
@@ -121,7 +109,12 @@ public class Material {
     
     //Metodo obtenerResumen
     public String obtenerResumen() {
-        return "Nombre: "+nombre+",tipo de joya: "+tipoJoya+", precio total: "+precioTotal;
+        return "ID: " + idMaterial +
+                "Nombre: " + nombre +
+                "Tipo: "+tipoMaterial+
+                "Peso: "+peso+"g" +
+                "Precio/g: "+precio+
+                "Precio Total: "+calcularTotal();
     }
     
     public String toString(){
