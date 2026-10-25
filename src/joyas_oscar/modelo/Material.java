@@ -2,7 +2,7 @@
 package joyas_oscar.modelo;
 
 
-public class Material {
+public class Material { //Completo
     
     private int idMaterial;
     private double peso;
