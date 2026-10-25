@@ -10,6 +10,7 @@ package joyas_oscar;
 import joyas_oscar.modelo.Cliente;
 import joyas_oscar.modelo.Joya;
 import joyas_oscar.modelo.Material;
+import joyas_oscar.modelo.Pago;
 public class Joyas_Oscar {
 
     
@@ -37,6 +38,11 @@ public class Joyas_Oscar {
     System.out.println("Material");
     Material material1 = new Material(1,2.8,10,"joya 23","Oro",57000.0);
     System.out.println(material1);
+    
+    //Prueba pago
+ 
+    Pago pago1 = new Pago(1,null,39000.0,"Nequi","Pagado","24 de octubre");
+    System.out.println(pago1.generarComprobante());
 }
     
     

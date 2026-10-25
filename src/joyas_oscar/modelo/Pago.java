@@ -10,16 +10,15 @@ public class Pago { //Falta
     private String estado;
     private String metodoPago;
     private String fechaPago;
-    private String comprobante;
     
-    public Pago(int idPago, Pedido pedido, double monto, String estado, String metodoPago, String fechaPago, String comprobante) {
+    public Pago(int idPago, Pedido pedido, double monto, String metodoPago, String estado, String fechaPago) {
         this.idPago = idPago;
         this.pedido = pedido;
         this.monto = monto;
-        this.estado = estado;
         this.metodoPago = metodoPago;
+        this.estado = estado;
         this.fechaPago =  fechaPago;
-        this.comprobante = comprobante;
+       
     }
     
     public int getIdPago() {
@@ -70,29 +69,37 @@ public class Pago { //Falta
         this.fechaPago = fechaPago;
     }
     
-    public String getComprobante() {
-    return comprobante;
-    }
-    
-    public void setComprobante(String combrobante) {
-        this.comprobante = comprobante;
-    }
-
     //Metodo validarPago
     public boolean validarPago(double monto){
-        
+        if (monto<=0) {
+            return false;
+        } if (pedido !=null && monto> pedido.calcularTotal()) {
+            return false;
+        } 
+        return true;
     }
+
+    
     
     //Metodo procesarPago
     public boolean procesarPago() {
         if (validarPago(monto)) {
+            this.estado= "pagado";
             return true;
         }
+        return false;
     }
+
     
-    //Metodo generarPago
-    public String generarPago() {
-        return
+    //Metodo generarComprobante
+    public String generarComprobante() {
+        System.out.println("Comprobante:");
+        return "Id Pago: " +idPago +
+                ", Pedido # " + pedido +
+                ",Monto: " +monto +
+                ",Metodo: " +metodoPago +
+                ", Estado: " +estado +
+                ", Fecha: " +fechaPago;
     }
-    
+
 }
