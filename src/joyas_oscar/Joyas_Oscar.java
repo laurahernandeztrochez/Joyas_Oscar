@@ -47,7 +47,7 @@ public class Joyas_Oscar {
     
     //Prueba de pedido
     System.out. println("Pedido");
-    Pedido pedido1= new Pedido(1,cliente1,"Enviado","Calle 33D 17-75");
+    Pedido pedido1= new Pedido(1,cliente1,"Enviado","Calle 33D 17-75", "25 de febrero 2027");
     System.out.println(pedido1);
     
     

@@ -5,22 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Pedido { //Falta
+public class Pedido { //Completado, sirve
     
     private int idPedido;
     private Cliente cliente;
     private String estado;
     private String direccion;
     private double total;
+    private String fecha;
     private List<DetallePedido> detalles;
   
     
-    public Pedido(int idPedido, Cliente cliente,String estado, String direccion) {
+    public Pedido(int idPedido, Cliente cliente,String estado, String direccion, String fecha) {
         this.idPedido  = idPedido;
         this.cliente = cliente;
         this.estado = estado;
         this.direccion = direccion;
         this.total = 0.0;
+        this.fecha = fecha;
         this.detalles = new ArrayList<>();
     }
     
@@ -61,6 +63,13 @@ public class Pedido { //Falta
     }
     public void setTotal(double total) {
         this.total=total;
+    }
+    
+    public String getFecha() {
+        return fecha;
+    }
+    public void setFecha (String fecha) {
+        this.fecha=fecha;
     }
     
     public List<DetallePedido> getDetalles() {
@@ -125,24 +134,19 @@ public class Pedido { //Falta
     
     //Metodo obtenerResumen
     public String obtenerResumen() {
-        return  "ID pedido: " + idPedido +
-                ",ID Cliente: " + getCliente() +
-                ",Direccion: "+direccion +
-                " ,Estado:" + estado +
-                ", total: " + calcularTotal();
-    }
-    
-   /* public String toString(){
-        return  
-                  "Resumen: " + obtenerResumen(); */
-      
-public String toString() {
-    return "Resumen: ID pedido: " + idPedido + 
+        return  "Resumen: ID pedido: " + idPedido + 
            ", ID Cliente: " + cliente.getIdCliente() + 
            " (" + cliente.getNombreCompleto() + ")" +
            ", Direccion Envio: " + direccion + 
            ", Estado: " + estado + 
+           ", Fecha pedido: " + fecha +
            ", total: " + total;
+    }
+    
+  
+      
+public String toString() {
+    return obtenerResumen();
 }
                
                
