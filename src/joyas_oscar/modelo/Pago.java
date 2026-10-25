@@ -2,7 +2,7 @@
 package joyas_oscar.modelo;
 
 
-public class Pago {
+public class Pago { //Falta
     
     private int idPago;
     private Pedido pedido;

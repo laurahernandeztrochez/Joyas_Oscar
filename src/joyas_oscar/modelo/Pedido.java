@@ -3,7 +3,7 @@ package joyas_oscar.modelo;
 
 import java.util.List;
 
-public class Pedido {
+public class Pedido { //Falta
     
     private int idPedido;
     private Cliente cliente;
