@@ -11,6 +11,7 @@ import joyas_oscar.modelo.Cliente;
 import joyas_oscar.modelo.Joya;
 import joyas_oscar.modelo.Material;
 import joyas_oscar.modelo.Pago;
+import joyas_oscar.modelo.Pedido;
 public class Joyas_Oscar {
 
     
@@ -43,9 +44,18 @@ public class Joyas_Oscar {
  
     Pago pago1 = new Pago(1,null,39000.0,"Nequi","Pagado","24 de octubre");
     System.out.println(pago1.generarComprobante());
-}
+    
+    //Prueba de pedido
+    System.out. println("Pedido");
+    Pedido pedido1= new Pedido(1,cliente1,"Enviado","Calle 33D 17-75");
+    System.out.println(pedido1);
     
     
     }
+
+}
+    
+    
+    
     
 

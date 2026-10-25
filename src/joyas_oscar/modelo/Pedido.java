@@ -15,12 +15,12 @@ public class Pedido { //Falta
     private List<DetallePedido> detalles;
   
     
-    public Pedido(int idPedido, Cliente cliente,String estado, String direccion, double total) {
+    public Pedido(int idPedido, Cliente cliente,String estado, String direccion) {
         this.idPedido  = idPedido;
         this.cliente = cliente;
         this.estado = estado;
         this.direccion = direccion;
-        this.total = total;
+        this.total = 0.0;
         this.detalles = new ArrayList<>();
     }
     
@@ -102,19 +102,57 @@ public class Pedido { //Falta
     }
 
     
-//Metodo calcularTotal
-public double calcularTotal() {
+    //Metodo calcularTotal
+    public double calcularTotal() {
     double total = 0;
     for (DetallePedido detalle : this.detalles) {
         total = total + detalle.getSubTotal();
-    }
+       }
     this.total = total;
     return total;
-}
+   }
     
     //Metodo registrarPedido
+    public boolean registrarPedido(List<DetallePedido> listaDetalles) {
+        if (validarDireccion() && validarEstado()) {
+              this.detalles = listaDetalles;
+               calcularTotal();
+               return true;
+            
+        }
+        return false;
+    }
     
+    //Metodo obtenerResumen
+    public String obtenerResumen() {
+        return  "ID pedido: " + idPedido +
+                ",ID Cliente: " + getCliente() +
+                ",Direccion: "+direccion +
+                " ,Estado:" + estado +
+                ", total: " + calcularTotal();
+    }
+    
+   /* public String toString(){
+        return  
+                  "Resumen: " + obtenerResumen(); */
+      
+public String toString() {
+    return "Resumen: ID pedido: " + idPedido + 
+           ", ID Cliente: " + cliente.getIdCliente() + 
+           " (" + cliente.getNombreCompleto() + ")" +
+           ", Direccion Envio: " + direccion + 
+           ", Estado: " + estado + 
+           ", total: " + total;
 }
+               
+               
+                
+        
+    }
+
+    
+     
+
  
    
 
