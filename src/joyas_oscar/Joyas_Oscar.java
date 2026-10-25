@@ -33,9 +33,9 @@ public class Joyas_Oscar {
     System.out.println(joya1);
     
     //clase material
-    Material material1 = new Material(1,"joya 23","Oro",57000.0);
-    material1.setStock(10);
-    material1.registrarMaterial("joya 23","oro",2.5,57000.0);
+    
+    System.out.println("Material");
+    Material material1 = new Material(1,2.8,10,"joya 23","Oro",57000.0);
     System.out.println(material1);
 }
     
