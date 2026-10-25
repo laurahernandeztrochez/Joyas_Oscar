@@ -1,7 +1,9 @@
 
 package joyas_oscar.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 public class Pedido { //Falta
     
@@ -9,14 +11,16 @@ public class Pedido { //Falta
     private Cliente cliente;
     private String estado;
     private String direccion;
+    private double total;
     private List<DetallePedido> detalles;
   
     
-    public Pedido(int idPedido, Cliente cliente,String estado, String direccion){
+    public Pedido(int idPedido, Cliente cliente,String estado, String direccion, double total) {
         this.idPedido  = idPedido;
         this.cliente = cliente;
         this.estado = estado;
         this.direccion = direccion;
+        this.total = total;
         this.detalles = new ArrayList<>();
     }
     
@@ -50,6 +54,13 @@ public class Pedido { //Falta
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+    
+    public double getTotal() {
+        return total;
+    }
+    public void setTotal(double total) {
+        this.total=total;
     }
     
     public List<DetallePedido> getDetalles() {
@@ -89,16 +100,21 @@ public class Pedido { //Falta
         String d = this.direccion.trim();
         return !d.isEmpty() && d.length() >5;
     }
+
+    
+//Metodo calcularTotal
+public double calcularTotal() {
+    double total = 0;
+    for (DetallePedido detalle : this.detalles) {
+        total = total + detalle.getSubTotal();
+    }
+    this.total = total;
+    return total;
 }
     
-    //Metodo calcularTotal
-    public double calcularTotal() {
-        double total = 0;
-        for (int i = 0; i <detalles.size(); i++) {
-        total = total + detalles.get(i).getSubtotal();
-    }
-        return total;
-    }
+    //Metodo registrarPedido
+    
+}
  
    
-}
+
