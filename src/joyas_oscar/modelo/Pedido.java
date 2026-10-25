@@ -1,26 +1,23 @@
 
 package joyas_oscar.modelo;
 
+import java.util.List;
 
 public class Pedido {
     
     private int idPedido;
-    private int idCliente;
-    private String nombre;
+    private Cliente cliente;
     private String estado;
-    private double total;
     private String direccion;
-    private double subtotal;
-   
+    private List<DetallePedido> detalles;
+  
     
-    public Pedido(int idPedido, int idCliente, String nombre, String estado, double total, String direccion, double subtotal){
+    public Pedido(int idPedido, Cliente cliente,String estado, String direccion){
         this.idPedido  = idPedido;
-        this.idCliente = idCliente;
-        this.nombre = nombre; 
+        this.cliente = cliente;
         this.estado = estado;
-        this.total = total;
         this.direccion = direccion;
-        this.subtotal = subtotal;
+        this.detalles = new ArrayList<>();
     }
     
     public int getIdPedido() {
@@ -31,20 +28,12 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
-    
-      public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public String getEstado() {
@@ -55,14 +44,6 @@ public class Pedido {
         this.estado = estado;
     }
 
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
       public String getDireccion() {
         return direccion;
     }
@@ -71,26 +52,52 @@ public class Pedido {
         this.direccion = direccion;
     }
     
-     public Double getSubTotal() {
-        return subtotal;
+    public List<DetallePedido> getDetalles() {
+        return detalles;
     }
-
-    public void setSubTotal(Double subtotal) {
-        this.subtotal = subtotal;
-    }
+    
+   public void setDetalles(List<DetallePedido> detalles) {
+       this.detalles = detalles;
+   }
+   
    
     //Metodo validarEstado
     public boolean validarEstado(String estado) {
-        if (estado==null) {
-            return false; 
+        if (estado==null) return false; 
+        String e = estado.toLowerCase().trim();
+        return e.equals("Pendiente") || e.equals("Enviado") || e.equals("Entregado");
+    }
+    //para validar this.estado
+    public boolean validarEstado() {
+        return validarEstado(this.estado);
+    }
+    //Metodo actualizarEstado
+    public boolean actualizarEstado(String nuevoEstado){
+        if (validarEstado(nuevoEstado)) {
+            this.estado = nuevoEstado;
+            return true;
         } else {
-            String e = estado.toLowerCase().trim();
-            if (e.equals("pendiente") || e.equals("enviado") || e.equals("entregado")) {
-                return true;
-            } else {
-                return false;
-            }
+            return false;
         }
+    }
+    
+    //Metodo validarDireccion
+    public boolean validarDireccion () {
+        if (this.direccion==null) {
+            return false;
+        }
+        String d = this.direccion.trim();
+        return !d.isEmpty() && d.length() >5;
+    }
+}
+    
+    //Metodo calcularTotal
+    public double calcularTotal() {
+        double total = 0;
+        for (int i = 0; i <detalles.size(); i++) {
+        total = total + detalles.get(i).getSubtotal();
+    }
+        return total;
     }
  
    
