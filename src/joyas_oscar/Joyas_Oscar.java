@@ -32,7 +32,7 @@ public class Joyas_Oscar {
     }
     System.out.println(joya1);
     
-    //clase material
+    //prueba clase material
     
     System.out.println("Material");
     Material material1 = new Material(1,2.8,10,"joya 23","Oro",57000.0);
