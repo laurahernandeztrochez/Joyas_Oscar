@@ -2,7 +2,7 @@
 package joyas_oscar.modelo;
 
 
-public class Joya {
+public class Joya { //Ya completo
 
     private int idJoya;
     private String nombre;
