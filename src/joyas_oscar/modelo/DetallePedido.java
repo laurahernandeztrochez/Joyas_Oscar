@@ -35,6 +35,14 @@ public class DetallePedido {
         this.idDetallePedido = idDetallePedido;
     }
     
+    public Pedido pedido() {
+    return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.cantidad = cantidad;
+    }
+    
        public Cliente getCliente() {
         return cliente;
     }
