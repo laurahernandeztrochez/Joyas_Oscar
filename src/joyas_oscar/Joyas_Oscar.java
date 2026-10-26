@@ -14,13 +14,16 @@ import joyas_oscar.modelo.Pago;
 import joyas_oscar.modelo.Pedido;
 import joyas_oscar.modelo.DetallePedido;
 
+import joyas_oscar.vista.VentanaCliente;
 public class Joyas_Oscar {
 
     
     public static void main(String[] args) {
         
         
-        // 1. CREAR TODO LOS DATOS PRIMERO
+          new VentanaCliente().setVisible(true);
+        
+        /* 1. CREAR TODO LOS DATOS PRIMERO
     Cliente cliente1 = new Cliente(1, "Juan", "Perez", "1234567890", "calle 33 d# 76-90");
     Joya joya1 = new Joya(1, "anillo Laura", "plata", 28000.0, 7);
     Pedido pedido1 = new Pedido(1, cliente1, "Enviado", "Calle 33D 17-75", "25 de febrero 2027");
@@ -42,7 +45,9 @@ public class Joyas_Oscar {
     System.out.println(detallepedido1.obtenerResumen());
     
     System.out.println("--- Probando material---");
-    System.out.println(material1);
+    System.out.println(material1);*/
+    
+  
     }
 } 
 

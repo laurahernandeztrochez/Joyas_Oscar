@@ -63,15 +63,15 @@ public class Cliente { //Ya completo, sirve
         return nombre + " "+ apellido;
     }
     //Metodo validarTelefono
-    public boolean validarTelefono(){
-     if (this.telefono ==null) return false;
-     return this.telefono.matches("\\d{10}");
+    public static boolean validarTelefono(String telefono){
+     if (telefono ==null) return false;
+     return telefono.matches("\\d{10}");
     }
     //Metodo registrarContacto
     public boolean registrarContacto(String direccion, String telefono) {
-        if (validarTelefono()) {
+        if (validarTelefono(telefono)) {
             this.direccion=direccion;
-            this.telefono=telefono;
+            telefono=telefono;
             return true;
         } else {
             System.out.println("Telefono no valido: "+telefono);
@@ -79,7 +79,7 @@ public class Cliente { //Ya completo, sirve
         }
     }
     public String toString () {
-        String telTexto= validarTelefono() ? telefono : "no valido";
+        String telTexto= validarTelefono(telefono) ? telefono : "no valido";
         return "id: " + idCliente + ", nombre completo: "+ getNombreCompleto()+ ", telefono: " +telTexto + ", direccion: "+ direccion;
     }
 }

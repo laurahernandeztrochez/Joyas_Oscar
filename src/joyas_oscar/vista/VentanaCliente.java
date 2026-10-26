@@ -11,12 +11,14 @@ package joyas_oscar.vista;
 public class VentanaCliente extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaCliente.class.getName());
+    private java.util.ArrayList<joyas_oscar.modelo.Cliente> listaClientes = new java.util.ArrayList<>();
 
     /**
      * Creates new form VentanaCliente
      */
     public VentanaCliente() {
         initComponents();
+        tablaClientes.setDefaultEditor(Object.class,null);
     }
 
     /**
@@ -49,7 +51,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         btnLimpiar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         tblClientes = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaClientes = new javax.swing.JTable();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -70,6 +72,10 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         jLabel3.setText("Teléfono:");
 
+        txtNombre.addActionListener(this::txtNombreActionPerformed);
+
+        txtDireccion.addActionListener(this::txtDireccionActionPerformed);
+
         jLabel4.setText("Apellido:");
 
         jLabel5.setText("Dirección");
@@ -77,6 +83,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         jLabel6.setText("Datos del Cliente");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnEditar.setText("Editar");
 
@@ -86,7 +93,7 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         jLabel7.setText("Lista de Clientes");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -97,7 +104,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 "ID", "Nombre", "Teléfono", "Dirección"
             }
         ));
-        tblClientes.setViewportView(jTable1);
+        tblClientes.setViewportView(tablaClientes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,46 +113,54 @@ public class VentanaCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tblClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(txtDireccion))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnGuardar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(btnEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnLimpiar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(31, 31, 31))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(67, 67, 67)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtIdCliente)
-                                        .addGap(44, 44, 44)
-                                        .addComponent(jLabel2)
-                                        .addGap(31, 31, 31)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(44, 44, 44)
-                                        .addComponent(jLabel4)
-                                        .addGap(31, 31, 31)
-                                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(tblClientes)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                    .addComponent(jLabel3)
+                                                    .addGap(31, 31, 31))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(jLabel1)
+                                                    .addGap(67, 67, 67)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel5)
+                                                .addGap(31, 31, 31)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtDireccion)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(txtIdCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                                                    .addComponent(txtTelefono))
+                                                .addGap(38, 38, 38)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel2)
+                                                    .addComponent(jLabel4))
+                                                .addGap(30, 30, 30)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(txtNombre)
+                                                    .addComponent(txtApellido))))))
+                                .addGap(11, 11, 11)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(btnGuardar)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnEditar)
+                        .addGap(54, 54, 54)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar)
+                        .addGap(35, 35, 35))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,6 +198,59 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDireccionActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+            // 1. Tomar lo que escribiste en las cajitas
+    String id = txtIdCliente.getText();
+    String nombre = txtNombre.getText();
+    String telefono = txtTelefono.getText();
+    String apellido = txtApellido.getText();
+    String direccion = txtDireccion.getText();
+
+    // 2. Validar que no esté vacío
+    if(id.isEmpty() || nombre.isEmpty()){
+        javax.swing.JOptionPane.showMessageDialog(this, "Debes llenar ID y Nombre");
+        return;
+    }
+    
+  if (!joyas_oscar.modelo.Cliente.validarTelefono(telefono)) {
+    javax.swing.JOptionPane.showMessageDialog(this, "El teléfono debe tener 10 dígitos");
+    return;
+}
+ 
+    
+    joyas_oscar.modelo.Cliente c = new  joyas_oscar.modelo.Cliente (Integer.parseInt(id),nombre,apellido,telefono,direccion);
+    listaClientes.add(c);
+
+    // 3. Agregarlo a la tabla de abajo
+    javax.swing.table.DefaultTableModel modelo = 
+        (javax.swing.table.DefaultTableModel) tablaClientes.getModel();
+    
+    modelo.addRow(new Object[]{
+        c.getIdCliente(),
+        c.getNombreCompleto(),
+        c.getTelefono(),
+        c.getDireccion()
+    });
+
+    // 4. Mensaje y limpiar
+    javax.swing.JOptionPane.showMessageDialog(this, "Cliente " + nombre + " guardado");
+    
+    txtIdCliente.setText("");
+    txtNombre.setText("");
+    txtTelefono.setText("");
+    txtApellido.setText("");
+    txtDireccion.setText("");
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,8 +292,8 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable tablaClientes;
     private javax.swing.JScrollPane tblClientes;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtDireccion;
