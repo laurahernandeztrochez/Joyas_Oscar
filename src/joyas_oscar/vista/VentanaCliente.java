@@ -43,12 +43,12 @@ public class VentanaCliente extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        tblClientes = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         jTextArea1.setColumns(20);
@@ -76,13 +76,13 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         jLabel6.setText("Datos del Cliente");
 
-        jButton1.setText("Guardar");
+        btnGuardar.setText("Guardar");
 
-        jButton2.setText("Editar");
+        btnEditar.setText("Editar");
 
-        jButton3.setText("Eliminar");
+        btnEliminar.setText("Eliminar");
 
-        jButton4.setText("Limpiar");
+        btnLimpiar.setText("Limpiar");
 
         jLabel7.setText("Lista de Clientes");
 
@@ -97,7 +97,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 "ID", "Nombre", "Teléfono", "Dirección"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        tblClientes.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,18 +106,18 @@ public class VentanaCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(tblClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(81, 81, 81)
                         .addComponent(txtDireccion))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnGuardar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(jButton3)
+                        .addComponent(btnEliminar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4))
+                        .addComponent(btnLimpiar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -170,14 +170,14 @@ public class VentanaCliente extends javax.swing.JFrame {
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnEditar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnLimpiar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                .addComponent(tblClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -210,10 +210,10 @@ public class VentanaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -223,10 +223,10 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane tblClientes;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtIdCliente;
