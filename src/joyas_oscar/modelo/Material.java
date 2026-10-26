@@ -110,15 +110,15 @@ public class Material { //Completo, sirve
     //Metodo obtenerResumen
     public String obtenerResumen() {
         return "ID: " + idMaterial +
-                "Nombre: " + nombre +
-                "Tipo: "+tipoMaterial+
-                "Peso: "+peso+"g" +
-                "Precio/g: "+precio+
-                "Precio Total: "+calcularTotal();
+                ", Nombre: " + nombre +
+                ", Tipo: "+tipoMaterial+
+                ", Peso: "+peso+"g" +
+                ", Precio/g: "+precio+
+                ", Precio Total: "+calcularTotal();
     }
     
     public String toString(){
-        return "id: "+idMaterial+" Resumen: "+obtenerResumen();
+        return  "Resumen: "+obtenerResumen();
     
 }
     

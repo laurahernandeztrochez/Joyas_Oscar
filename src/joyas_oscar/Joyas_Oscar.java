@@ -20,14 +20,15 @@ public class Joyas_Oscar {
     public static void main(String[] args) {
         
         
-        // 1. CREAR TODO PRIMERO
+        // 1. CREAR TODO LOS DATOS PRIMERO
     Cliente cliente1 = new Cliente(1, "Juan", "Perez", "1234567890", "calle 33 d# 76-90");
     Joya joya1 = new Joya(1, "anillo Laura", "plata", 28000.0, 7);
     Pedido pedido1 = new Pedido(1, cliente1, "Enviado", "Calle 33D 17-75", "25 de febrero 2027");
     DetallePedido detallepedido1 = new DetallePedido(1, joya1, 3);
     Pago pago1 = new Pago(1, pedido1, 39000.0, "Nequi", "Pagado", "24 de octubre");
+    Material material1 = new Material(1,28.9,7,"Caja 2","Oro",10000.0);
     
-    // 2. PONERLE EL TOTAL AL PEDIDO (ESTO ES LO IMPORTANTE)
+    // 2. PONERLE EL TOTAL AL PEDIDO 
     pedido1.setTotal(detallepedido1.getSubTotal());
 
     // 3. AHORA SI IMPRIMIR
@@ -39,6 +40,9 @@ public class Joyas_Oscar {
 
     System.out.println("--- Probando detalle---");
     System.out.println(detallepedido1.obtenerResumen());
+    
+    System.out.println("--- Probando material---");
+    System.out.println(material1);
     }
 } 
 
