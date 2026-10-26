@@ -95,11 +95,15 @@ public class Pago { //Completo, sirve
     public String generarComprobante() {
         System.out.println("Comprobante:");
         return "Id Pago: " +idPago +
-                ", Pedido # " + pedido +
+                ", Pedido # " + pedido.getIdPedido() +
                 ",Monto: " +monto +
                 ",Metodo: " +metodoPago +
                 ", Estado: " +estado +
                 ", Fecha: " +fechaPago;
+    }
+    
+    public String toString() {
+        return generarComprobante(); 
     }
 
 }

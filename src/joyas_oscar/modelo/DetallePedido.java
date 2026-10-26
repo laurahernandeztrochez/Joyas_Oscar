@@ -4,26 +4,19 @@ package joyas_oscar.modelo;
 
 public class DetallePedido { //Falta
     private int idDetallePedido;
-    private Pedido pedido;
-    private Cliente cliente;
     private Joya joya;
     
     private double cantidad;
     private double precioUnitario;
     private double subtotal;
-    private int stock;
-    private String nombreJoya;
     
-    public DetallePedido (int idDetallePedido, Pedido pedido, Cliente cliente, Joya joya, double cantidad, double precioUnitario, double subtotal, int stock, String nombreJoya) {
+    public DetallePedido (int idDetallePedido,Joya joya, double cantidad) {
         this.idDetallePedido = idDetallePedido;
-        this.pedido = pedido;
-        this.cliente = cliente;
         this.joya = joya;
         this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
-        this.subtotal = subtotal;
-        this.stock = stock;
-        this.nombreJoya = nombreJoya;
+        this.precioUnitario = joya.getPrecio();
+        this.subtotal = cantidad * precioUnitario;
+
         
     }
     
@@ -35,22 +28,6 @@ public class DetallePedido { //Falta
         this.idDetallePedido = idDetallePedido;
     }
     
-    public Pedido pedido() {
-    return pedido;
-    }
-
-    public void setPedido(Pedido pedido) {
-        this.cantidad = cantidad;
-    }
-    
-       public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public double getCantidad() {
         return cantidad;
     }
@@ -83,21 +60,42 @@ public class DetallePedido { //Falta
         this.subtotal = subtotal;
     }
   
-      public int getStock() {
-        return stock;
+    
+    //Metodo para calular el subtotal
+    public double calcularSubtotal() {
+    this.subtotal = this.cantidad * this.precioUnitario;
+    return subtotal;
     }
-
-    public void setStock(int stock) {
-        this.stock = stock;
+    
+    //Metodo para validar la cantidad o stock
+    public boolean validarCantidad(int cantidad) {
+        return cantidad > 0 && cantidad <= this.joya.getStock();
     }
-
-    public String getNombreJoya() {
-        return nombreJoya;
+    
+    //Metodo para registrar el detalle del pedido
+    public boolean registrarDetalle(int cantidad) {
+        double subtotal=  calcularSubtotal();
+        if (validarCantidad(cantidad) && calcularSubtotal() >0) {
+            this.cantidad = cantidad;
+            this.precioUnitario= this.joya.getPrecio();
+           this.subtotal = subtotal;
+            return true;
+        }
+        return false;
     }
-
-    public void setNombreJoya(String nombreJoya) {
-        this.nombreJoya = nombreJoya;
+    
+    public String obtenerResumen() {
+        System.out.println("Detallle pedido: ");
+        return "Joya: " + joya.getNombre() +
+                ", cantidad: " + cantidad +
+                ", precio: " + precioUnitario +
+                ", subtotal: " + subtotal;
     }
+    
+    public String toString () {
+        return obtenerResumen();
+    }
+    
             
 }
 
