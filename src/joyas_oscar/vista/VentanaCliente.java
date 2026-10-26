@@ -4,6 +4,7 @@
  */
 package joyas_oscar.vista;
 
+import joyas_oscar.modelo.Cliente;
 /**
  *
  * @author Lau04
@@ -12,12 +13,14 @@ public class VentanaCliente extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaCliente.class.getName());
     private java.util.ArrayList<joyas_oscar.modelo.Cliente> listaClientes = new java.util.ArrayList<>();
+    private joyas_oscar.modelo.Cliente clienteEnEdicion = null;
 
     /**
      * Creates new form VentanaCliente
      */
     public VentanaCliente() {
         initComponents();
+        tablaClientes.getTableHeader().setReorderingAllowed(false);
         tablaClientes.setDefaultEditor(Object.class,null);
     }
 
@@ -86,6 +89,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(this::btnEditarActionPerformed);
 
         btnEliminar.setText("Eliminar");
 
@@ -204,53 +208,91 @@ public class VentanaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDireccionActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-            // 1. Tomar lo que escribiste en las cajitas
+        // TODO add your handling code here:                                          
     String id = txtIdCliente.getText();
     String nombre = txtNombre.getText();
     String telefono = txtTelefono.getText();
     String apellido = txtApellido.getText();
     String direccion = txtDireccion.getText();
 
-    // 2. Validar que no esté vacío
-    if(id.isEmpty() || nombre.isEmpty()){
-        javax.swing.JOptionPane.showMessageDialog(this, "Debes llenar ID y Nombre");
+    if(id.isEmpty() || nombre.isEmpty() || direccion.isEmpty() || apellido.isEmpty() || telefono.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Debes llenar todas las casillas");
         return;
     }
     
-  if (!joyas_oscar.modelo.Cliente.validarTelefono(telefono)) {
-    javax.swing.JOptionPane.showMessageDialog(this, "El teléfono debe tener 10 dígitos");
-    return;
-}
+    if (!joyas_oscar.modelo.Cliente.validarTelefono(telefono)) {
+        javax.swing.JOptionPane.showMessageDialog(this, "El teléfono debe tener 10 dígitos");
+        return;
+    }
+    
+   for (joyas_oscar.modelo.Cliente cli : listaClientes) {
+        if (cli.getIdCliente()==Integer.parseInt(id)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El id " + id + " ya existe, use otro");
+            return;
+        }
+    
+   
+    if (cli.getTelefono().equals(telefono)) {
+        javax.swing.JOptionPane.showMessageDialog(this, "El teléfono "+telefono+" ya esta registrado");
+        return;
+    }
+   }
  
+    joyas_oscar.modelo.Cliente c = new joyas_oscar.modelo.Cliente(Integer.parseInt(id),nombre,apellido,telefono,direccion);
     
-    joyas_oscar.modelo.Cliente c = new  joyas_oscar.modelo.Cliente (Integer.parseInt(id),nombre,apellido,telefono,direccion);
-    listaClientes.add(c);
+    if (!c.registrarContacto(direccion, telefono)) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar contacto");
+        return;
+    }
 
-    // 3. Agregarlo a la tabla de abajo
-    javax.swing.table.DefaultTableModel modelo = 
-        (javax.swing.table.DefaultTableModel) tablaClientes.getModel();
+    listaClientes.add(c); // SOLO UNA VEZ
+
+    // Usa tu método para mostrar, no addRow a mano
+    cargarTabla();
+    limpiarCampos();
     
-    modelo.addRow(new Object[]{
-        c.getIdCliente(),
-        c.getNombreCompleto(),
-        c.getTelefono(),
-        c.getDireccion()
-    });
-
-    // 4. Mensaje y limpiar
     javax.swing.JOptionPane.showMessageDialog(this, "Cliente " + nombre + " guardado");
+
     
-    txtIdCliente.setText("");
-    txtNombre.setText("");
-    txtTelefono.setText("");
-    txtApellido.setText("");
-    txtDireccion.setText("");
+   
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+    
+
+
+   
+    }//Cierra el boton guardar
+   
+private void cargarTabla() {
+    javax.swing.table.DefaultTableModel modelo = 
+        (javax.swing.table.DefaultTableModel) tablaClientes.getModel();
+    modelo.setRowCount(0);
+
+    for (joyas_oscar.modelo.Cliente c : listaClientes) {
+        modelo.addRow(new Object[]{
+            c.getIdCliente(),
+            c.getNombreCompleto(),
+            c.getTelefono(),
+            c.getDireccion()
+        });
+    }
+}
+
+private void limpiarCampos() {
+    txtIdCliente.setText("");
+    txtNombre.setText("");
+    txtApellido.setText("");
+    txtTelefono.setText("");
+    txtDireccion.setText("");
+
+
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments

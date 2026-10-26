@@ -71,16 +71,13 @@ public class Cliente { //Ya completo, sirve
     public boolean registrarContacto(String direccion, String telefono) {
         if (validarTelefono(telefono)) {
             this.direccion=direccion;
-            telefono=telefono;
+            this.telefono = telefono;
             return true;
         } else {
             System.out.println("Telefono no valido: "+telefono);
             return false;
         }
     }
-    public String toString () {
-        String telTexto= validarTelefono(telefono) ? telefono : "no valido";
-        return "id: " + idCliente + ", nombre completo: "+ getNombreCompleto()+ ", telefono: " +telTexto + ", direccion: "+ direccion;
-    }
+    
 }
 
