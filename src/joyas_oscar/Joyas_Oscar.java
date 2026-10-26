@@ -13,6 +13,8 @@ import joyas_oscar.modelo.Material;
 import joyas_oscar.modelo.Pago;
 import joyas_oscar.modelo.Pedido;
 import joyas_oscar.modelo.DetallePedido;
+import joyas_oscar.modelo.Usuario;
+import joyas_oscar.modelo.Rol;
 
 import joyas_oscar.vista.VentanaCliente;
 public class Joyas_Oscar {
@@ -30,6 +32,9 @@ public class Joyas_Oscar {
     DetallePedido detallepedido1 = new DetallePedido(1, joya1, 3);
     Pago pago1 = new Pago(1, pedido1, 39000.0, "Nequi", "Pagado", "24 de octubre");
     Material material1 = new Material(1,28.9,7,"Caja 2","Oro",10000.0);
+    Usuario usuario1 = new Usuario();
+    Rol rol1 = new Rol();
+       
     
     // 2. PONERLE EL TOTAL AL PEDIDO 
     pedido1.setTotal(detallepedido1.getSubTotal());
@@ -45,7 +50,13 @@ public class Joyas_Oscar {
     System.out.println(detallepedido1.obtenerResumen());
     
     System.out.println("--- Probando material---");
-    System.out.println(material1);*/
+    System.out.println(material1);
+    
+    System.out.println("--- Probando Usuario---");
+    System.out.println(usuario1);
+    
+    System.out.println("--- Probando Rol---");
+    System.out.println(rol1);*/
     
   
     }
