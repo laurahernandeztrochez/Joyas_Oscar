@@ -33,10 +33,7 @@ public class ClienteRepositorio {
         lista.clear();
     }
     
-    public ArrayList<Cliente> listar() {
-        return lista;
-    }
-
+   //Para buscar por id
     public Cliente buscarPorId(int id) {
         for (Cliente c : lista) {
             if (c.getIdCliente() == id) {
@@ -45,6 +42,34 @@ public class ClienteRepositorio {
         }
         return null;
     }
+    //Para validar si el id existe ya o no
+    public boolean existeId(int id) {
+        for (Cliente c : lista){
+            if (c.getIdCliente()==id) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    //Para validar si el numero de telefono existe o no
+    public boolean existeTelefono(String tel) {
+        for (Cliente c : lista) {
+            if (c.getTelefono().equals(tel)) {
+           return true;  
+        }
+      }
+        return false;
+   }
+    
+
+        public ArrayList<Cliente> listar() {
+        return lista;
+    }
+
+    
+    
 }
   
     

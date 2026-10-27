@@ -225,18 +225,6 @@ public class VentanaCliente extends javax.swing.JFrame {
         return;
     }
     
-   for (joyas_oscar.modelo.Cliente cli : listaClientes) {
-        if (cli.getIdCliente()==Integer.parseInt(id)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "El id " + id + " ya existe, use otro");
-            return;
-        }
-    
-   
-    if (cli.getTelefono().equals(telefono)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "El teléfono "+telefono+" ya esta registrado");
-        return;
-    }
-   }
  
     joyas_oscar.modelo.Cliente c = new joyas_oscar.modelo.Cliente(Integer.parseInt(id),nombre,apellido,telefono,direccion);
     
