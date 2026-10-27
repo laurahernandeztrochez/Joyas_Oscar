@@ -261,14 +261,56 @@ public class VentanaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-    
-
-
-   
+            
+    int fila = tablaClientes.getSelectedRow();
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(this, "Selecciona un cliente de la tabla");
+        return;
     }
+
+    // 1. Si es la primera vez que das clic, carga los datos a las cajas
+    if (clienteEnEdicion == null) {
+        int idSeleccionado = (int) tablaClientes.getValueAt(fila, 0);
+        clienteEnEdicion = repositorio.buscarPorId(idSeleccionado);
+        
+        txtIdCliente.setText(String.valueOf(clienteEnEdicion.getIdCliente()));
+        // Asumo que separaste nombre y apellido en tu modelo, ajusta esto
+        txtNombre.setText(clienteEnEdicion.getNombreCompleto()); 
+        txtTelefono.setText(clienteEnEdicion.getTelefono());
+        txtDireccion.setText(clienteEnEdicion.getDireccion());
+        txtIdCliente.setEnabled(false); // no dejar cambiar el ID
+        
+        JOptionPane.showMessageDialog(this, "Edita los datos y vuelve a pulsar Editar para guardar");
+        return;
+    }
+
+    // 2. Si ya estaba en edición, guarda los cambios (aquí sí va el trim igual)
+    String nombre = txtNombre.getText().trim();
+    String telefono = txtTelefono.getText().trim();
+    String apellido = txtApellido.getText().trim();
+    String direccion = txtDireccion.getText().trim();
+
+    if (nombre.isEmpty() || telefono.isEmpty() || direccion.isEmpty() || apellido.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Debes llenar todas las casillas");
+        return;
+    }
+    int id=Integer.parseInt(txtIdCliente.getText().trim());
+
+    if (id != clienteEnEdicion.getIdCliente() && repositorio.existeId(id)) {
+           JOptionPane.showMessageDialog(this, "Ese id ya loo tiene otro cliente");
+        return;
+    }
+  
+        if (!telefono.equals(clienteEnEdicion.getTelefono()) && repositorio.existeTelefono(telefono)) {
+        JOptionPane.showMessageDialog(this, "Ese telefono ya lo tiene otro cliente");
+        return;
+    }
+
+        
+    }//Cierra boton editar
    
-private void cargarTabla() {
+//Para boton guardar
+private void cargarTabla() { 
     javax.swing.table.DefaultTableModel modelo = 
         (javax.swing.table.DefaultTableModel) tablaClientes.getModel();
     modelo.setRowCount(0);
@@ -283,12 +325,33 @@ private void cargarTabla() {
     }
 }
 
+
 private void limpiarCampos() {
     txtIdCliente.setText("");
     txtNombre.setText("");
     txtApellido.setText("");
     txtTelefono.setText("");
     txtDireccion.setText("");
+    
+ /*Para boton editar
+  Actualizar el objeto*/
+    String nombre= txtNombre.getText().trim();
+     String apellido= txtApellido.getText().trim();
+      String telefono= txtTelefono.getText().trim();
+       String direccion= txtDireccion.getText().trim();
+ 
+    clienteEnEdicion.setNombre(nombre);
+    clienteEnEdicion.setApellido(apellido);
+    clienteEnEdicion.setTelefono(telefono);
+    clienteEnEdicion.setDireccion(direccion);
+    repositorio.guardar(clienteEnEdicion); 
+
+    cargarTabla();
+    limpiarCampos();
+    txtIdCliente.setEnabled(true);
+    clienteEnEdicion = null;
+    JOptionPane.showMessageDialog(this, "Cliente actualizado");
+
 
 
     }//GEN-LAST:event_btnEditarActionPerformed
