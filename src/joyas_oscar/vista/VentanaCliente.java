@@ -1,10 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package joyas_oscar.vista;
 
+import javax.swing.JOptionPane;
 import joyas_oscar.modelo.Cliente;
+import joyas_oscar.repositorio.ClienteRepositorio;
 /**
  *
  * @author Lau04
@@ -12,7 +11,7 @@ import joyas_oscar.modelo.Cliente;
 public class VentanaCliente extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaCliente.class.getName());
-    private java.util.ArrayList<joyas_oscar.modelo.Cliente> listaClientes = new java.util.ArrayList<>();
+    private joyas_oscar.repositorio.ClienteRepositorio repositorio = new joyas_oscar.repositorio.ClienteRepositorio();
     private joyas_oscar.modelo.Cliente clienteEnEdicion = null;
 
     /**
@@ -20,8 +19,8 @@ public class VentanaCliente extends javax.swing.JFrame {
      */
     public VentanaCliente() {
         initComponents();
-        tablaClientes.getTableHeader().setReorderingAllowed(false);
-        tablaClientes.setDefaultEditor(Object.class,null);
+        tablaClientes.getTableHeader().setReorderingAllowed(false); //Sirve para que no se puedan editar las tablas desde ahi
+        tablaClientes.setDefaultEditor(Object.class,null); //Sirve para que no se muevan las columnas de la tabla
     }
 
     /**
@@ -209,21 +208,33 @@ public class VentanaCliente extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:                                          
-    String id = txtIdCliente.getText();
-    String nombre = txtNombre.getText();
-    String telefono = txtTelefono.getText();
-    String apellido = txtApellido.getText();
-    String direccion = txtDireccion.getText();
+    String id = txtIdCliente.getText().trim();
+    String nombre = txtNombre.getText().trim();
+    String telefono = txtTelefono.getText().trim();
+    String apellido = txtApellido.getText().trim();
+    String direccion = txtDireccion.getText().trim();
 
     if(id.isEmpty() || nombre.isEmpty() || direccion.isEmpty() || apellido.isEmpty() || telefono.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Debes llenar todas las casillas");
+        JOptionPane.showMessageDialog(this, "Debes llenar todas las casillas");
         return;
     }
     
     if (!joyas_oscar.modelo.Cliente.validarTelefono(telefono)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "El teléfono debe tener 10 dígitos");
+       JOptionPane.showMessageDialog(this, "El teléfono debe tener 10 dígitos");
         return;
     }
+    
+    int idNumero = Integer.parseInt(id); //
+    
+    if(repositorio.existeId(idNumero)) {
+        JOptionPane.showMessageDialog(this, "El id ya existe");
+        return;
+    }
+     if(repositorio.existeTelefono(telefono)) {
+        JOptionPane.showMessageDialog(this, "El telefono ya existe");
+        return;
+    }
+    
     
  
     joyas_oscar.modelo.Cliente c = new joyas_oscar.modelo.Cliente(Integer.parseInt(id),nombre,apellido,telefono,direccion);
@@ -233,16 +244,16 @@ public class VentanaCliente extends javax.swing.JFrame {
         return;
     }
 
-    listaClientes.add(c); // SOLO UNA VEZ
+    repositorio.guardar(c);
 
     // Usa tu método para mostrar, no addRow a mano
     cargarTabla();
     limpiarCampos();
     
-    javax.swing.JOptionPane.showMessageDialog(this, "Cliente " + nombre + " guardado");
+    JOptionPane.showMessageDialog(this, "Cliente " + nombre + " guardado");
 
     
-   
+   //Cierra boton guardar:
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
@@ -255,14 +266,14 @@ public class VentanaCliente extends javax.swing.JFrame {
 
 
    
-    }//Cierra el boton guardar
+    }
    
 private void cargarTabla() {
     javax.swing.table.DefaultTableModel modelo = 
         (javax.swing.table.DefaultTableModel) tablaClientes.getModel();
     modelo.setRowCount(0);
 
-    for (joyas_oscar.modelo.Cliente c : listaClientes) {
+    for (joyas_oscar.modelo.Cliente c : repositorio.listar()) {
         modelo.addRow(new Object[]{
             c.getIdCliente(),
             c.getNombreCompleto(),
