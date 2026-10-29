@@ -98,13 +98,13 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Teléfono", "Dirección"
+                "ID", "Nombre Completo", "Teléfono", "Dirección", "Mantenimiento (Sí/No)"
             }
         ));
         tblClientes.setViewportView(tablaClientes);
@@ -116,54 +116,53 @@ public class VentanaCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tblClientes)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addComponent(tblClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(0, 559, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addGap(31, 31, 31))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel1)
+                                            .addGap(67, 67, 67)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(31, 31, 31)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(30, 30, 30)
+                                        .addComponent(btnGuardar)
+                                        .addGap(49, 49, 49)
+                                        .addComponent(btnEditar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnEliminar)
+                                        .addGap(47, 47, 47)
+                                        .addComponent(btnLimpiar)
+                                        .addGap(69, 69, 69))
+                                    .addComponent(txtDireccion)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtIdCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                                            .addComponent(txtTelefono))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                    .addComponent(jLabel3)
-                                                    .addGap(31, 31, 31))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(jLabel1)
-                                                    .addGap(67, 67, 67)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel5)
-                                                .addGap(31, 31, 31)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtDireccion)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(txtIdCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                                                    .addComponent(txtTelefono))
-                                                .addGap(38, 38, 38)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel2)
-                                                    .addComponent(jLabel4))
-                                                .addGap(30, 30, 30)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txtNombre)
-                                                    .addComponent(txtApellido))))))
-                                .addGap(11, 11, 11)))
-                        .addContainerGap())
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                                            .addComponent(txtApellido))))))
+                        .addGap(11, 11, 11))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(btnGuardar)
-                        .addGap(44, 44, 44)
-                        .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addComponent(btnEliminar)
-                        .addGap(46, 46, 46)
-                        .addComponent(btnLimpiar)
-                        .addGap(35, 35, 35))))
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,49 +261,8 @@ public class VentanaCliente extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
             
-    int fila = tablaClientes.getSelectedRow();
-    if (fila == -1) {
-        JOptionPane.showMessageDialog(this, "Selecciona un cliente de la tabla");
-        return;
-    }
-
-    // 1. Si es la primera vez que das clic, carga los datos a las cajas
-    if (clienteEnEdicion == null) {
-        int idSeleccionado = (int) tablaClientes.getValueAt(fila, 0);
-        clienteEnEdicion = repositorio.buscarPorId(idSeleccionado);
-        
-        txtIdCliente.setText(String.valueOf(clienteEnEdicion.getIdCliente()));
-        // Asumo que separaste nombre y apellido en tu modelo, ajusta esto
-        txtNombre.setText(clienteEnEdicion.getNombreCompleto()); 
-        txtTelefono.setText(clienteEnEdicion.getTelefono());
-        txtDireccion.setText(clienteEnEdicion.getDireccion());
-        txtIdCliente.setEnabled(false); // no dejar cambiar el ID
-        
-        JOptionPane.showMessageDialog(this, "Edita los datos y vuelve a pulsar Editar para guardar");
-        return;
-    }
-
-    // 2. Si ya estaba en edición, guarda los cambios (aquí sí va el trim igual)
-    String nombre = txtNombre.getText().trim();
-    String telefono = txtTelefono.getText().trim();
-    String apellido = txtApellido.getText().trim();
-    String direccion = txtDireccion.getText().trim();
-
-    if (nombre.isEmpty() || telefono.isEmpty() || direccion.isEmpty() || apellido.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Debes llenar todas las casillas");
-        return;
-    }
-    int id=Integer.parseInt(txtIdCliente.getText().trim());
-
-    if (id != clienteEnEdicion.getIdCliente() && repositorio.existeId(id)) {
-           JOptionPane.showMessageDialog(this, "Ese id ya loo tiene otro cliente");
-        return;
-    }
   
-        if (!telefono.equals(clienteEnEdicion.getTelefono()) && repositorio.existeTelefono(telefono)) {
-        JOptionPane.showMessageDialog(this, "Ese telefono ya lo tiene otro cliente");
-        return;
-    }
+   
 
         
     }//Cierra boton editar
@@ -333,24 +291,6 @@ private void limpiarCampos() {
     txtTelefono.setText("");
     txtDireccion.setText("");
     
- /*Para boton editar
-  Actualizar el objeto*/
-    String nombre= txtNombre.getText().trim();
-     String apellido= txtApellido.getText().trim();
-      String telefono= txtTelefono.getText().trim();
-       String direccion= txtDireccion.getText().trim();
- 
-    clienteEnEdicion.setNombre(nombre);
-    clienteEnEdicion.setApellido(apellido);
-    clienteEnEdicion.setTelefono(telefono);
-    clienteEnEdicion.setDireccion(direccion);
-    repositorio.guardar(clienteEnEdicion); 
-
-    cargarTabla();
-    limpiarCampos();
-    txtIdCliente.setEnabled(true);
-    clienteEnEdicion = null;
-    JOptionPane.showMessageDialog(this, "Cliente actualizado");
 
 
 
