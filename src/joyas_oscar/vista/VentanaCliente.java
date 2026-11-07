@@ -98,13 +98,13 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre Completo", "Teléfono", "Dirección", "Mantenimiento (Sí/No)"
+                "ID", "Nombre Completo", "Teléfono", "Dirección"
             }
         ));
         tblClientes.setViewportView(tablaClientes);
