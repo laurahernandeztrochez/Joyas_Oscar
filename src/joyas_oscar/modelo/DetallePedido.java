@@ -6,11 +6,11 @@ public class DetallePedido { //Completo, sirve
     private int idDetallePedido;
     private Joya joya;
     
-    private double cantidad;
+    private int cantidad;
     private double precioUnitario;
     private double subtotal;
     
-    public DetallePedido (int idDetallePedido,Joya joya, double cantidad) {
+    public DetallePedido (int idDetallePedido,Joya joya, int cantidad) {
         this.idDetallePedido = idDetallePedido;
         this.joya = joya;
         this.cantidad = cantidad;
@@ -32,7 +32,7 @@ public class DetallePedido { //Completo, sirve
         return cantidad;
     }
 
-    public void setCantidad(double cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
     
