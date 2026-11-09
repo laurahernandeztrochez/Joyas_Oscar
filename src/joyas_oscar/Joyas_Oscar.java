@@ -25,7 +25,7 @@ public class Joyas_Oscar {
         
           new VentanaCliente().setVisible(true);
         
-        /* 1. CREAR TODO LOS DATOS PRIMERO
+        /* 
     Cliente cliente1 = new Cliente(1, "Juan", "Perez", "1234567890", "calle 33 d# 76-90");
     Joya joya1 = new Joya(1, "anillo Laura", "plata", 28000.0, 7);
     Pedido pedido1 = new Pedido(1, cliente1, "Enviado", "Calle 33D 17-75", "25 de febrero 2027");
@@ -36,10 +36,10 @@ public class Joyas_Oscar {
     Rol rol1 = new Rol();
        
     
-    // 2. PONERLE EL TOTAL AL PEDIDO 
+    //tOTAL DEL PEDIDO 
     pedido1.setTotal(detallepedido1.getSubTotal());
 
-    // 3. AHORA SI IMPRIMIR
+  
     System.out.println("--- Probando pedido ---");
     System.out.println("Resumen: ID pedido: " + pedido1.getIdPedido() + ", ID Cliente: " + cliente1.getIdCliente() + " (" + cliente1.getNombre() + "), Direccion Envio: " + pedido1.getDireccion() + ", Estado: " + pedido1.getEstado() + ", Fecha pedido: " + pedido1.getFecha() + ", total: " + pedido1.getTotal());
 
