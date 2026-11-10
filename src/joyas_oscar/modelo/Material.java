@@ -4,6 +4,7 @@ package joyas_oscar.modelo;
 
 public class Material { //Completo, sirve
     
+    // Atributos privados del material
     private int idMaterial;
     private double peso;
     private double stock;
@@ -11,7 +12,7 @@ public class Material { //Completo, sirve
     private String tipoMaterial;
     private double precio;
    
-
+     // Constructor principal para inicializar todos los datos
     public Material(int idMaterial, double peso, double stock,String nombre, String tipoMaterial, double precio) {
         this.idMaterial = idMaterial;
         this.peso = peso;
@@ -20,7 +21,7 @@ public class Material { //Completo, sirve
         this.tipoMaterial = tipoMaterial;
         this.precio = precio;
     }
-    
+    // Constructor alternativo (sin peso ni stock, inicializándolos en 0)
     public Material(int idMaterial,String nombre, String tipoMaterial, double precio) {
         this.idMaterial = idMaterial;
         this.peso = 0;
@@ -29,7 +30,7 @@ public class Material { //Completo, sirve
         this.tipoMaterial = tipoMaterial;
         this.precio = precio;
     }
-       
+    // Método para obtener el ID del material   
     public int getIdMaterial() {
         return idMaterial;
     }
@@ -78,7 +79,7 @@ public class Material { //Completo, sirve
         this.precio = precio;
     }
     
-    //Metodo validarStock
+    // Método para validar que el peso sea mayor a 0 y menor o igual al stock disponible
     public boolean validarStock(double peso) {
         if(peso>0 && peso <= this.stock){
             return true;
@@ -87,27 +88,27 @@ public class Material { //Completo, sirve
         }
     }
     
-    //Metodo calcularTotal
+    // Método para calcular el precio total multiplicando el peso por el precio unitario
     public double calcularTotal () {
         double precioTotal = this.peso * this.precio; 
         return precioTotal;
     }
     
-    //Metodo registrarMateria
+    // Método donde si el stock es válido, registra y actualiza los datos del material, y si no, no guarda nada
     public boolean registrarMaterial(String nombre, String tipoMaterial, double peso, double precio){
-      if (validarStock(peso)) {
+      if (validarStock(peso)) {  // Llama al método anterior para verificar
         this.nombre = nombre;
         this.tipoMaterial = tipoMaterial;
         this.peso = peso;
         this.precio = precio;
-        double precioTotal = calcularTotal();
+        double precioTotal = calcularTotal();  // Calcula el total
       return true;
     } else {
-          return false;
+          return false;  // Si no, retorna falso y no guarda
       }
     }
     
-    //Metodo obtenerResumen
+    // Método para obtener un resumen completo con los datos y el total calculado del material
     public String obtenerResumen() {
         return "ID: " + idMaterial +
                 ", Nombre: " + nombre +
@@ -116,7 +117,7 @@ public class Material { //Completo, sirve
                 ", Precio/g: "+precio+
                 ", Precio Total: "+calcularTotal();
     }
-    
+    // Método toString para mostrar el resumen del material en un solo texto
     public String toString(){
         return  "Resumen: "+obtenerResumen();
     
