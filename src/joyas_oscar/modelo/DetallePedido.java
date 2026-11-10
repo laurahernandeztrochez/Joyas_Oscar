@@ -1,119 +1,119 @@
 
 package joyas_oscar.modelo;
 
-public class DetallePedido {
+
+public class DetallePedido { //Completo, sirve
+<<<<<<< HEAD
     // Atributos
     private int idDetallePedido;
+=======
+    //referencia a pedido y joya
     private Pedido pedido;
+>>>>>>> 58964bc6b1ac1d81ae1e1cd138d8d49a138a0c7c
     private Joya joya;
     private int cantidad;
     private double precioUnitario;
     private double subtotal;
-
-    // Constructor principal
-    public DetallePedido(int idDetallePedido, Joya joya, int cantidad) {
+    
+<<<<<<< HEAD
+    // Constructor
+    public DetallePedido (int idDetallePedido,Joya joya, int cantidad) {
         this.idDetallePedido = idDetallePedido;
-        this.joya = joya;
-        this.cantidad = cantidad;
-        this.precioUnitario = (joya != null) ? joya.getPrecio() : 0;
-        this.subtotal = this.cantidad * this.precioUnitario;
-    }
-
-    // Constructor alternativo con pedido
-    public DetallePedido(Pedido pedido, Joya joya, int cantidad) {
+=======
+    //Constructor: crea el detalle con su pedido y joya
+    public DetallePedido (Pedido pedido, Joya joya, int cantidad) {
         this.pedido = pedido;
+>>>>>>> 58964bc6b1ac1d81ae1e1cd138d8d49a138a0c7c
         this.joya = joya;
         this.cantidad = cantidad;
-        this.precioUnitario = (joya != null) ? joya.getPrecio() : 0;
-        this.subtotal = this.cantidad * this.precioUnitario;
+        this.precioUnitario = joya.getPrecio();
+        this.subtotal = cantidad * precioUnitario;
     }
-
-    // Getters y setters
+<<<<<<< HEAD
+    // Gets y Sets
     public int getIdDetallePedido() {
-        return idDetallePedido;
-    }
-
-    public void setIdDetallePedido(int idDetallePedido) {
-        this.idDetallePedido = idDetallePedido;
-    }
-
+    return idDetallePedido;
+=======
+    
+    //Getters y setters
     public Pedido getPedido() {
-        return pedido;
+    return pedido;
+>>>>>>> 58964bc6b1ac1d81ae1e1cd138d8d49a138a0c7c
     }
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
     }
-
-    public int getCantidad() {
+    
+    public double getCantidad() {
         return cantidad;
     }
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-        this.subtotal = calcularSubtotal();
     }
-
-    public Joya getJoya() {
+    
+       public Joya getJoya() {
         return joya;
     }
 
     public void setJoya(Joya joya) {
         this.joya = joya;
-        if (this.joya != null) {
-            this.precioUnitario = this.joya.getPrecio();
-        }
-        this.subtotal = calcularSubtotal();
+    }
+    
+    public Double getPrecioUnitario() {
+    return precioUnitario;
     }
 
-    public double getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(double precioUnitario) {
+    public void setPrecioUnitario(Double precioUnitariol) {
+<<<<<<< HEAD
+        this.precioUnitario = precioUnitariol;
+=======
         this.precioUnitario = precioUnitario;
-        this.subtotal = calcularSubtotal();
+>>>>>>> 58964bc6b1ac1d81ae1e1cd138d8d49a138a0c7c
+    }
+    
+    public Double getSubTotal() {
+    return subtotal;
     }
 
-    public double getSubTotal() {
-        return subtotal;
-    }
-
-    public void setSubTotal(double subtotal) {
+    public void setSubTotal(Double subtotal) {
         this.subtotal = subtotal;
     }
-
-    // Metodo para calcular el subtotal
+  
+    
+    //Metodo para calular el subtotal
     public double calcularSubtotal() {
-        if (this.joya != null) {
-            this.precioUnitario = this.joya.getPrecio();
-        }
-        this.subtotal = this.cantidad * this.precioUnitario;
-        return subtotal;
+    this.subtotal = this.cantidad * this.precioUnitario; //Ecuacion para calcular el subtotal
+    return subtotal; //lo calcula y guarda
     }
-
-    // Metodo para validar la cantidad o stock
+    
+    //Metodo para validar la cantidad o stock
     public boolean validarCantidad(int cantidad) {
-        return cantidad > 0 && this.joya != null && cantidad <= this.joya.getStock();
+        return cantidad > 0 && cantidad <= this.joya.getStock();
     }
-
-    // Metodo para registrar el detalle del pedido
+    
+    //Metodo para registrar el detalle del pedido
     public boolean registrarDetalle(int cantidad) {
-        if (validarCantidad(cantidad)) {
+        double subtotal=  calcularSubtotal();
+        if (validarCantidad(cantidad) && calcularSubtotal() >0) { //llama a validar cantidad y calcular el subtotal
             this.cantidad = cantidad;
-            this.precioUnitario = this.joya.getPrecio();
-            this.subtotal = calcularSubtotal();
-            return true;
+            this.precioUnitario= this.joya.getPrecio();
+           this.subtotal = subtotal; 
+            return true; //Si los dos son true, lo guarda
         }
-        return false;
+        return false; //sino, no guarda nada
     }
-
-    // Resumen para el detalle del pedido
+    
+    //Resumen para el detalle del pedido
     public String obtenerResumen() {
-        return "Joya: " + ((joya != null) ? joya.getNombre() : "N/A") +
+        System.out.println("Detallle pedido: ");
+        return "Joya: " + joya.getNombre() +
                 ", cantidad: " + cantidad +
                 ", precio: " + precioUnitario +
                 ", subtotal: " + subtotal;
     }
+   
+         
 }
 
