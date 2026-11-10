@@ -6,7 +6,7 @@ import joyas_oscar.modelo.Cliente;
 import joyas_oscar.repositorio.ClienteRepositorio;
 /**
  *
- * @author Lau04
+ *
  */
 public class VentanaCliente extends javax.swing.JFrame {
     
@@ -245,7 +245,7 @@ public class VentanaCliente extends javax.swing.JFrame {
 
     repositorio.guardar(c);
 
-    // Usa tu método para mostrar, no addRow a mano
+   
     cargarTabla();
     limpiarCampos();
     
