@@ -3,23 +3,22 @@ package joyas_oscar.modelo;
 
 
 public class DetallePedido { //Completo, sirve
+    // Atributos
     private int idDetallePedido;
     private Joya joya;
-    
     private int cantidad;
     private double precioUnitario;
     private double subtotal;
     
+    // Constructor
     public DetallePedido (int idDetallePedido,Joya joya, int cantidad) {
         this.idDetallePedido = idDetallePedido;
         this.joya = joya;
         this.cantidad = cantidad;
         this.precioUnitario = joya.getPrecio();
         this.subtotal = cantidad * precioUnitario;
-
-        
     }
-    
+    // Gets y Sets
     public int getIdDetallePedido() {
     return idDetallePedido;
     }
@@ -49,7 +48,7 @@ public class DetallePedido { //Completo, sirve
     }
 
     public void setPrecioUnitario(Double precioUnitariol) {
-        this.subtotal = subtotal;
+        this.precioUnitario = precioUnitariol;
     }
     
     public Double getSubTotal() {
