@@ -1,16 +1,17 @@
 
-package joyas_oscar.modelo;
+package joyas_oscar.modelo; //Paquete donde se encuentra la clase pago
 
 
 public class Pago { //Completo, sirve
     
-    private int idPago;
-    private Pedido pedido;
-    private double monto;
-    private String estado;
-    private String metodoPago;
-    private String fechaPago;
+    private int idPago; //Id que identifica todo el pago
+    private Pedido pedido; //Referencia a pedido para saber cual se va a pagar
+    private double monto; //Cuanto debe pagar/cuanto pago
+    private String estado; //Pagado, cancelado, pendiente
+    private String metodoPago; // transferencia, tarjeta, efectivo y nequi
+    private String fechaPago; //Tipo string la fecha en que se registró el pago
     
+    //Constructor
     public Pago(int idPago, Pedido pedido, double monto, String metodoPago, String estado, String fechaPago) {
         this.idPago = idPago;
         this.pedido = pedido;
@@ -19,6 +20,7 @@ public class Pago { //Completo, sirve
         this.estado = estado;
         this.fechaPago =  fechaPago;
        
+        //Getters y setters
     }
     
     public int getIdPago() {
@@ -69,11 +71,11 @@ public class Pago { //Completo, sirve
         this.fechaPago = fechaPago;
     }
     
-    //Metodo validarPago
+    //Metodo que valida que el monto sea ni mas ni menos a lo que debia
     public boolean validarPago(double monto){
-        if (monto<=0) {
+        if (monto<=0) { //que el monto sea mayor a 0 evitar que se deje vacio
             return false;
-        } if (pedido !=null && monto> pedido.calcularTotal()) {
+        } if (pedido !=null && monto> pedido.calcularTotal()) { //Que el monto sea igual al total del pedido registrado
             return false;
         } 
         return true;
@@ -83,16 +85,16 @@ public class Pago { //Completo, sirve
     
     //Metodo procesarPago
     public boolean procesarPago() {
-        if (validarPago(monto)) {
-            this.estado= "pagado";
-            return true;
+        if (validarPago(monto)) { //Llama a validar pago, metodo anterior
+            this.estado= "pagado"; 
+            return true; //Si es true, se guarda el pago
         }
         return false;
     }
 
     
     //Metodo generarComprobante
-    public String generarComprobante() {
+    public String generarComprobante() { //Solo un resumen de todo el pago, comprobante
         System.out.println("Comprobante:");
         return "Id Pago: " +idPago +
                 ", Pedido # " + pedido.getIdPedido() +
@@ -100,10 +102,6 @@ public class Pago { //Completo, sirve
                 ",Metodo: " +metodoPago +
                 ", Estado: " +estado +
                 ", Fecha: " +fechaPago;
-    }
-    
-    public String toString() {
-        return generarComprobante(); 
     }
 
 }
