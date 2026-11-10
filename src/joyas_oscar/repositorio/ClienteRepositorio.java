@@ -5,15 +5,17 @@ import joyas_oscar.modelo.Cliente;
 import java.util.ArrayList;
 
 public class ClienteRepositorio {
-  
+    // Lista para almacenar los clientes
+
     private ArrayList<Cliente> lista = new ArrayList<>();
 
-    // BOTON PARA GUARDAR
+    // BOTON PARA GUARDAR datos de clientes
+    
     public void guardar(Cliente c) {
         lista.add(c);
     }
 
-    // BOTON PARA EDITAR
+    // BOTON PARA EDITAR los datos de clientes, recibe un objeto Cliente con los datos editados
     public void editar(Cliente cEditado) {
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).getIdCliente() == cEditado.getIdCliente()) {
@@ -23,11 +25,20 @@ public class ClienteRepositorio {
         }
     }
 
-    // BOTON PARA ELIMINAR
-    public void eliminar(int id) {
+    // BOTON PARA ELIMINAR los datos de clientes, recibe el id del cliente a eliminar
+/*    public void eliminar(int id) {
         lista.removeIf(c -> c.getIdCliente() == id);
     }
-
+*/  
+    public void eliminar(int id) {
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getIdCliente() == id) {
+                lista.remove(i);
+                break;
+            }
+        }
+    }
+    
     // BOTON LIMPIAR (limpia toda la lista) y LISTAR
     public void limpiar() {
         lista.clear();

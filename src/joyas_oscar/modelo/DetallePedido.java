@@ -1,44 +1,29 @@
-
 package joyas_oscar.modelo;
 
 
 public class DetallePedido { //Completo, sirve
-<<<<<<< HEAD
-    // Atributos
-    private int idDetallePedido;
-=======
+
     //referencia a pedido y joya
     private Pedido pedido;
->>>>>>> 58964bc6b1ac1d81ae1e1cd138d8d49a138a0c7c
     private Joya joya;
     private int cantidad;
     private double precioUnitario;
     private double subtotal;
     
-<<<<<<< HEAD
-    // Constructor
-    public DetallePedido (int idDetallePedido,Joya joya, int cantidad) {
-        this.idDetallePedido = idDetallePedido;
-=======
+
     //Constructor: crea el detalle con su pedido y joya
     public DetallePedido (Pedido pedido, Joya joya, int cantidad) {
         this.pedido = pedido;
->>>>>>> 58964bc6b1ac1d81ae1e1cd138d8d49a138a0c7c
+
         this.joya = joya;
         this.cantidad = cantidad;
         this.precioUnitario = joya.getPrecio();
         this.subtotal = cantidad * precioUnitario;
     }
-<<<<<<< HEAD
-    // Gets y Sets
-    public int getIdDetallePedido() {
-    return idDetallePedido;
-=======
-    
+
     //Getters y setters
     public Pedido getPedido() {
     return pedido;
->>>>>>> 58964bc6b1ac1d81ae1e1cd138d8d49a138a0c7c
     }
 
     public void setPedido(Pedido pedido) {
@@ -65,12 +50,8 @@ public class DetallePedido { //Completo, sirve
     return precioUnitario;
     }
 
-    public void setPrecioUnitario(Double precioUnitariol) {
-<<<<<<< HEAD
-        this.precioUnitario = precioUnitariol;
-=======
+    public void setPrecioUnitario(Double precioUnitario) {
         this.precioUnitario = precioUnitario;
->>>>>>> 58964bc6b1ac1d81ae1e1cd138d8d49a138a0c7c
     }
     
     public Double getSubTotal() {
@@ -116,4 +97,3 @@ public class DetallePedido { //Completo, sirve
    
          
 }
-
