@@ -75,6 +75,7 @@ public class Cliente { //Ya completo, sirve
         this.activo = activo;
     }
 
+    
     //Metodo tipo string para guardar nombre y apellido juntos como nombre completo
     public String getNombreCompleto() {
         return nombre + " "+ apellido;
