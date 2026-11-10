@@ -1,7 +1,7 @@
 
 package joyas_oscar.modelo;
 /* =========================================================================
-   CLASE: Rol                        PAQUETE: ministore.modelo
+   CLASE: Rol                        PAQUETE: joyas_oscar.modelo
   =========================================================================
 
   Sirve para representar al usuario, como empleado o administrador de joyas oscar
