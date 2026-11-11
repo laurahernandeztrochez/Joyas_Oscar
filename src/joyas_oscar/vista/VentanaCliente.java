@@ -5,10 +5,12 @@ import javax.swing.JOptionPane;
 import joyas_oscar.modelo.Cliente;
 import joyas_oscar.repositorio.ClienteRepositorio;
 /**
- *
- *
+ * Esta es la ventana donde se puede ver y registrar todo lo relacionado con el cliente
+ * La idea es que al conectarlo con la base de datos se quite la parte de colocar manualmente el id
+ * de momento se pone solamente para probar
  */
 public class VentanaCliente extends javax.swing.JFrame {
+    
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaCliente.class.getName());
     private joyas_oscar.repositorio.ClienteRepositorio repositorio = new joyas_oscar.repositorio.ClienteRepositorio();
@@ -91,10 +93,18 @@ public class VentanaCliente extends javax.swing.JFrame {
         btnEditar.addActionListener(this::btnEditarActionPerformed);
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(this::btnLimpiarActionPerformed);
 
         jLabel7.setText("Lista de Clientes");
+
+        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientesMouseClicked(evt);
+            }
+        });
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,6 +117,11 @@ public class VentanaCliente extends javax.swing.JFrame {
                 "ID", "Nombre Completo", "Teléfono", "Dirección"
             }
         ));
+        tablaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaClientesMouseClicked(evt);
+            }
+        });
         tblClientes.setViewportView(tablaClientes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,6 +267,7 @@ public class VentanaCliente extends javax.swing.JFrame {
     JOptionPane.showMessageDialog(this, "Cliente " + nombre + " guardado");
 
     
+   
    //Cierra boton guardar:
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -260,8 +276,25 @@ public class VentanaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-            
+      
+    if(txtIdCliente.getText().isEmpty()) {
+         JOptionPane.showMessageDialog(this, "Primero selecciona un cliente de la tabla");
+         return;
+    }    
+    String id = txtIdCliente.getText().trim();
+    String nombre = txtNombre.getText().trim();
+    String telefono = txtTelefono.getText().trim();
+    String apellido = txtApellido.getText().trim();
+    String direccion = txtDireccion.getText().trim();
+    
+  joyas_oscar.modelo.Cliente c = new joyas_oscar.modelo.Cliente(Integer.parseInt(id),nombre,apellido,telefono,direccion);
+  c.registrarContacto(direccion, telefono);
+    
   
+  repositorio.editar(c);
+  cargarTabla();
+  limpiarCampos();
+ JOptionPane.showMessageDialog(this, "Cliente actualizado");
    
 
         
@@ -289,12 +322,57 @@ private void limpiarCampos() {
     txtNombre.setText("");
     txtApellido.setText("");
     txtTelefono.setText("");
+    tablaClientes.clearSelection();
     txtDireccion.setText("");
     
 
 
 
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+ //No es, borrar
+    }//GEN-LAST:event_tblClientesMouseClicked
+
+    private void tablaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClientesMouseClicked
+         int fila = tablaClientes.getSelectedRow();
+    if (fila >= 0) {
+        txtIdCliente.setText(tablaClientes.getValueAt(fila, 0).toString());
+
+ 
+        String nombreCompleto = tablaClientes.getValueAt(fila, 1).toString();
+        String[] partes = nombreCompleto.split(" ", 2);
+        txtNombre.setText(partes[0]);
+        if (partes.length > 1) {
+            txtApellido.setText(partes[1]);
+        } else {
+            txtApellido.setText("");
+        }
+
+        txtTelefono.setText(tablaClientes.getValueAt(fila, 2).toString());
+        txtDireccion.setText(tablaClientes.getValueAt(fila, 3).toString());
+        
+     
+    }
+    }//GEN-LAST:event_tablaClientesMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+       if (txtIdCliente.getText().trim().isEmpty()) {
+               JOptionPane.showMessageDialog(this, "Primero seleccione un cliente de la tabla");
+               return;
+       }
+    
+        int id = Integer.parseInt(txtIdCliente.getText());
+        repositorio.eliminar(id);
+        cargarTabla();
+        limpiarCampos();
+        JOptionPane.showMessageDialog(this, "Cliente eliminado");
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        repositorio.limpiar();
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
