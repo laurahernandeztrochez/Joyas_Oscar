@@ -3,6 +3,7 @@ package joyas_oscar.vista;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 
 public class VentanaLogin extends javax.swing.JFrame {
     
@@ -16,7 +17,19 @@ public class VentanaLogin extends javax.swing.JFrame {
     }
 
     private void personalizarDiseño() {
-        
+  
+    // 1. Cargamos y escalamos la imagen UNA SOLA VEZ para optimizar
+    javax.swing.ImageIcon iconoOriginal = new javax.swing.ImageIcon(getClass().getResource("/joyas_oscar/vista/login.png"));
+    java.awt.Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(35, 35, java.awt.Image.SCALE_SMOOTH);
+    javax.swing.ImageIcon iconoFinal = new javax.swing.ImageIcon(imagenEscalada);
+
+    // 2. Se la asignas a tu primera etiqueta
+    jLabelImagen.setIcon(iconoFinal);
+
+    // 3. Se la asignas a tu segunda etiqueta 
+    jLabelImagen2.setIcon(iconoFinal);
+
+
         // Colores basados en tu mockup
         Color colorFondo = new Color(20, 20, 20);
         Color colorDorado = new Color(212, 175, 55);
@@ -35,7 +48,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         jLabel2.setFont(fuenteTitulo);
         jLabel2.setForeground(colorDorado);
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("♦  Joyas Oscar  ♦");
+        jLabel2.setText("  Joyas Oscar  ");
 
         jLabel3.setFont(fuenteSubtitulo);
         jLabel3.setForeground(colorDorado);
@@ -90,6 +103,7 @@ btnIngresar.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
     btnSalir.setContentAreaFilled(false);
     btnSalir.setOpaque(true);
 
+    
     }
     
   
@@ -105,6 +119,8 @@ btnIngresar.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
         jLabel5 = new javax.swing.JLabel();
         btnIngresar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        jLabelImagen = new javax.swing.JLabel();
+        jLabelImagen2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,17 +145,18 @@ btnIngresar.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(106, 106, 106)
-                                .addComponent(jLabel2)
-                                .addGap(21, 21, 21))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(15, 15, 15)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addComponent(jLabel5))
@@ -148,20 +165,24 @@ btnIngresar.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
                         .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(146, 146, 146)
-                        .addComponent(jLabel3)))
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabelImagen2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabelImagen)))
                 .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelImagen2)
+                    .addComponent(jLabelImagen))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -212,6 +233,8 @@ btnIngresar.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabelImagen;
+    private javax.swing.JLabel jLabelImagen2;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

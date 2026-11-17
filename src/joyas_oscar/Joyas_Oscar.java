@@ -17,17 +17,17 @@ import joyas_oscar.modelo.Usuario;
 import joyas_oscar.modelo.Rol;
 
 //import joyas_oscar.vista.VentanaCliente;
-//import joyas_oscar.vista.VentanaLogin;
-import joyas_oscar.vista.VentanaUsuario;
+import joyas_oscar.vista.VentanaLogin;
+//import joyas_oscar.vista.VentanaUsuario;
 public class Joyas_Oscar {
 
     
     public static void main(String[] args) {
-         // java.awt.EventQueue.invokeLater(() -> new VentanaLogin().setVisible(true));
+         java.awt.EventQueue.invokeLater(() -> new VentanaLogin().setVisible(true));
         
         
         //  new VentanaCliente().setVisible(true);
-           java.awt.EventQueue.invokeLater(() -> new VentanaUsuario ().setVisible(true));
+           //java.awt.EventQueue.invokeLater(() -> new VentanaUsuario ().setVisible(true));
         
         /* 
     Cliente cliente1 = new Cliente(1, "Juan", "Perez", "1234567890", "calle 33 d# 76-90");
