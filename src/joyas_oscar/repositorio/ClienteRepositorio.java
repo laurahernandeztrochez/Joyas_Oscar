@@ -141,8 +141,8 @@ public class ClienteRepositorio {
     // MÉTODOS AYUDANTES
     // =====================================================================
     private Cliente crearCliente(ResultSet rs) throws SQLException {
-        Cliente c = new Cliente (rs.getInt("id_cliente"),
-                rs.getString("nombre"),
+        Cliente c = new Cliente 
+                (rs.getString("nombre"),
                 rs.getString("apellido"),
                 rs.getString("telefono"),
                 rs.getString("direccion"));

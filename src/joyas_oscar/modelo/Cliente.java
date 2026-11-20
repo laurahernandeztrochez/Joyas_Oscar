@@ -16,13 +16,13 @@ public class Cliente { //Ya completo, sirve
     private boolean activo;
 
     //Constructor, donde nace un objeto
-    public Cliente(int idCliente, String nombre, String apellido, String telefono, String direccion) {
-        this.idCliente = idCliente;
-        this.nombre = nombre;
-        this.apellido = apellido;
+    public Cliente(String nombre, String apellido, String telefono, String direccion) {
+       
+        this.nombre = "Sin nombre";
+        this.apellido = "Sin apellido";
         this.telefono = telefono;
         this.direccion = direccion;
-        this.activo = activo;
+        this.activo = true;
     }
     
     // GETTERS Y SETTERS 
