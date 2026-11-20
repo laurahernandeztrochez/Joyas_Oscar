@@ -1,117 +1,165 @@
-
+/*
+ * =========================================================================
+ *  CLASE: ClienteRepositorio              PAQUETE: joyas_oscar.repositorio
+ *  VERSIÓN: MySQL
+ * =========================================================================
+ */
 package joyas_oscar.repositorio;
 
-import joyas_oscar.modelo.Cliente;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import joyas_oscar.modelo.Cliente;
+import joyas_oscar.util.ConexionBD;
 
 public class ClienteRepositorio {
-    // Lista donde se almacenan todos los clientes del sistema.
-    // Esta estructura permite guardar, buscar, editar, eliminar y listar clientes.
-    private ArrayList<Cliente> lista = new ArrayList<>();
 
-    // ------------------------------------------------------------
-    // guardar(): agrega un nuevo cliente a la lista.
-    // Funciona como el botón "Guardar" del formulario.
-    // ------------------------------------------------------------
-    public void guardar(Cliente c) {
-        lista.add(c);
+    // En SQL siempre va id_cliente (con guion bajo)
+    private static final String SELECT_BASE =
+            "SELECT id_cliente, nombre, apellido, telefono, direccion, activo FROM clientes ";
+
+    public ClienteRepositorio() {
     }
 
-    // ------------------------------------------------------------
-    // editar(): busca un cliente por su id y reemplaza sus datos.
-    // Funciona como el botón "Editar" del formulario.
-    // Recibe el cliente ya actualizado con los nuevos datos.
-    // ------------------------------------------------------------
-    public void editar(Cliente cEditado) {
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getIdCliente() == cEditado.getIdCliente()) {
-                lista.set(i, cEditado); // reemplaza el registro anterior con el nuevo
-                break; // sale del ciclo porque ya encontró el cliente
+    // =====================================================================
+    // C: CREATE -> guardar
+    // =====================================================================
+    public void guardar(Cliente cliente) {
+        String sql = "INSERT INTO clientes (nombre, apellido, telefono, direccion, activo) "
+                   + "VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            llenarDatos(ps, cliente);
+            ps.executeUpdate();
+
+            try (ResultSet llaves = ps.getGeneratedKeys()) {
+                if (llaves.next()) {
+                    cliente.setIdCliente(llaves.getInt(1));
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al guardar el cliente: " + e.getMessage(), e);
         }
     }
 
-    // ------------------------------------------------------------
-    // eliminar(): elimina un cliente usando su id.
-    // Funciona como el botón "Eliminar" del formulario.
-    // Busca el cliente y lo borra de la lista.
-    // ------------------------------------------------------------
-    public void eliminar(int id) {
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getIdCliente() == id) {
-                lista.remove(i); // elimina la posición encontrada
-                break; // deja de buscar porque ya se eliminó
+    // =====================================================================
+    // R: READ
+    // =====================================================================
+    public ArrayList<Cliente> listar() {
+        ArrayList<Cliente> lista = new ArrayList<>();
+        String sql = SELECT_BASE + "WHERE activo = TRUE ORDER BY id_cliente";
+
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(crearCliente(rs));
             }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al listar los clientes: " + e.getMessage(), e);
         }
+        return lista;
     }
 
-    // ------------------------------------------------------------
-    // limpiar(): elimina todos los clientes de la lista.
-    // Funciona como el botón "Limpiar" o "Vaciar".
-    // ------------------------------------------------------------
-    public void limpiar() {
-        lista.clear();
-    }
+    public Cliente buscarPorId(int idCliente) {
+        String sql = SELECT_BASE + "WHERE id_cliente = ?";
 
-    // ------------------------------------------------------------
-    // buscarPorId(): busca un cliente por su identificador.
-    // Devuelve el objeto Cliente si existe; si no, devuelve null.
-    // Se usa para cargar datos de un cliente específico.
-    // ------------------------------------------------------------
-    public Cliente buscarPorId(int id) {
-        for (Cliente c : lista) {
-            if (c.getIdCliente() == id) {
-                return c;
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idCliente);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return crearCliente(rs);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar el cliente: " + e.getMessage(), e);
         }
         return null;
     }
 
-    // ------------------------------------------------------------
-    // existeId(): valida si ya existe un cliente con ese id.
-    // Sirve para evitar duplicados antes de guardar o editar.
-    // Retorna true si el id ya está en uso.
-    // ------------------------------------------------------------
-    public boolean existeId(int id) {
-        for (Cliente c : lista) {
-            if (c.getIdCliente() == id) {
-                return true;
-            }
-        }
-        return false;
-    }
+    public Cliente buscarPorTelefono(String telefono) {
+        String sql = SELECT_BASE + "WHERE telefono = ?";
 
-    // ------------------------------------------------------------
-    // existeTelefono(): valida si ya existe un número de teléfono en la lista.
-    // Se usa para evitar registrar dos clientes con el mismo teléfono.
-    // Retorna true si el teléfono ya existe.
-    // ------------------------------------------------------------
-    public boolean existeTelefono(String tel) {
-        for (Cliente c : lista) {
-            if (c.getTelefono() != null && c.getTelefono().equals(tel)) {
-                return true;
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, telefono);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return crearCliente(rs);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar el cliente: " + e.getMessage(), e);
         }
-        return false;
+        return null;
     }
 
     // =====================================================================
-    // datosPrueba(): crea algunos clientes de ejemplo para probar la aplicación.
-    // Solo se usa en pruebas o para iniciar datos temporales.
-    // No es un botón visual; es un método auxiliar para cargar información.
+    // U: UPDATE
     // =====================================================================
-    private void datosPrueba() {
-        guardar(new Cliente(1, "Juan Perez", "1234567890", null, null));
-        guardar(new Cliente(2, "Maria Garcia", "0987654321", null, null));
+    public boolean actualizar(Cliente cliente) {
+        String sql = "UPDATE clientes SET nombre = ?, apellido = ?, telefono = ?, direccion = ?, "
+                   + "activo = ? WHERE id_cliente = ?";
+
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            llenarDatos(ps, cliente);
+            ps.setInt(6, cliente.getIdCliente());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el cliente: " + e.getMessage(), e);
+        }
     }
 
-    // ------------------------------------------------------------
-    // listar(): devuelve la lista completa de clientes.
-    // Funciona para mostrar todos los datos en una tabla o vista.
-    // ------------------------------------------------------------
-    public ArrayList<Cliente> listar() {
-        return lista;
+    // =====================================================================
+    // D: DELETE -> desactivar
+    // =====================================================================
+    public boolean desactivar(int idCliente) {
+        String sql = "UPDATE clientes SET activo = FALSE WHERE id_cliente = ?";
+
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idCliente);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al desactivar el cliente: " + e.getMessage(), e);
+        }
+    }
+
+    // =====================================================================
+    // MÉTODOS AYUDANTES
+    // =====================================================================
+    private Cliente crearCliente(ResultSet rs) throws SQLException {
+        Cliente c = new Cliente (rs.getInt("id_cliente"),
+                rs.getString("nombre"),
+                rs.getString("apellido"),
+                rs.getString("telefono"),
+                rs.getString("direccion"));
+        
+        // AQUÍ ESTABA EL ERROR: antes decia getInt("id")
+        // Ahora es getInt("id_cliente") porque así se llama en MySQL
+        // y setIdCliente porque así se llama en Java
+        c.setIdCliente(rs.getInt("id_cliente"));
+        c.setActivo(rs.getBoolean("activo"));
+        return c;
+    }
+
+    private void llenarDatos(PreparedStatement ps, Cliente c) throws SQLException {
+        ps.setString(1, c.getNombre());
+        ps.setString(2, c.getApellido());
+        ps.setString(3, c.getTelefono());
+        ps.setString(4, c.getDireccion());
+        ps.setBoolean(5, c.isActivo());
     }
 }
-
-
