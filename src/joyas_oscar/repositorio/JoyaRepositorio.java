@@ -96,6 +96,31 @@ public class JoyaRepositorio {
 
 /*
  * =========================================================================
+ * SEARCH -> buscarPorNombre
+ * =========================================================================
+ */
+    public ArrayList<Joya> buscarPorNombre(String nombre) {
+        ArrayList<Joya> lista = new ArrayList<>();
+        String sql = SELECT_BASE
+                + "WHERE activo = TRUE AND nombre LIKE ? ORDER BY id_joya";
+
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, "%" + nombre + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(crearJoya(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar las joyas: " + e.getMessage(), e);
+        }
+        return lista;
+    }
+
+/*
+ * =========================================================================
  * UPDATE -> actualizar
  * =========================================================================
  */

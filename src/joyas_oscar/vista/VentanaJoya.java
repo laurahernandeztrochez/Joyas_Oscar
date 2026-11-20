@@ -28,6 +28,7 @@ public class VentanaJoya extends javax.swing.JFrame {
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
         btnEditar.addActionListener(this::btnEditarActionPerformed);
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
         personalizarDiseno();
         cargarTabla();
     }
@@ -51,6 +52,7 @@ public class VentanaJoya extends javax.swing.JFrame {
         txtPrecio = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -65,7 +67,7 @@ public class VentanaJoya extends javax.swing.JFrame {
 
         jLabel4.setText("Tipo material:");
 
-        jLabel5.setText("Precio unitario:");
+        jLabel5.setText("Precio:");
 
         jLabel6.setText("Stock:");
 
@@ -83,7 +85,7 @@ public class VentanaJoya extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre joya", "Material", "Stock", "Precio unitario"
+                "Id", "Nombre joya", "Material", "Stock", "Precio"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -92,6 +94,9 @@ public class VentanaJoya extends javax.swing.JFrame {
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         jLabel7.setText("Historial de joyas");
 
@@ -133,6 +138,8 @@ public class VentanaJoya extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(157, 157, 157)
                         .addComponent(btnGuardar)
+                        .addGap(89, 89, 89)
+                        .addComponent(btnBuscar)
                         .addGap(89, 89, 89)
                         .addComponent(btnCancelar))
                     .addGroup(layout.createSequentialGroup()
@@ -179,6 +186,7 @@ public class VentanaJoya extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
+                    .addComponent(btnBuscar)
                     .addComponent(btnCancelar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
@@ -196,7 +204,47 @@ public class VentanaJoya extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpiarCampos();
+        cargarTabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+/*
+ * =========================================================================
+ * Buscar una o varias joyas por nombre
+ * =========================================================================
+ */
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
+        String nombre = txtNombre.getText().trim();
+        if (nombre.isEmpty()) {
+            cargarTabla();
+            return;
+        }
+
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+            modelo.setRowCount(0);
+
+            java.util.ArrayList<Joya> resultados =
+                    repositorio.buscarPorNombre(nombre);
+
+            for (Joya joya : resultados) {
+                modelo.addRow(new Object[]{
+                    joya.getIdJoya(),
+                    joya.getNombre(),
+                    joya.getMaterial(),
+                    joya.getStock(),
+                    joya.getPrecio()
+                });
+            }
+
+            if (resultados.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "No se encontraron joyas con ese nombre");
+            }
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void personalizarDiseno() {
         Color fondo = new Color(20, 20, 20);
@@ -223,7 +271,7 @@ public class VentanaJoya extends javax.swing.JFrame {
         }
 
         for (javax.swing.JButton boton : new javax.swing.JButton[]{
-            btnGuardar, btnEditar, btnEliminar, btnCancelar}) {
+            btnGuardar, btnEditar, btnEliminar, btnCancelar, btnBuscar}) {
             boton.setBackground(gris);
             boton.setForeground(dorado);
             boton.setFocusPainted(false);
@@ -403,6 +451,7 @@ public class VentanaJoya extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
