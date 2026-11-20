@@ -20,12 +20,17 @@ import joyas_oscar.modelo.Joya;
 import joyas_oscar.util.ConexionBD;
 
 public class JoyaRepositorio {
-    
-    private static final String SELECT_BASE =
-            "SELECT id_joya, nombre, material, precio_unitario, stock, activo FROM joyas ";
 
+    private static final String SELECT_BASE =
+            "SELECT id_joya, nombre, material, precio, stock, activo FROM joyas ";
+
+/*
+ * =========================================================================
+ * CREATE -> guardar
+ * =========================================================================
+ */
     public void guardar(Joya joya) {
-        String sql = "INSERT INTO joyas (nombre, material, precio_unitario, stock, activo) "
+        String sql = "INSERT INTO joyas (nombre, material, precio, stock, activo) "
                    + "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection con = ConexionBD.obtenerConexion();
@@ -44,6 +49,11 @@ public class JoyaRepositorio {
         }
     }
 
+/*
+ * =========================================================================
+ * LIST -> listar
+ * =========================================================================
+ */
     public ArrayList<Joya> listar() {
         ArrayList<Joya> lista = new ArrayList<>();
         String sql = SELECT_BASE + "WHERE activo = TRUE ORDER BY id_joya";
@@ -61,6 +71,11 @@ public class JoyaRepositorio {
         return lista;
     }
 
+/*
+ * =========================================================================
+ * READ -> buscarPorId
+ * =========================================================================
+ */
     public Joya buscarPorId(int idJoya) {
         String sql = SELECT_BASE + "WHERE id_joya = ?";
 
@@ -79,8 +94,13 @@ public class JoyaRepositorio {
         return null;
     }
 
+/*
+ * =========================================================================
+ * UPDATE -> actualizar
+ * =========================================================================
+ */
     public boolean actualizar(Joya joya) {
-        String sql = "UPDATE joyas SET nombre = ?, material = ?, precio_unitario = ?, "
+        String sql = "UPDATE joyas SET nombre = ?, material = ?, precio = ?, "
                    + "stock = ?, activo = ? WHERE id_joya = ?";
 
         try (Connection con = ConexionBD.obtenerConexion();
@@ -94,6 +114,11 @@ public class JoyaRepositorio {
         }
     }
 
+/*
+ * =========================================================================
+ * DELETE -> desactivar
+ * =========================================================================
+ */
     public boolean desactivar(int idJoya) {
         String sql = "UPDATE joyas SET activo = FALSE WHERE id_joya = ?";
 
@@ -112,7 +137,7 @@ public class JoyaRepositorio {
                 rs.getInt("id_joya"),
                 rs.getString("nombre"),
                 rs.getString("material"),
-                rs.getDouble("precio_unitario"),
+                rs.getDouble("precio"),
                 rs.getInt("stock"),
                 rs.getBoolean("activo"));
         return joya;
