@@ -18,8 +18,8 @@ public class Cliente { //Ya completo, sirve
     //Constructor, donde nace un objeto
     public Cliente(String nombre, String apellido, String telefono, String direccion) {
        
-        this.nombre = "Sin nombre";
-        this.apellido = "Sin apellido";
+        this.nombre = nombre;
+        this.apellido = apellido;
         this.telefono = telefono;
         this.direccion = direccion;
         this.activo = true;

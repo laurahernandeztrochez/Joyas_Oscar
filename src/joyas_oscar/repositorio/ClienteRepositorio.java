@@ -85,7 +85,24 @@ public class ClienteRepositorio {
         return null;
     }
 
-    public Cliente buscarPorTelefono(String telefono) {
+    public Cliente buscarPorNombre(String nombre) {
+        String sql = SELECT_BASE + "WHERE nombre = ?";
+
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, nombre);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return crearCliente(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar el cliente: " + e.getMessage(), e);
+        }
+        return null;
+    }
+        public Cliente buscarPorTelefono(String telefono) {
         String sql = SELECT_BASE + "WHERE telefono = ?";
 
         try (Connection con = ConexionBD.obtenerConexion();
@@ -102,6 +119,7 @@ public class ClienteRepositorio {
         }
         return null;
     }
+    
 
     // =====================================================================
     // U: UPDATE

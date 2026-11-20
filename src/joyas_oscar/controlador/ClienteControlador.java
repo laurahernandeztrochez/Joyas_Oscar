@@ -26,8 +26,8 @@ public class ClienteControlador {
 
     // Busca un cliente que este: activo y por su numero de telefono con el boton buscar
     // Devuelve null si no existe o si el cliente está desactivado.
-    public Cliente buscarCliente(String telefono) {
-        Cliente c = clientes.buscarPorTelefono(telefono.trim());
+    public Cliente buscarCliente(String nombre) {
+        Cliente c = clientes.buscarPorNombre(nombre.trim());
         if (c != null && c.isActivo()) {
             return c;
         }

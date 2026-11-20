@@ -36,12 +36,11 @@ public class VentanaCliente extends javax.swing.JFrame {
     public VentanaCliente(ClienteControlador controlador) {
         
     
-        initComponents();                        // PRIMERO: crea los componentes del diseñador.
-                                                 // Antes de esta línea, tblClientes no existe.
-        this.controlador = controlador;          // Guarda el controlador recibido.
+        initComponents();                      
+                                                
+        this.controlador = controlador;          
 
-        // La tabla con sus columnas reales (reemplaza "Title 1... Title 4").
-        // El 0 significa: empieza sin filas.
+        
         modelo = new DefaultTableModel(new String[]{"Nombre", "Apellido", "Teléfono","Direccion"}, 0);
         tblCliente.setModel(modelo);
            
@@ -157,7 +156,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         tblCliente.getTableHeader().setBackground(colorGrisOscuro);
         tblCliente.getTableHeader().setForeground(colorDorado);
         
-        tblCliente.getViewport().setBackground(colorFondo);
+        jScrollPane1.getViewport().setBackground(colorFondo);
         tblCliente.setBorder(BorderFactory.createLineBorder(colorDorado, 1));
         
         // Limpiar textos adicionales para que no se encimen
@@ -324,16 +323,16 @@ public class VentanaCliente extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
             .addGroup(layout.createSequentialGroup()
                 .addGap(203, 203, 203)
                 .addComponent(btnBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,7 +449,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         if (c != null) {                        // Siempre revisar null antes de usarlo.
             resultado.add(c);
         } else {
-            JOptionPane.showMessageDialog(this, "No existe un cliente con ese documento");
+            JOptionPane.showMessageDialog(this, "No existe un cliente con ese nombre");
         }
         cargarTabla(resultado);
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -475,9 +474,16 @@ public class VentanaCliente extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaCliente().setVisible(true));
+        // java.awt.EventQueue.invokeLater(() -> new VentanaClientes().setVisible(true));  // borrar
+        // Para probar esta ventana sola: se crean el repositorio y el controlador,
+        // y se le entregan a la ventana. (Más adelante lo hará el main del proyecto,
+        // para que TODAS las ventanas compartan los mismos repositorios).
+        java.awt.EventQueue.invokeLater(() -> {
+            ClienteRepositorio clientes = new ClienteRepositorio();                  // 1. La bodega de clientes.
+            ClienteControlador controlador = new ClienteControlador(clientes);       // 2. El controlador, con la bodega.
+            new VentanaCliente (controlador).setVisible(true);                       // 3. La ventana, con el controlador.
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
