@@ -17,7 +17,7 @@ import joyas_oscar.util.ConexionBD;
 
 public class ClienteRepositorio {
 
-    // En SQL siempre va id_cliente (con guion bajo)
+    // En SQL siempre va id_cliente
     private static final String SELECT_BASE =
             "SELECT id_cliente, nombre, apellido, telefono, direccion, activo FROM clientes ";
 
@@ -147,9 +147,7 @@ public class ClienteRepositorio {
                 rs.getString("telefono"),
                 rs.getString("direccion"));
         
-        // AQUÍ ESTABA EL ERROR: antes decia getInt("id")
-        // Ahora es getInt("id_cliente") porque así se llama en MySQL
-        // y setIdCliente porque así se llama en Java
+     
         c.setIdCliente(rs.getInt("id_cliente"));
         c.setActivo(rs.getBoolean("activo"));
         return c;
