@@ -10,16 +10,18 @@ public class Joya { //Ya completo, sirve
     private String material;
     private Double precio;
     private int stock;
+    private boolean activo;
 
     public Joya() {
     }
    // constructo, donde nace un objeto 
-    public Joya(int idJoya, String nombre, String material, Double precio, int stock) {
+    public Joya(int idJoya, String nombre, String material, Double precio, int stock, boolean activo) {
         this.idJoya = idJoya;
         this.nombre = nombre;
         this.material = material;
         this.precio = precio;
         this.stock = stock;
+        this.activo = activo;
     }
 
     public int getIdJoya() {
@@ -61,6 +63,15 @@ public class Joya { //Ya completo, sirve
     public void setStock(int stock) {
         this.stock = stock;
     }
+    
+    public boolean isActivo() {
+        return activo;
+    }
+    
+    public void setActivo(boolean activo) {
+        this.activo=activo;
+    }
+    
     
     //Método tipo String para unir y devolver la descripción básica de la joya
     public String getDescripcion(){

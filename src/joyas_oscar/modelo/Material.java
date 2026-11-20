@@ -11,15 +11,17 @@ public class Material { //Completo, sirve
     private String nombre;
     private String tipoMaterial;
     private double precio;
+    private boolean activo;
    
      // Constructor principal para inicializar todos los datos
-    public Material(int idMaterial, double peso, double stock,String nombre, String tipoMaterial, double precio) {
+    public Material(int idMaterial, double peso, double stock,String nombre, String tipoMaterial, double precio, boolean activo) {
         this.idMaterial = idMaterial;
         this.peso = peso;
         this.stock = stock;
         this.nombre = nombre;
         this.tipoMaterial = tipoMaterial;
         this.precio = precio;
+        this.activo = activo;
     }
     // Constructor alternativo (sin peso ni stock, inicializándolos en 0)
     public Material(int idMaterial,String nombre, String tipoMaterial, double precio) {
@@ -78,6 +80,16 @@ public class Material { //Completo, sirve
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+    
+        public boolean isActivo() {
+        return activo;
+    }
+    
+    public void setActivo(boolean activo) {
+        this.activo=activo;
+    }
+    
+    
     
     // Método para validar que el peso sea mayor a 0 y menor o igual al stock disponible
     public boolean validarStock(double peso) {
