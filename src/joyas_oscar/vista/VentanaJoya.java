@@ -1,14 +1,35 @@
 
 package joyas_oscar.vista;
 
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import joyas_oscar.modelo.Joya;
+import joyas_oscar.repositorio.JoyaRepositorio;
 
 public class VentanaJoya extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaJoya.class.getName());
+    private final JoyaRepositorio repositorio = new JoyaRepositorio();
+    private Joya joyaEnEdicion;
 
   
     public VentanaJoya() {
         initComponents();
+        jTable1.setDefaultEditor(Object.class, null);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                seleccionarJoya();
+            }
+        });
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
+        btnEditar.addActionListener(this::btnEditarActionPerformed);
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+        personalizarDiseno();
+        cargarTabla();
     }
 
    
@@ -174,9 +195,189 @@ public class VentanaJoya extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // Tboton cancelar
+        limpiarCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void personalizarDiseno() {
+        Color fondo = new Color(20, 20, 20);
+        Color dorado = new Color(212, 175, 55);
+        Color gris = new Color(40, 40, 40);
+
+        getContentPane().setBackground(fondo);
+        setTitle("Joyas Oscar - Joya");
+        setResizable(false);
+        setLocationRelativeTo(null);
+
+        javax.swing.JLabel[] etiquetas = {jLabel1, jLabel2, jLabel3, jLabel4,
+            jLabel5, jLabel6, jLabel7};
+        for (javax.swing.JLabel etiqueta : etiquetas) {
+            etiqueta.setForeground(dorado);
+        }
+
+        javax.swing.JTextField[] campos = {txtNombre, txtTipo, txtPrecio, txtStock};
+        for (javax.swing.JTextField campo : campos) {
+            campo.setBackground(gris);
+            campo.setForeground(Color.WHITE);
+            campo.setCaretColor(Color.WHITE);
+            campo.setBorder(BorderFactory.createLineBorder(dorado, 1));
+        }
+
+        for (javax.swing.JButton boton : new javax.swing.JButton[]{
+            btnGuardar, btnEditar, btnEliminar, btnCancelar}) {
+            boton.setBackground(gris);
+            boton.setForeground(dorado);
+            boton.setFocusPainted(false);
+            boton.setBorder(BorderFactory.createLineBorder(dorado, 1));
+        }
+
+        jTable1.setBackground(gris);
+        jTable1.setForeground(Color.WHITE);
+        jTable1.setGridColor(dorado);
+        jTable1.getTableHeader().setBackground(gris);
+        jTable1.getTableHeader().setForeground(dorado);
+        jScrollPane1.getViewport().setBackground(fondo);
+        jScrollPane1.setBorder(BorderFactory.createLineBorder(dorado, 1));
+    }
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            Joya joya = leerCampos();
+            repositorio.guardar(joya);
+            cargarTabla();
+            limpiarCampos();
+            JOptionPane.showMessageDialog(this, "Joya guardada");
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {
+        if (joyaEnEdicion == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione una joya de la tabla");
+            return;
+        }
+
+        try {
+            Joya joya = leerCampos();
+            joya.setIdJoya(joyaEnEdicion.getIdJoya());
+            if (repositorio.actualizar(joya)) {
+                cargarTabla();
+                limpiarCampos();
+                JOptionPane.showMessageDialog(this, "Joya actualizada");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo actualizar la joya");
+            }
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {
+        if (joyaEnEdicion == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione una joya de la tabla");
+            return;
+        }
+
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Desea eliminar la joya seleccionada?", "Confirmar",
+                JOptionPane.YES_NO_OPTION);
+        if (confirmacion != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            repositorio.desactivar(joyaEnEdicion.getIdJoya());
+            cargarTabla();
+            limpiarCampos();
+            JOptionPane.showMessageDialog(this, "Joya eliminada");
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private Joya leerCampos() {
+        String nombre = txtNombre.getText().trim();
+        String material = txtTipo.getText().trim();
+        String precioTexto = txtPrecio.getText().trim();
+        String stockTexto = txtStock.getText().trim();
+
+        if (nombre.isEmpty() || material.isEmpty()
+                || precioTexto.isEmpty() || stockTexto.isEmpty()) {
+            throw new IllegalArgumentException("Debe llenar todas las casillas");
+        }
+
+        double precio;
+        int stock;
+        try {
+            precio = Double.parseDouble(precioTexto);
+            stock = Integer.parseInt(stockTexto);
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("Precio y stock deben contener valores numericos");
+        }
+
+        if (precio < 0 || stock < 0) {
+            throw new IllegalArgumentException("Precio y stock no pueden ser negativos");
+        }
+
+        Joya joya = new Joya();
+        joya.setNombre(nombre);
+        joya.setMaterial(material);
+        joya.setPrecio(precio);
+        joya.setStock(stock);
+        joya.setActivo(true);
+        return joya;
+    }
+
+    private void cargarTabla() {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+            modelo.setRowCount(0);
+            for (Joya joya : repositorio.listar()) {
+                modelo.addRow(new Object[]{
+                    joya.getIdJoya(),
+                    joya.getNombre(),
+                    joya.getMaterial(),
+                    joya.getStock(),
+                    joya.getPrecio()
+                });
+            }
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void seleccionarJoya() {
+        int fila = jTable1.getSelectedRow();
+        if (fila < 0) {
+            return;
+        }
+
+        int id = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
+        joyaEnEdicion = repositorio.buscarPorId(id);
+        if (joyaEnEdicion != null) {
+            txtNombre.setText(joyaEnEdicion.getNombre());
+            txtTipo.setText(joyaEnEdicion.getMaterial());
+            txtStock.setText(String.valueOf(joyaEnEdicion.getStock()));
+            txtPrecio.setText(String.valueOf(joyaEnEdicion.getPrecio()));
+        }
+    }
+
+    private void limpiarCampos() {
+        txtNombre.setText("");
+        txtTipo.setText("");
+        txtPrecio.setText("");
+        txtStock.setText("");
+        jTable1.clearSelection();
+        joyaEnEdicion = null;
+    }
    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
