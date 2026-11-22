@@ -23,7 +23,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
         
-        initComponents();                        // PRIMERO: crea los componentes del diseñador.
+                           // PRIMERO: crea los componentes del diseñador.
         this.login = login;                      // Guarda el controlador recibido.
         this.app = app;                          // Guarda la aplicación.
         lblMensaje.setText("");                  // El mensaje rojo empieza vacío.
