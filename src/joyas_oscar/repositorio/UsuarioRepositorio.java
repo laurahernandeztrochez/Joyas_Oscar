@@ -100,5 +100,46 @@ public class UsuarioRepositorio {
                 rs.getString("contrasena_hash"), rs.getString("nombre_completo"),
                 rol, rs.getBoolean("activo"));
     }
+    
+        // Guardar - usa el id_rol de la tabla roles
+    public void guardar(Usuario u) {
+        String sql = "INSERT INTO usuarios (nombre_usuario, contrasena_hash, nombre_completo, id_rol, activo) VALUES (?, ?, ?, ?, TRUE)";
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, u.getNombreUsuario());
+            ps.setString(2, u.getContrasenaHash());
+            ps.setString(3, u.getNombreCompleto());
+            ps.setInt(4, u.getRol().getIdRol());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al guardar el usuario: " + e.getMessage(), e);
+        }
+    }
+
+    // Actualizar - solo nombre de usuario y nombre completo
+    public void actualizar(Usuario u) {
+        String sql = "UPDATE usuarios SET nombre_usuario = ?, nombre_completo = ? WHERE id_usuario = ?";
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, u.getNombreUsuario());
+            ps.setString(2, u.getNombreCompleto());
+            ps.setInt(3, u.getIdUsuario());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el usuario: " + e.getMessage(), e);
+        }
+    }
+
+    // Desactivar - no borra, solo pone activo en FALSE
+    public void desactivar(int id) {
+        String sql = "UPDATE usuarios SET activo = FALSE WHERE id_usuario = ?";
+        try (Connection con = ConexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al desactivar el usuario: " + e.getMessage(), e);
+        }
+    }
 
 }

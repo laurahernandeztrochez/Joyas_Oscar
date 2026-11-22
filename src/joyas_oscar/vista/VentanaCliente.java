@@ -40,6 +40,12 @@ public class VentanaCliente extends javax.swing.JFrame {
         
         modelo = new DefaultTableModel(new String[]{"Nombre", "Apellido", "Teléfono","Direccion"}, 0);
         tblCliente.setModel(modelo);
+        
+         tblCliente.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+            mostrarSeleccionado();
+        }
+    });
            
         tblCliente.getTableHeader().setReorderingAllowed(false); 
          tblCliente.setDefaultEditor(Object.class,null); 
@@ -74,7 +80,8 @@ public class VentanaCliente extends javax.swing.JFrame {
         txtApellido.setText("");
         txtTelefono.setText("");
         txtDireccion.setText("");
-        tblCliente.clearSelection();            
+        tblCliente.clearSelection();
+        btnActualizar.setText("Editar");
     }
     
     
@@ -89,6 +96,8 @@ public class VentanaCliente extends javax.swing.JFrame {
         txtApellido.setText(c.getApellido());
         txtTelefono.setText(c.getTelefono());
         txtDireccion.setText(c.getDireccion());
+        btnActualizar.setText("Actualizar");
+             
     }   
     
         
@@ -398,13 +407,22 @@ jScrollPane1.getViewport().setBackground(colorGrisOscuro);
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
       
-       String mensaje = controlador.actualizarCliente(
-                idSeleccionado,                 
-                txtNombre.getText(),
-                txtApellido.getText(),
-                txtTelefono.getText(),
-                txtDireccion.getText());
-        mostrarResultado(mensaje);
+
+    if (btnActualizar.getText().equals("Editar")) {
+        JOptionPane.showMessageDialog(this, "Seleccione un cliente de la tabla");
+        return;
+    }
+
+    // Si ya dice Actualizar, guarda de una
+    String mensaje = controlador.actualizarCliente(
+            idSeleccionado,
+            txtNombre.getText(),
+            txtApellido.getText(),
+            txtTelefono.getText(),
+            txtDireccion.getText());
+    mostrarResultado(mensaje);
+    btnActualizar.setText("Editar");
+
         
     //Cierra boton editar
   

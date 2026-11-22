@@ -183,6 +183,7 @@ for (Rol r : repoRol.listarRoles()) {
         jLabel7.setText("Usuarios existentes:");
 
         jButton1.setText("Guardar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("Cancelar");
 
@@ -302,6 +303,10 @@ for (Rol r : repoRol.listarRoles()) {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
        
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
  
     public static void main(String args[]) {
