@@ -3,14 +3,23 @@ package joyas_oscar.vista;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.BorderFactory;
+import joyas_oscar.modelo.Rol;
+import joyas_oscar.repositorio.RolRepositorio;
 
 public class VentanaUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaUsuario.class.getName());
-
+   
+    private RolRepositorio repoRol= new RolRepositorio();
    
     public VentanaUsuario() {
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        jComboBox1.removeAllItems();
+for (Rol r : repoRol.listarRoles()) {
+    jComboBox1.addItem(r.getNombre());
+
+}
         personalizarDiseño(); // <--- Aplica el estilo visual
     }
     
@@ -169,6 +178,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
         jPasswordField2.setText("jPasswordField1");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
 
         jLabel7.setText("Usuarios existentes:");
 
@@ -288,6 +298,10 @@ public class VentanaUsuario extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+       
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
  
     public static void main(String args[]) {

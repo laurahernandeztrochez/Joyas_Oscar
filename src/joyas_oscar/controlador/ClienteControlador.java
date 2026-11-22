@@ -36,8 +36,13 @@ public class ClienteControlador {
 
     // Guardar
     public String guardarCliente(String nombre, String apellido, String telefono, String direccion) {
+        
         if (telefono.trim().isEmpty() || nombre.trim().isEmpty()) {
             return "El telefono y el nombre son obligatorios";              
+        }
+        
+        if (!Cliente.validarTelefono(telefono.trim())) {
+            return "El teléfono debe tener 10 digitos";
         }
         if (clientes.buscarPorTelefono(telefono.trim()) != null) {
             return "Ya existe un cliente con ese numero de telefono";                 

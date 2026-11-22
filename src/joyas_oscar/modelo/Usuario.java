@@ -38,12 +38,13 @@ public class Usuario {
     //Segundo constructor para MySQL, solo lo usa el repositorio de usuario
    
     public Usuario(int idUsuario, String nombreUsuario, String contrasenaHash,
-                   String nombreCompleto, Rol rol, boolean activo) {
+        String nombreCompleto, Rol rol, boolean activo) {
         this.idUsuario = idUsuario;                            
         this.nombreUsuario = nombreUsuario;
         this.contrasenaHash = contrasenaHash;    
         this.nombreCompleto = nombreCompleto;
-        this.rol = rol;                         
+        this.rol = rol;            
+        this.activo = activo;
     }
     
     //Metodos
