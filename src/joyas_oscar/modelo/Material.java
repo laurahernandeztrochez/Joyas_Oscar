@@ -7,14 +7,14 @@ public class Material { //Completo, sirve
     // Atributos privados del material
     private int idMaterial;
     private double peso;
-    private double stock;
+    private int stock;
     private String nombre;
     private String tipoMaterial;
     private double precio;
     private boolean activo;
    
      // Constructor principal para inicializar todos los datos
-    public Material(int idMaterial, double peso, double stock,String nombre, String tipoMaterial, double precio, boolean activo) {
+    public Material(int idMaterial, double peso, int stock,String nombre, String tipoMaterial, double precio, boolean activo) {
         this.idMaterial = idMaterial;
         this.peso = peso;
         this.stock = stock;
@@ -31,6 +31,7 @@ public class Material { //Completo, sirve
         this.nombre = nombre;
         this.tipoMaterial = tipoMaterial;
         this.precio = precio;
+        this.activo = true;
     }
     // Método para obtener el ID del material   
     public int getIdMaterial() {
@@ -49,11 +50,11 @@ public class Material { //Completo, sirve
         this.peso = peso;
     }
 
-    public double getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(double stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
     
