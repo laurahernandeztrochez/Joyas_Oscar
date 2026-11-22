@@ -17,6 +17,7 @@ public class VentanaJoya extends javax.swing.JFrame {
   
     public VentanaJoya() {
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jTable1.setDefaultEditor(Object.class, null);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
