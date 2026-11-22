@@ -35,6 +35,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     
     public VentanaInicio(Aplicacion app, Usuario usuario) {
         initComponents();
+        aplicarPermisos(usuario);
         personalizarDiseño();
         pack();
         setLocationRelativeTo(null);
@@ -45,20 +46,30 @@ public class VentanaInicio extends javax.swing.JFrame {
 
        
         lblBienvenida.setText("Bienvenido, " + usuario.obtenerInformacion());   
-
-      
-        boolean esAdmin = usuario.esAdministrador();   
-        lblAdministrador.setVisible(esAdmin);   
-        btnJoyas.setVisible(esAdmin);       
-        btnPagos.setVisible(esAdmin);         
-        btnClientes.setVisible(esAdmin); 
-        btnPedidos.setVisible(esAdmin);  
-        btnUsRol.setVisible(esAdmin);  
-        btnMaterial.setVisible(esAdmin);  
-
-        setLocationRelativeTo(null);       
-    
     }
+    
+    private void aplicarPermisos(Usuario usuario) {
+    String rol = usuario.getRol().getNombre();
+    
+   if (rol.equalsIgnoreCase("Administrador")) {
+       return;
+   }
+
+    if (rol.equalsIgnoreCase("Vendedor")) {
+        btnJoyas.setVisible(false);
+        btnUsRol.setVisible(false);
+        btnMaterial.setVisible(false);
+        lblAdministrador.setVisible(false);
+    }
+
+    if (rol.equalsIgnoreCase("Joyero")) {
+        btnUsRol.setVisible(false);
+        btnPedidos.setVisible(false);
+        btnPagos.setVisible(false);
+        btnClientes.setVisible(false);
+         lblAdministrador.setVisible(false);
+    }
+}
     
     private void personalizarDiseño() {
         getContentPane().setBackground(fondoOscuro);

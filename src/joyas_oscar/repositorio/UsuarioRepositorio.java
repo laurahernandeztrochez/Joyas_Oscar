@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import joyas_oscar.modelo.Rol;
 import joyas_oscar.modelo.Usuario;
 import joyas_oscar.util.ConexionBD;
@@ -141,5 +142,20 @@ public class UsuarioRepositorio {
             throw new RuntimeException("Error al desactivar el usuario: " + e.getMessage(), e);
         }
     }
-
+    
+   public List<String> listarRoles() {
+    List<String> roles = new ArrayList<>();
+    String sql = "SELECT nombre FROM roles ORDER BY nombre";
+    try (Connection con = ConexionBD.obtenerConexion();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            roles.add(rs.getString("nombre"));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return roles;
+}
+   
 }
