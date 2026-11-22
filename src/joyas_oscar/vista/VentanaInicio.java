@@ -414,7 +414,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUsRolActionPerformed
 
     private void btnMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaterialActionPerformed
-        JOptionPane.showMessageDialog(this, "Módulo en construcción"); 
+        app.abrirMaterial();
     }//GEN-LAST:event_btnMaterialActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
