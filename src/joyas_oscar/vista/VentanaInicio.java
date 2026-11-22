@@ -26,16 +26,38 @@ public class VentanaInicio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaInicio.class.getName());
 
-      private final Color fondoOscuro = Color.decode("#141414");
+    private final Color fondoOscuro = Color.decode("#141414");
     private final Color tarjetaOscura = Color.decode("#282828");
     private final Color dorado = Color.decode("#D4AF37");
-
     
-    public VentanaInicio() {
+    private Aplicacion app;                      
+    private Usuario usuario;     
+    
+    public VentanaInicio(Aplicacion app, Usuario usuario) {
         initComponents();
         personalizarDiseño();
         pack();
         setLocationRelativeTo(null);
+       
+     
+        this.app = app;                        
+        this.usuario = usuario;                 
+
+       
+        lblBienvenida.setText("Bienvenido, " + usuario.obtenerInformacion());   
+
+      
+        boolean esAdmin = usuario.esAdministrador();   
+        lblAdministrador.setVisible(esAdmin);   
+        btnJoyas.setVisible(esAdmin);       
+        btnPagos.setVisible(esAdmin);         
+        btnClientes.setVisible(esAdmin); 
+        btnPedidos.setVisible(esAdmin);  
+        btnUsRol.setVisible(esAdmin);  
+        btnMaterial.setVisible(esAdmin);  
+
+        setLocationRelativeTo(null);       
+    
     }
     
     private void personalizarDiseño() {
@@ -48,8 +70,8 @@ public class VentanaInicio extends javax.swing.JFrame {
         jSeparator1.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, dorado));
 
         // Encabezados
-        jLabel1.setForeground(dorado);
-        jLabel1.setFont(new Font("Georgia", Font.BOLD, 20));
+        lblBienvenida.setForeground(dorado);
+        lblBienvenida.setFont(new Font("Georgia", Font.BOLD, 20));
 
         jLabel2.setForeground(Color.WHITE);
         jLabel2.setFont(new Font("Georgia", Font.PLAIN, 13));
@@ -163,7 +185,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblBienvenida = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel7 = new javax.swing.JPanel();
@@ -180,10 +202,12 @@ public class VentanaInicio extends javax.swing.JFrame {
         btnPagos = new javax.swing.JButton();
         btnUsRol = new javax.swing.JButton();
         btnMaterial = new javax.swing.JButton();
+        lblAdministrador = new javax.swing.JLabel();
+        btnCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Bienvenido Oscar Toro (Administrador)");
+        lblBienvenida.setText("Bienvenido Oscar Toro (Administrador)");
 
         jLabel2.setText("Selecciona una opción para gestionar");
 
@@ -255,13 +279,21 @@ public class VentanaInicio extends javax.swing.JFrame {
         btnClientes.addActionListener(this::btnClientesActionPerformed);
 
         btnPedidos.setText("Crear y revisar pedidos");
+        btnPedidos.addActionListener(this::btnPedidosActionPerformed);
 
         btnPagos.setText("Pagos");
         btnPagos.addActionListener(this::btnPagosActionPerformed);
 
         btnUsRol.setText("Usuarios y roles");
+        btnUsRol.addActionListener(this::btnUsRolActionPerformed);
 
         btnMaterial.setText("Material/materia prima");
+        btnMaterial.addActionListener(this::btnMaterialActionPerformed);
+
+        lblAdministrador.setText("Solo el administrador:");
+
+        btnCerrarSesion.setText("Cerrar sesión");
+        btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -269,29 +301,36 @@ public class VentanaInicio extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnJoyas)
-                            .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUsRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnPedidos)
-                            .addComponent(btnMaterial))
-                        .addGap(47, 47, 47))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel2))
-                            .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(lblBienvenida))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblAdministrador)
+                                    .addComponent(jLabel2))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCerrarSesion))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnJoyas)
+                                    .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnUsRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(33, 33, 33)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnPedidos)
+                                    .addComponent(btnMaterial))))
+                        .addGap(47, 47, 47)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -324,12 +363,15 @@ public class VentanaInicio extends javax.swing.JFrame {
                         .addGap(42, 42, 42)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lblBienvenida)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
-                        .addGap(49, 49, 49)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblAdministrador)
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnJoyas)
                             .addComponent(btnClientes)
@@ -342,24 +384,45 @@ public class VentanaInicio extends javax.swing.JFrame {
                                     .addComponent(btnMaterial)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(78, 78, 78)
-                                .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCerrarSesion)
+                        .addGap(59, 59, 59))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
+        app.abrirCliente();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosActionPerformed
-        // TODO add your handling code here:
+          JOptionPane.showMessageDialog(this, "Módulo en construcción"); 
     }//GEN-LAST:event_btnPagosActionPerformed
 
     private void btnJoyasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoyasActionPerformed
-        // TODO add your handling code here:
+        app.abrirJoya();
     }//GEN-LAST:event_btnJoyasActionPerformed
+
+    private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
+         JOptionPane.showMessageDialog(this, "Módulo en construcción");  
+    }//GEN-LAST:event_btnPedidosActionPerformed
+
+    private void btnUsRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsRolActionPerformed
+        app.abrirUsuario();
+    }//GEN-LAST:event_btnUsRolActionPerformed
+
+    private void btnMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaterialActionPerformed
+        JOptionPane.showMessageDialog(this, "Módulo en construcción"); 
+    }//GEN-LAST:event_btnMaterialActionPerformed
+
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        // Se cierra el menú y se vuelve a abrir el login, para que entre otra persona.
+        dispose();                               // Cierra SOLO esta ventana.
+        app.iniciar();                           // Aplicacion abre un login nuevo.
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     
     public static void main(String args[]) {
@@ -381,17 +444,20 @@ public class VentanaInicio extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaInicio().setVisible(true));
+       java.awt.EventQueue.invokeLater(() -> {
+            Usuario prueba = new UsuarioRepositorio().buscarPorNombreUsuario("admin"); // usuario prueba puede ser "admin" o no como "carlos"
+            new VentanaInicio(new Aplicacion(), prueba).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnJoyas;
     private javax.swing.JButton btnMaterial;
     private javax.swing.JButton btnPagos;
     private javax.swing.JButton btnPedidos;
     private javax.swing.JButton btnUsRol;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -402,5 +468,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblAdministrador;
+    private javax.swing.JLabel lblBienvenida;
     // End of variables declaration//GEN-END:variables
 }

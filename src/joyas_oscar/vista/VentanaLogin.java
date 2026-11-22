@@ -1,5 +1,4 @@
 
-
 package joyas_oscar.vista;
 
 import java.awt.Color;
@@ -7,16 +6,18 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
-import joyas_oscar.controlador.LoginControlador;
+import joyas_oscar.controlador.LoginControlador;       // El controlador que recibe la ventana.
+import joyas_oscar.repositorio.UsuarioRepositorio;     // Lo usa el main para probar la ventana.
+import joyas_oscar.Aplicacion;       
 
 public class VentanaLogin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaLogin.class.getName());
     
       private LoginControlador login;              // Quien valida usuario y contraseña.
-    //private Aplicacion app;                      // Para abrir la ventana principal al entrar.
+      private Aplicacion app;                      // Para abrir la ventana principal al entrar.
     
-    public VentanaLogin() {
+     public VentanaLogin(LoginControlador login, Aplicacion app) {
         initComponents();
         personalizarDiseño();
         pack();
@@ -24,12 +25,12 @@ public class VentanaLogin extends javax.swing.JFrame {
         
         initComponents();                        // PRIMERO: crea los componentes del diseñador.
         this.login = login;                      // Guarda el controlador recibido.
-        //this.app = app;                          // Guarda la aplicación.
+        this.app = app;                          // Guarda la aplicación.
         lblMensaje.setText("");                  // El mensaje rojo empieza vacío.
         getRootPane().setDefaultButton(btnIngresar);   // La tecla Enter oprime Ingresar.
         setLocationRelativeTo(null);             // Abre la ventana en el centro.
     }
-    }
+    
 
     //Personalizacion de la interfaz
     private void personalizarDiseño() {
@@ -238,10 +239,7 @@ btnIngresar.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-          // TODO add your handling code here:
-        // La vista LEE, se lo PASA al controlador y MUESTRA la respuesta.
-        // getPassword() devuelve char[] (no String): new String(...) lo convierte.
-        String mensaje = login.iniciarSesion(
+ String mensaje = login.iniciarSesion(
                 txtUsuario.getText(),
                 new String(txtContrasena.getPassword()));
 
@@ -255,8 +253,8 @@ btnIngresar.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
         //JOptionPane.showMessageDialog(this, mensaje); esto se borra
         // Entró: se cierra el login y se abre el menú principal con el usuario que entró. esto se borra
         
-       // dispose();                                           // Cierra SOLO esta ventana.
-       // app.abrirPrincipal(login.getUsuarioActual());        // Aplicacion abre la principal.
+        dispose();                                           // Cierra SOLO esta ventana.
+        app.abrirPrincipal(login.getUsuarioActual());   
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -290,5 +288,5 @@ btnIngresar.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
-
+}
 

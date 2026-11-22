@@ -1,6 +1,6 @@
 /*
  *  ¿PARA QUÉ SIRVE?
-*    es donde permite hacer consultas y funcionar los botones de guardar,
+ *    es donde permite hacer consultas y funcionar los botones de guardar,
  *   actualizar, y desactivar, además poder buscar un usuario por su id
  *    
  *  ¿CON QUIÉN SE CONECTA?
@@ -16,7 +16,6 @@
  */
 package joyas_oscar.repositorio;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,16 +25,13 @@ import joyas_oscar.modelo.Rol;
 import joyas_oscar.modelo.Usuario;
 import joyas_oscar.util.ConexionBD;
 
-
-
 public class UsuarioRepositorio {
-
 
     private static final String SELECT_BASE =
             "SELECT u.id_usuario, u.nombre_usuario, u.contrasena_hash, u.nombre_completo, u.activo, "
-          + "r.id AS id_rol, r.nombre AS rol_nombre "
+          + "r.id_rol AS id_rol, r.nombre AS rol_nombre "
           + "FROM usuarios u "
-          + "JOIN roles r ON r.id = u.id_rol ";
+          + "JOIN roles r ON r.id_rol = u.id_rol ";
 
     public UsuarioRepositorio() {
     }
@@ -44,7 +40,7 @@ public class UsuarioRepositorio {
     // donde lista solo los usuarios que eten activos (TRUE)
     public ArrayList<Usuario> listar() {
         ArrayList<Usuario> lista = new ArrayList<>();
-        String sql = SELECT_BASE + "WHERE u.activo = TRUE ORDER BY u.id";
+        String sql = SELECT_BASE + "WHERE u.activo = TRUE ORDER BY u.id_usuario";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql);
@@ -61,7 +57,7 @@ public class UsuarioRepositorio {
 
     // Si al buscar por id, el id no existe da error:
     public Usuario buscarPorId(int id) {
-        String sql = SELECT_BASE + "WHERE u.id = ?";
+        String sql = SELECT_BASE + "WHERE u.id_usuario = ?";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {

@@ -26,17 +26,20 @@ public class Joyas_Oscar {
 
     
     public static void main(String[] args) {
-         java.awt.EventQueue.invokeLater(() -> new VentanaLogin().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            new Aplicacion().iniciar();
+        });
+    }
+}
         
-        
-new VentanaCliente(new ClienteControlador(new ClienteRepositorio())).setVisible(true);
-           java.awt.EventQueue.invokeLater(() -> new VentanaUsuario ().setVisible(true));
+//new VentanaCliente(new ClienteControlador(new ClienteRepositorio())).setVisible(true);
+          // java.awt.EventQueue.invokeLater(() -> new VentanaUsuario ().setVisible(true));
            
           
-        java.awt.EventQueue.invokeLater(() -> {
-            VentanaInicio inicio = new VentanaInicio();
-            inicio.setVisible(true);
-        });
+      //  java.awt.EventQueue.invokeLater(() -> {
+           // VentanaInicio inicio = new VentanaInicio();
+         //   inicio.setVisible(true);
+       // });
     
         
         /* 
@@ -73,8 +76,7 @@ new VentanaCliente(new ClienteControlador(new ClienteRepositorio())).setVisible(
     System.out.println(rol1);*/
     
   
-    }
-} 
+
 
 
     
