@@ -19,17 +19,25 @@ import joyas_oscar.repositorio.ClienteRepositorio;
 import joyas_oscar.controlador.ClienteControlador;
 
 import joyas_oscar.vista.VentanaCliente;
-//import joyas_oscar.vista.VentanaLogin;
-//import joyas_oscar.vista.VentanaUsuario;
+import joyas_oscar.vista.VentanaLogin;
+import joyas_oscar.vista.VentanaUsuario;
+import joyas_oscar.vista.VentanaInicio;
 public class Joyas_Oscar {
 
     
     public static void main(String[] args) {
-         //java.awt.EventQueue.invokeLater(() -> new VentanaLogin().setVisible(true));
+         java.awt.EventQueue.invokeLater(() -> new VentanaLogin().setVisible(true));
         
         
 new VentanaCliente(new ClienteControlador(new ClienteRepositorio())).setVisible(true);
-           //java.awt.EventQueue.invokeLater(() -> new VentanaUsuario ().setVisible(true));
+           java.awt.EventQueue.invokeLater(() -> new VentanaUsuario ().setVisible(true));
+           
+          
+        java.awt.EventQueue.invokeLater(() -> {
+            VentanaInicio inicio = new VentanaInicio();
+            inicio.setVisible(true);
+        });
+    
         
         /* 
     Cliente cliente1 = new Cliente(1, "Juan", "Perez", "1234567890", "calle 33 d# 76-90");
