@@ -1,8 +1,8 @@
 /*
  *  ¿PARA QUÉ SIRVE?
-*    Recibe los datos de la ventanaCliente, los valida
-*    y si es valido, se guarda en el repositorio
-*    No toca los botones ni el MySQL directo */
+ *    Recibe los datos de la ventana, los valida
+ *    y si es valido, se guarda en el repositorio
+ *    No toca los botones ni el MySQL directo */
 
 package joyas_oscar.controlador;
 
@@ -10,78 +10,82 @@ import java.util.ArrayList;
 import joyas_oscar.modelo.Joya;
 import joyas_oscar.repositorio.JoyaRepositorio;
 
-
 public class JoyaControlador {
-    
-    
-    private JoyaRepositorio joyas;    
+
+    private JoyaRepositorio joyas;
 
     public JoyaControlador(JoyaRepositorio joyas) {
         this.joyas = joyas;
     }
 
-
-   
     public ArrayList<Joya> listarJoya() {
         return joyas.listar();
     }
 
-    // Busca un cliente que este: activo y por su numero de telefono con el boton buscar
-    // Devuelve null si no existe o si el cliente está desactivado.
-    public Joya buscarJoya(String nombre) {
-        Joya j = joyas.buscarPorNombre(nombre.trim());
-        if (j != null && j.isActivo()) {
-            return j;
+    // Busca joyas activas por nombre, devuelve lista
+    public ArrayList<Joya> buscarJoya(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            return joyas.listar();
         }
-        return null;
+        return joyas.buscarPorNombre(nombre.trim());
     }
 
     // Guardar
-    public String guardarJoya (String nombre, ) {
-        
-        if (telefono.trim().isEmpty() || nombre.trim().isEmpty()) {
-            return "El telefono y el nombre son obligatorios";              
+    public String guardarJoya(String nombre, String material, double precio, int stock) {
+        if (nombre == null || nombre.trim().isEmpty() || material == null || material.trim().isEmpty()) {
+            return "El tipo de material y el nombre son obligatorios";
         }
-        
-        if (!Cliente.validarTelefono(telefono.trim())) {
-            return "El teléfono debe tener 10 digitos";
+        if (precio < 0 || stock < 0) {
+            return "Precio y stock no pueden ser negativos";
         }
-        if (clientes.buscarPorTelefono(telefono.trim()) != null) {
-            return "Ya existe un cliente con ese numero de telefono";                 
-        }
-        clientes.guardar(new Cliente(nombre.trim(), apellido.trim(), telefono.trim(), direccion.trim()));
-        return "Cliente guardado";                                            
+
+        Joya j = new Joya();
+        j.setNombre(nombre.trim());
+        j.setMaterial(material.trim());
+        j.setPrecio(precio);
+        j.setStock(stock);
+        j.setActivo(true);
+
+        joyas.guardar(j);
+        return "Joya guardada";
     }
 
     // Actualizar
-    public String actualizarCliente(int idCliente, String nombre, String apellido, String telefono, String direccion) {
-        Cliente c = clientes.buscarPorId(idCliente);
-        if (c == null) {
-            return "Seleccione un cliente de la tabla";                       
+    public String actualizarJoya(int idJoya, String nombre, String material, double precio, int stock) {
+        Joya j = joyas.buscarPorId(idJoya);
+        if (j == null) {
+            return "Seleccione una joya de la tabla";
         }
-        if (telefono.trim().isEmpty() || nombre.trim().isEmpty()) {
-            return "El numero de telefono y el nombre son obligatorios";
+        if (nombre == null || nombre.trim().isEmpty() || material == null || material.trim().isEmpty()) {
+            return "El tipo de material y el nombre son obligatorios";
         }
-        Cliente otro = clientes.buscarPorTelefono(telefono.trim());
-        if (otro != null && otro.getIdCliente() != idCliente) {                          
-            return "Ya existe otro cliente con ese numero";
+        if (precio < 0 || stock < 0) {
+            return "Precio y stock no pueden ser negativos";
         }
-        
-        c.setNombre(nombre.trim());
-        c.setApellido(apellido.trim());
-        c.setTelefono(telefono.trim());
-        c.setDireccion(direccion.trim());
-        clientes.actualizar(c);
-        return "Cliente actualizado";
+
+        // Revisa si ya existe otra joya con ese nombre
+        ArrayList<Joya> otras = joyas.buscarPorNombre(nombre.trim());
+        for (Joya otro : otras) {
+            if (otro.getIdJoya() != idJoya) {
+                return "Ya existe otra joya con ese nombre";
+            }
+        }
+
+        j.setNombre(nombre.trim());
+        j.setMaterial(material.trim());
+        j.setPrecio(precio); // <- sin trim, es double
+        j.setStock(stock);   // <- sin trim, es int
+        joyas.actualizar(j);
+        return "Joya actualizada";
     }
 
     // Eliminar
-    public String desactivarCliente(int idCliente) {
-        Cliente c = clientes.buscarPorId(idCliente);
-        if (c == null) {
-            return "Seleccione un cliente de la tabla";
+    public String desactivarJoya(int idJoya) {
+        Joya j = joyas.buscarPorId(idJoya);
+        if (j == null) {
+            return "Seleccione una joya de la tabla";
         }
-        clientes.desactivar(idCliente);
-        return "Cliente eliminado";
+        joyas.desactivar(idJoya);
+        return "Joya eliminada";
     }
 }

@@ -13,13 +13,16 @@ import joyas_oscar.controlador.ClienteControlador;
 import joyas_oscar.controlador.MaterialControlador;
 import joyas_oscar.repositorio.ClienteRepositorio;
 import joyas_oscar.repositorio.MaterialRepositorio;
-//import joyas_oscar.vista.VentanaJoya;
+import joyas_oscar.repositorio.JoyaRepositorio;
+import joyas_oscar.controlador.JoyaControlador;
+
 
 public class Aplicacion {
 
     private UsuarioRepositorio usuarios = new UsuarioRepositorio();
     private ClienteRepositorio clientes = new ClienteRepositorio();
     private MaterialRepositorio materiales = new MaterialRepositorio();
+    private JoyaRepositorio joyas = new JoyaRepositorio();
 
     public void iniciar() {
         new VentanaLogin(new LoginControlador(usuarios), this).setVisible(true);
@@ -30,7 +33,7 @@ public class Aplicacion {
 }
  
     public void abrirJoya() {
-        new VentanaJoya().setVisible(true);
+       new VentanaJoya(new JoyaControlador(joyas)).setVisible(true);
     }
 
    public void abrirCliente() {
