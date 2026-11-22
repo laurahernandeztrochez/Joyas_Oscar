@@ -17,11 +17,13 @@ import joyas_oscar.modelo.Usuario;
 import joyas_oscar.modelo.Rol;
 import joyas_oscar.repositorio.ClienteRepositorio;
 import joyas_oscar.controlador.ClienteControlador;
-
+ /*
 import joyas_oscar.vista.VentanaCliente;
 import joyas_oscar.vista.VentanaLogin;
 import joyas_oscar.vista.VentanaUsuario;
 import joyas_oscar.vista.VentanaInicio;
+*/
+
 public class Joyas_Oscar {
 
     
