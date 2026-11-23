@@ -288,167 +288,193 @@ public class VentanaMaterial extends JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        lblTitulo = new JLabel("MATERIAL");
-        lblTipoMaterial = new JLabel("MATERIAL");
-        lblPeso = new JLabel("PESO (g)");
-        lblStock = new JLabel("STOCK");
-        lblPrecio = new JLabel("PRECIO / g");
-        lblNombre = new JLabel("NOMBRE");
-        lblExistentes = new JLabel("Material existente");
-        txtTipoMaterial = new JTextField();
-        txtPeso = new JTextField();
-        txtStock = new JTextField();
-        txtPrecio = new JTextField();
-        txtNombre = new JTextField();
-        txtTotal = new JTextField();
-        btnCalcular = new JButton("+ Calcular total");
-        btnGuardar = new JButton("Guardar");
-        btnCancelar = new JButton("Cancelar");
-        btnEliminar = new JButton("Eliminar material");
-        btnEditar = new JButton("Editar material");
+
+        lblTitulo = new javax.swing.JLabel();
+        lblTipoMaterial = new javax.swing.JLabel();
+        lblPeso = new javax.swing.JLabel();
+        lblStock = new javax.swing.JLabel();
+        lblPrecio = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblExistentes = new javax.swing.JLabel();
+        txtTipoMaterial = new javax.swing.JTextField();
+        txtPeso = new javax.swing.JTextField();
+        txtStock = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
+        btnCalcular = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         scrollMateriales = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tabla.setModel(new DefaultTableModel(
-                new Object[][]{},
-                new String[]{"Id", "Material", "Peso (g)", "Stock", "Precio/g", "Nombre", "Total"}));
+        lblTitulo.setText("MATERIAL");
+
+        lblTipoMaterial.setText("MATERIAL");
+
+        lblPeso.setText("PESO (g)");
+
+        lblStock.setText("STOCK");
+
+        lblPrecio.setText("PRECIO / g");
+
+        lblNombre.setText("NOMBRE");
+
+        lblExistentes.setText("Material existente");
+
+        txtTotal.setEditable(false);
+
+        btnCalcular.setText("+ Calcular total");
+
+        btnGuardar.setText("Guardar");
+
+        btnCancelar.setText("Limpiar");
+
+        btnEliminar.setText("Eliminar material");
+
+        btnEditar.setText("Editar material");
+
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Material", "Peso (g)", "Stock", "Precio/g", "Nombre", "Total"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabla.getTableHeader().setReorderingAllowed(false);
         scrollMateriales.setViewportView(tabla);
 
-        GroupLayout layout = new GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblTitulo)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24)
-                        .addComponent(lblTipoMaterial, 130, 130, 130)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTipoMaterial, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                        .addGap(24))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24)
-                        .addComponent(lblPeso, 130, 130, 130)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPeso, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                        .addGap(24))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24)
-                        .addComponent(lblStock, 130, 130, 130)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtStock, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                        .addGap(24))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24)
-                        .addComponent(lblPrecio, 130, 130, 130)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPrecio, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                        .addGap(24))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24)
-                        .addComponent(lblNombre, 130, 130, 130)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNombre, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                        .addGap(24))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitulo)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCalcular)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTotal, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtTotal, 0, 400, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnGuardar)
                         .addGap(45, 45, 45)
-                        .addComponent(btnCancelar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblExistentes)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(btnCancelar))
+                    .addComponent(lblExistentes)
                     .addComponent(scrollMateriales)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnEliminar)
                         .addGap(40, 40, 40)
-                        .addComponent(btnEditar)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(btnEditar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblTipoMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtTipoMaterial, 0, 500, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtPeso, 0, 500, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblStock, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtStock, 0, 500, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtPrecio, 0, 500, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtNombre, 0, 500, Short.MAX_VALUE)))
+                        .addGap(24, 24, 24)))
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
-            layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(lblTitulo)
-            .addGap(18)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblTipoMaterial)
-                .addComponent(txtTipoMaterial, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblPeso)
-                .addComponent(txtPeso, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblStock)
-                .addComponent(txtStock, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblPrecio)
-                .addComponent(txtPrecio, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblNombre)
-                .addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-            .addGap(18)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(btnCalcular)
-                .addComponent(txtTotal, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(btnGuardar)
-                .addComponent(btnCancelar))
-            .addGap(16)
-            .addComponent(lblExistentes)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(scrollMateriales, GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(btnEliminar)
-                .addComponent(btnEditar))
-            .addContainerGap()
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(lblTitulo)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTipoMaterial)
+                    .addComponent(txtTipoMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPeso)
+                    .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStock)
+                    .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPrecio)
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCalcular)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar))
+                .addGap(16, 16, 16)
+                .addComponent(lblExistentes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollMateriales, 0, 165, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnEditar))
+                .addGap(12, 12, 12))
         );
+
         pack();
-    }
-    // </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>//GEN-END:initComponents
 
     private final NumberFormat formatoMoneda =
             NumberFormat.getCurrencyInstance(Locale.forLanguageTag("es-CO"));
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JButton btnCalcular;
-    private JButton btnCancelar;
-    private JButton btnEditar;
-    private JButton btnEliminar;
-    private JButton btnGuardar;
-    private JLabel lblExistentes;
-    private JLabel lblNombre;
-    private JLabel lblPeso;
-    private JLabel lblPrecio;
-    private JLabel lblStock;
-    private JLabel lblTipoMaterial;
-    private JLabel lblTitulo;
+    private javax.swing.JButton btnCalcular;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JLabel lblExistentes;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblPeso;
+    private javax.swing.JLabel lblPrecio;
+    private javax.swing.JLabel lblStock;
+    private javax.swing.JLabel lblTipoMaterial;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JScrollPane scrollMateriales;
     private javax.swing.JTable tabla;
-    private JTextField txtNombre;
-    private JTextField txtPeso;
-    private JTextField txtPrecio;
-    private JTextField txtStock;
-    private JTextField txtTipoMaterial;
-    private JTextField txtTotal;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPeso;
+    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtStock;
+    private javax.swing.JTextField txtTipoMaterial;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
