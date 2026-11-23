@@ -91,7 +91,8 @@ public class Pedido { //Completado, sirve
     public boolean validarEstado(String estado) {
         if (estado==null) return false; //No deja no llenar el estado
         String e = estado.toLowerCase().trim();
-        return e.equals("pendiente") || e.equals("proceso") || e.equals("enviado") || e.equals("entregado") || e.equals("cancelado"); //Los diferentes posibles estados
+        return e.equals("pendiente") || e.equals("proceso") || e.equals("en proceso")
+                || e.equals("enviado") || e.equals("entregado") || e.equals("cancelado");
     }
     //para validar this.estado
     public boolean validarEstado() {
@@ -129,13 +130,13 @@ public class Pedido { //Completado, sirve
     
     //Metodo registrarPedido
     public boolean registrarPedido(List<DetallePedido> listaDetalles) {
-        if (validarDireccion() && validarEstado()) { //LLama a validar direccion y validar estado
-              this.detalles = listaDetalles;
-               calcularTotal();
-               return true; //Si los dos son true, se registra el pedido
-            
+        if (listaDetalles == null || !validarDireccion() || !validarEstado()) {
+            return false;
         }
-        return false; //Sino, no se registra el pedido
+
+        this.detalles = listaDetalles;
+        calcularTotal();
+        return true;
     }
     
     //Metodo obtenerResumen para probar que los metodos esten bien
