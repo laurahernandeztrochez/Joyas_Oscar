@@ -39,7 +39,7 @@ public class MaterialControlador {
         }
 
         Material material = new Material(
-                0, peso, stock, nombre.trim(), tipoMaterial.trim(), precio, true);
+                0, peso, stock, nombre.trim(), tipoMaterial.trim(), precio, total.trim(), true);
         materiales.guardar(material);
         return "Material guardado";
     }

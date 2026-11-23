@@ -16,7 +16,7 @@ import joyas_oscar.util.ConexionBD;
 public class MaterialRepositorio {
 
     private static final String SELECT_BASE =
-            "SELECT id_material, tipo_material, stock, nombre, peso, precio, activo "
+            "SELECT id_material, tipo_material, stock, nombre, peso, precio,total, activo "
           + "FROM materiales ";
 
 /*
@@ -27,8 +27,8 @@ public class MaterialRepositorio {
  */
     public void guardar(Material material) {
         String sql = "INSERT INTO materiales "
-                   + "(tipo_material, stock, nombre, peso, precio, activo) "
-                   + "VALUES (?, ?, ?, ?, ?, ?)";
+                   + "(tipo_material, stock, nombre, peso, precio, total, activo) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -127,7 +127,7 @@ public class MaterialRepositorio {
  */
     public boolean actualizar(Material material) {
         String sql = "UPDATE materiales SET tipo_material = ?, stock = ?, nombre = ?, "
-                   + "peso = ?, precio = ?, activo = ? WHERE id_material = ?";
+                   + "peso = ?, precio = ?, total = ?, activo = ? WHERE id_material = ?";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -167,6 +167,7 @@ public class MaterialRepositorio {
                 rs.getString("nombre"),
                 rs.getString("tipo_material"),
                 rs.getDouble("precio"),
+                rs.getDouble("total"),
                 rs.getBoolean("activo"));
     }
 
@@ -176,6 +177,7 @@ public class MaterialRepositorio {
         ps.setString(3, material.getNombre());
         ps.setDouble(4, material.getPeso());
         ps.setDouble(5, material.getPrecio());
-        ps.setBoolean(6, material.isActivo());
+        ps.setDouble(6,material.getTotal());
+        ps.setBoolean(7, material.isActivo());
     }
 }
