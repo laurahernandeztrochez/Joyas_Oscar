@@ -6,6 +6,9 @@ import javax.swing.BorderFactory;
 import joyas_oscar.modelo.Rol;
 import joyas_oscar.repositorio.RolRepositorio;
 
+/**
+ * Ventana de administración de usuarios y selección de sus roles.
+ */
 public class VentanaUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaUsuario.class.getName());

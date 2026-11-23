@@ -2,6 +2,10 @@
 package joyas_oscar.modelo; //Paquete donde se encuentra la clase pago
 
 
+/**
+ * Representa el pago asociado a un pedido, con su monto, método, fecha
+ * y estado, y permite generar un comprobante.
+ */
 public class Pago { //Completo, sirve
     
     private int idPago; //Id que identifica todo el pago

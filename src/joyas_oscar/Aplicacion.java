@@ -17,6 +17,10 @@ import joyas_oscar.repositorio.JoyaRepositorio;
 import joyas_oscar.controlador.JoyaControlador;
 
 
+/**
+ * Coordina la aplicación: crea los repositorios y controladores necesarios
+ * y abre las ventanas de inicio de sesión, menú y módulos.
+ */
 public class Aplicacion {
 
     private UsuarioRepositorio usuarios = new UsuarioRepositorio();

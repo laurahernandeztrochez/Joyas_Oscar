@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import joyas_oscar.modelo.Material;
 import joyas_oscar.repositorio.MaterialRepositorio;
 
+/**
+ * Valida y coordina las acciones sobre materiales entre la interfaz
+ * y el repositorio de materiales.
+ */
 public class MaterialControlador {
 
     private final MaterialRepositorio materiales;

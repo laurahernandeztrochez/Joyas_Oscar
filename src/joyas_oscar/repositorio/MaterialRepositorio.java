@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import joyas_oscar.modelo.Material;
 import joyas_oscar.util.ConexionBD;
 
+/**
+ * Accede a la base de datos para registrar, listar, buscar, actualizar
+ * y desactivar materiales.
+ */
 public class MaterialRepositorio {
 
     private static final String SELECT_BASE =

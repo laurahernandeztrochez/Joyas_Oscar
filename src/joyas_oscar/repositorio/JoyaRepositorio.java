@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import joyas_oscar.modelo.Joya;
 import joyas_oscar.util.ConexionBD;
 
+/**
+ * Realiza las operaciones de consulta, registro, actualización y desactivación
+ * de joyas en la base de datos.
+ */
 public class JoyaRepositorio {
 
     private static final String SELECT_BASE =

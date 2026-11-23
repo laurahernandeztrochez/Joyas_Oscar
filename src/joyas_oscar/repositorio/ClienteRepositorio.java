@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import joyas_oscar.modelo.Cliente;
 import joyas_oscar.util.ConexionBD;
 
+/**
+ * Accede a la tabla de clientes para registrar, consultar, actualizar
+ * y desactivar clientes mediante la base de datos.
+ */
 public class ClienteRepositorio {
 
     // En SQL siempre va id_cliente

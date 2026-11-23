@@ -21,6 +21,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Muestra el menú principal y permite abrir los módulos de gestión
+ * disponibles para el usuario que inició sesión.
+ */
 public class VentanaInicio extends javax.swing.JFrame {
     
     

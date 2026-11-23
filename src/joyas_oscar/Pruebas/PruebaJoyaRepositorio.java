@@ -3,6 +3,10 @@ package joyas_oscar.Pruebas;
 import joyas_oscar.modelo.Joya;
 import joyas_oscar.repositorio.JoyaRepositorio;
 
+/**
+ * Ejecuta pruebas manuales de las operaciones disponibles en
+ * {@link joyas_oscar.repositorio.JoyaRepositorio}.
+ */
 public class PruebaJoyaRepositorio {
 
     public static void main(String[] args) {

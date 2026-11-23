@@ -2,6 +2,10 @@
 package joyas_oscar.modelo;
 
 
+/**
+ * Representa un material utilizado por el negocio, incluyendo su tipo,
+ * peso, precio, existencias y estado.
+ */
 public class Material { //Completo, sirve
     
     // Atributos privados del material

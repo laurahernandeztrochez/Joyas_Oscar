@@ -11,6 +11,10 @@ import joyas_oscar.repositorio.JoyaRepositorio;
 import joyas_oscar.controlador.JoyaControlador;
 import java.util.ArrayList;         
 
+/**
+ * Ventana para consultar y gestionar las joyas del inventario desde
+ * una tabla y un formulario.
+ */
 public class VentanaJoya extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaJoya.class.getName());

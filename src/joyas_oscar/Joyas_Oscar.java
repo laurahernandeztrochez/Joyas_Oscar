@@ -24,6 +24,10 @@ import joyas_oscar.vista.VentanaUsuario;
 import joyas_oscar.vista.VentanaInicio;
 */
 
+/**
+ * Punto de entrada del programa: inicia la aplicación en el hilo de eventos
+ * de Swing y muestra la ventana de inicio de sesión.
+ */
 public class Joyas_Oscar {
 
     

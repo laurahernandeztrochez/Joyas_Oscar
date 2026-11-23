@@ -1,6 +1,10 @@
 package joyas_oscar.modelo;
 
 
+/**
+ * Representa una línea de un pedido: la joya solicitada, su cantidad,
+ * precio unitario y subtotal.
+ */
 public class DetallePedido { //Completo, sirve
 
     //referencia a pedido y joya

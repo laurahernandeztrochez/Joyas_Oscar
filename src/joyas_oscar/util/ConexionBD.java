@@ -22,6 +22,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;    
 
 
+/**
+ * Proporciona conexiones JDBC a la base de datos MySQL de la aplicación.
+ */
 public class ConexionBD {
      
     private static final String URL = "jdbc:mysql://localhost:3306/joyasoscar";

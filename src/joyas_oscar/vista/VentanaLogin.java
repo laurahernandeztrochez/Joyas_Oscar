@@ -10,6 +10,10 @@ import joyas_oscar.controlador.LoginControlador;       // El controlador que rec
 import joyas_oscar.repositorio.UsuarioRepositorio;     // Lo usa el main para probar la ventana.
 import joyas_oscar.Aplicacion;       
 
+/**
+ * Presenta el formulario de inicio de sesión y solicita al controlador
+ * validar las credenciales antes de abrir el menú principal.
+ */
 public class VentanaLogin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaLogin.class.getName());

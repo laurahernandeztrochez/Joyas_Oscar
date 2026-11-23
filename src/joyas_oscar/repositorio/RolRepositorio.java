@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import joyas_oscar.util.ConexionBD;
 
+/**
+ * Consulta los roles disponibles en la base de datos, ya sea para listarlos
+ * o para buscar uno por su nombre.
+ */
 public class RolRepositorio {
 
     // Trae todos los roles de la BD para llenar el combo

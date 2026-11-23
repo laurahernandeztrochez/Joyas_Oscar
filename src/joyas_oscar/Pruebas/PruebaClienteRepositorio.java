@@ -8,6 +8,10 @@ package joyas_oscar.Pruebas;
  *
  * @author Lau04
  */
+/**
+ * Clase destinada a probar manualmente las operaciones del repositorio
+ * de clientes.
+ */
 public class PruebaClienteRepositorio {
     
 }

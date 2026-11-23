@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Representa un pedido de un cliente, sus detalles, dirección, fecha,
+ * estado y total.
+ */
 public class Pedido { //Completado, sirve
     
     private int idPedido;  //PK en bsd para identificar cada pedido con su id

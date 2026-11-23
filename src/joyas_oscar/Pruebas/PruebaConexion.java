@@ -8,6 +8,10 @@ import java.sql.Statement;
 import joyas_oscar.util.ConexionBD;
 
 
+/**
+ * Programa de prueba que comprueba la conexión a MySQL y consulta
+ * la cantidad de joyas activas.
+ */
 public class PruebaConexion {
      public static void main(String[] args) {
 

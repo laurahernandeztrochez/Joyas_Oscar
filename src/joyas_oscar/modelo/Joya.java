@@ -2,6 +2,10 @@
 package joyas_oscar.modelo;
 
 
+/**
+ * Representa una joya del inventario, con su material, precio, existencias
+ * y estado; también contiene operaciones básicas relacionadas con el stock.
+ */
 public class Joya { //Ya completo, sirve
     
     // atributos basicos de la joya en privado 

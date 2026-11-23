@@ -18,6 +18,10 @@ import javax.swing.table.DefaultTableModel;
 import joyas_oscar.controlador.MaterialControlador;
 import joyas_oscar.modelo.Material;
 
+/**
+ * Ventana para consultar y gestionar materiales del inventario, incluyendo
+ * sus existencias, peso, precio y tipo.
+ */
 public class VentanaMaterial extends JFrame {
 
     private static final Color FONDO = new Color(20, 20, 20);

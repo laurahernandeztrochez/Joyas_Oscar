@@ -15,6 +15,10 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 
 
+/**
+ * Ventana para gestionar clientes: muestra sus datos y permite realizar
+ * acciones como buscarlos, registrarlos, actualizarlos o desactivarlos.
+ */
 public class VentanaCliente extends javax.swing.JFrame {
     
     
