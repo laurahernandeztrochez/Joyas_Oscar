@@ -91,7 +91,7 @@ public class Pedido { //Completado, sirve
     public boolean validarEstado(String estado) {
         if (estado==null) return false; //No deja no llenar el estado
         String e = estado.toLowerCase().trim();
-        return e.equals("Pendiente") || e.equals("En proceso") || e.equals("Entregado") || e.equals("Cancelado"); //Los diferentes posibles estados
+        return e.equals("pendiente") || e.equals("proceso") || e.equals("enviado") || e.equals("entregado") || e.equals("cancelado"); //Los diferentes posibles estados
     }
     //para validar this.estado
     public boolean validarEstado() {
