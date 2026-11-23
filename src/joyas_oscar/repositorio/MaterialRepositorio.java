@@ -133,7 +133,7 @@ public class MaterialRepositorio {
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             llenarDatos(ps, material);
-            ps.setInt(7, material.getIdMaterial());
+            ps.setInt(8, material.getIdMaterial());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException("Error al actualizar el material: " + e.getMessage(), e);

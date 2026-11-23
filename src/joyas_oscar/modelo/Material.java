@@ -4,7 +4,7 @@ package joyas_oscar.modelo;
 
 /**
  * Representa un material utilizado por el negocio, incluyendo su tipo,
- * peso, precio, existencias y estado.
+ * peso, precio, total, existencias y estado.
  */
 public class Material { //Completo, sirve
     
@@ -15,16 +15,23 @@ public class Material { //Completo, sirve
     private String nombre;
     private String tipoMaterial;
     private double precio;
+    private double total;
     private boolean activo;
    
      // Constructor principal para inicializar todos los datos
     public Material(int idMaterial, double peso, int stock,String nombre, String tipoMaterial, double precio, boolean activo) {
+        this(idMaterial, peso, stock, nombre, tipoMaterial, precio, peso * precio, activo);
+    }
+
+    public Material(int idMaterial, double peso, int stock, String nombre,
+            String tipoMaterial, double precio, double total, boolean activo) {
         this.idMaterial = idMaterial;
         this.peso = peso;
         this.stock = stock;
         this.nombre = nombre;
         this.tipoMaterial = tipoMaterial;
         this.precio = precio;
+        this.total = total;
         this.activo = activo;
     }
     // Constructor alternativo (sin peso ni stock, inicializándolos en 0)
@@ -35,6 +42,7 @@ public class Material { //Completo, sirve
         this.nombre = nombre;
         this.tipoMaterial = tipoMaterial;
         this.precio = precio;
+        this.total = 0;
         this.activo = true;
     }
     // Método para obtener el ID del material   
@@ -85,6 +93,14 @@ public class Material { //Completo, sirve
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
     
         public boolean isActivo() {
         return activo;
@@ -107,8 +123,8 @@ public class Material { //Completo, sirve
     
     // Método para calcular el precio total multiplicando el peso por el precio unitario
     public double calcularTotal () {
-        double precioTotal = this.peso * this.precio; 
-        return precioTotal;
+        this.total = this.peso * this.precio;
+        return this.total;
     }
     
     // Método donde si el stock es válido, registra y actualiza los datos del material, y si no, no guarda nada
@@ -118,7 +134,7 @@ public class Material { //Completo, sirve
         this.tipoMaterial = tipoMaterial;
         this.peso = peso;
         this.precio = precio;
-        double precioTotal = calcularTotal();  // Calcula el total
+        calcularTotal();
       return true;
     } else {
           return false;  // Si no, retorna falso y no guarda

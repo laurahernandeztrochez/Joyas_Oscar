@@ -38,8 +38,9 @@ public class MaterialControlador {
             return error;
         }
 
+        double total = peso * precio;
         Material material = new Material(
-                0, peso, stock, nombre.trim(), tipoMaterial.trim(), precio, total.trim(), true);
+                0, peso, stock, nombre.trim(), tipoMaterial.trim(), precio, total, true);
         materiales.guardar(material);
         return "Material guardado";
     }
@@ -61,6 +62,7 @@ public class MaterialControlador {
         material.setStock(stock);
         material.setPeso(peso);
         material.setPrecio(precio);
+        material.setTotal(peso * precio);
         return materiales.actualizar(material)
                 ? "Material actualizado"
                 : "No se pudo actualizar el material";
@@ -90,6 +92,9 @@ public class MaterialControlador {
         }
         if (!(precio > 0) || Double.isInfinite(precio)) {
             return "El precio debe ser un valor mayor que cero";
+        }
+        if (Double.isInfinite(peso * precio)) {
+            return "El total calculado excede el valor permitido";
         }
         return null;
     }
