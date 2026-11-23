@@ -16,7 +16,7 @@ public class Pedido { //Completado, sirve
     private String estado; //Tipo string para registrar en que estado se encuentra el pedido (entregado, en proceso, pendiente, cancelado)
     private String direccion; //Registrar la direccion del pedido por si se hace a domicilio
     private double total; //en double, int es muy pequeño para registrar cantidades grandes de dinero
-    private String fecha; //En base de datos, se usa DATE para la fecha, solo dejando registrar este tipo de fecha, no caracteres extraños
+    private String fecha; //Fecha para la base de datos en formato yyyy-MM-dd
     private List<DetallePedido> detalles; //Se usa para el subtotal que se encuentra en el detalle pedido y con esos calcular el total
   
     
