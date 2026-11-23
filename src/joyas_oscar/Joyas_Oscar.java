@@ -20,8 +20,7 @@ import joyas_oscar.controlador.ClienteControlador;
  /*
 import joyas_oscar.vista.VentanaCliente;
 import joyas_oscar.vista.VentanaLogin;
-import joyas_oscar.vista.VentanaUsuario;
-import joyas_oscar.vista.VentanaInicio;
+import joyas_oscar.vista.VentanaUsuario;import joyas_oscar.vista.VentanaInicio;
 */
 
 /**
