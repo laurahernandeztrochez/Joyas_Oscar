@@ -37,8 +37,8 @@ public class ClienteControlador {
     // Guardar
     public String guardarCliente(String nombre, String apellido, String telefono, String direccion) {
         
-        if (telefono.trim().isEmpty() || nombre.trim().isEmpty()) {
-            return "El telefono y el nombre son obligatorios";              
+        if (telefono.trim().isEmpty() || nombre.trim().isEmpty() || apellido.trim().isEmpty() || direccion.trim().isEmpty()) {
+            return "Todos los campos son obligatorios";              
         }
         
         if (!Cliente.validarTelefono(telefono.trim())) {
