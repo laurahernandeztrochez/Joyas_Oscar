@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-
 import joyas_oscar.controlador.LoginControlador;       // El controlador que recibe la ventana.
 import joyas_oscar.repositorio.UsuarioRepositorio;     // Lo usa el main para probar la ventana.
 import joyas_oscar.Aplicacion;       

@@ -19,6 +19,12 @@ public class MaterialRepositorio {
             "SELECT id_material, tipo_material, stock, nombre, peso, precio, activo "
           + "FROM materiales ";
 
+/*
+ * =========================================================================
+ * CREATE -> guardar
+ * Botón Guardar de VentanaMaterial.
+ * =========================================================================
+ */
     public void guardar(Material material) {
         String sql = "INSERT INTO materiales "
                    + "(tipo_material, stock, nombre, peso, precio, activo) "
@@ -40,6 +46,12 @@ public class MaterialRepositorio {
         }
     }
 
+/*
+ * =========================================================================
+ * LIST -> listar
+ * Carga la tabla de materiales de VentanaMaterial.
+ * =========================================================================
+ */
     public ArrayList<Material> listar() {
         ArrayList<Material> lista = new ArrayList<>();
         String sql = SELECT_BASE + "WHERE activo = TRUE ORDER BY id_material";
@@ -57,6 +69,12 @@ public class MaterialRepositorio {
         return lista;
     }
 
+/*
+ * =========================================================================
+ * READ -> buscarPorId
+ * Obtiene el material seleccionado en la tabla para editarlo o desactivarlo.
+ * =========================================================================
+ */
     public Material buscarPorId(int idMaterial) {
         String sql = SELECT_BASE + "WHERE id_material = ?";
 
@@ -75,6 +93,12 @@ public class MaterialRepositorio {
         return null;
     }
 
+/*
+ * =========================================================================
+ * SEARCH -> buscarPorNombre
+ * Busca materiales activos por nombre.
+ * =========================================================================
+ */
     public ArrayList<Material> buscarPorNombre(String nombre) {
         ArrayList<Material> lista = new ArrayList<>();
         String sql = SELECT_BASE
@@ -95,6 +119,12 @@ public class MaterialRepositorio {
         return lista;
     }
 
+/*
+ * =========================================================================
+ * UPDATE -> actualizar
+ * Botón Editar de VentanaMaterial.
+ * =========================================================================
+ */
     public boolean actualizar(Material material) {
         String sql = "UPDATE materiales SET tipo_material = ?, stock = ?, nombre = ?, "
                    + "peso = ?, precio = ?, activo = ? WHERE id_material = ?";
@@ -110,6 +140,12 @@ public class MaterialRepositorio {
         }
     }
 
+/*
+ * =========================================================================
+ * DELETE -> desactivar
+ * Botón Eliminar de VentanaMaterial; desactiva el material seleccionado.
+ * =========================================================================
+ */
     public boolean desactivar(int idMaterial) {
         String sql = "UPDATE materiales SET activo = FALSE WHERE id_material = ?";
 

@@ -39,4 +39,12 @@ public class PedidoRepositorio {
             throw new RuntimeException("Error al guardar el pedido: " + e.getMessage(), e);
         }
     }
+
+    private void llenarDatos(PreparedStatement ps, Pedido pedido) throws SQLException {
+        ps.setString(1, pedido.getEstado());
+        ps.setString(2, pedido.getDireccion());
+        ps.setString(3, pedido.getFecha());
+        ps.setDouble(4, pedido.getTotal());
+        ps.setInt(5, pedido.getCliente().getIdCliente());
+    }
 }
