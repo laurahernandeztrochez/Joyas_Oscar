@@ -55,7 +55,6 @@ public class VentanaJoya extends javax.swing.JFrame {
     modelo.setRowCount(0); // limpia la tabla
     for (Joya j : lista) {
         modelo.addRow(new Object[]{
-            j.getIdJoya(),
             j.getNombre(),
             j.getMaterial(),
             j.getPrecio(),
