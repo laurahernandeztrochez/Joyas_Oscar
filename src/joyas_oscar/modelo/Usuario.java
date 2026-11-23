@@ -83,11 +83,11 @@ public class Usuario {
     }
 
     //Getter y setters
-    public int getId() {
+    public int getIdUsuario() {
         return idUsuario;
     }
 
-    public void setId(int id) {                 
+    public void setIdUsuario(int id) {                 
         this.idUsuario = id;
     }
 

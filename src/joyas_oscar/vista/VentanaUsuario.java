@@ -3,8 +3,14 @@ package joyas_oscar.vista;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.BorderFactory;
-import joyas_oscar.modelo.Rol;
-import joyas_oscar.repositorio.RolRepositorio;
+
+import joyas_oscar.modelo.Usuario;
+import joyas_oscar.repositorio.UsuarioRepositorio;
+import joyas_oscar.controlador.UsuarioControlador;
+import java.util.ArrayList;    
+import javax.swing.table.DefaultTableModel; 
+import javax.swing.JOptionPane;
+
 
 /**
  * Ventana de administración de usuarios y selección de sus roles.
@@ -12,21 +18,88 @@ import joyas_oscar.repositorio.RolRepositorio;
 public class VentanaUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaUsuario.class.getName());
+    
+    private UsuarioControlador controlador;      
+    private DefaultTableModel modelo;           
+    private ArrayList<Usuario> usuariosEnTabla = new ArrayList<>();   
+    private int idSeleccionado = -1;
    
-    private RolRepositorio repoRol= new RolRepositorio();
-   
-    public VentanaUsuario() {
-        initComponents();
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        jComboBox1.removeAllItems();
-for (Rol r : repoRol.listarRoles()) {
-    jComboBox1.addItem(r.getNombre());
+    
+    public VentanaUsuario(UsuarioControlador controlador) {
+    initComponents();
+    this.controlador = controlador;
 
+  
+    modelo = new DefaultTableModel(new String[]{"NombreCompleto", "NombreUsuario", "ContrasenaHash", "Rol"}, 0);
+    tblUsuarios.setModel(modelo);
+
+ 
+    cargarRoles();
+    cargarTabla(controlador.listaUsuario());
+
+    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+    tblUsuarios.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+            mostrarSeleccionado();
+        }
+    });
+
+    tblUsuarios.getTableHeader().setReorderingAllowed(false);
+    tblUsuarios.setDefaultEditor(Object.class, null);
+    personalizarDiseño();
+    setLocationRelativeTo(null);
 }
-        personalizarDiseño(); // <--- Aplica el estilo visual
+
+private void cargarTabla(ArrayList<Usuario> lista) {
+    usuariosEnTabla = lista;
+    modelo.setRowCount(0);
+    for (Usuario u : lista) {
+        modelo.addRow(new Object[]{u.getNombreCompleto(), u.getNombreUsuario(), u.getContrasenaHash(), u.getRol().getNombre()});
     }
+}
+
+private void mostrarResultado(String mensaje) {
+    JOptionPane.showMessageDialog(this, mensaje);
+    if (mensaje.startsWith("Usuario ")) {
+        limpiar();
+        cargarTabla(controlador.listaUsuario());
+    }
+}
+
+private void limpiar() {
+    idSeleccionado = -1;
+    txtNombre.setText("");
+    txtUsuario.setText("");
+    jPasswordField1.setText("");
+    jPasswordField2.setText("");
+    tblUsuarios.clearSelection();
+    btnActualizar.setText("Editar");
+}
+
+private void mostrarSeleccionado() {
+    int fila = tblUsuarios.getSelectedRow();
+    if (fila == -1) {
+        return;
+    }
+
+    Usuario u = usuariosEnTabla.get(fila);
+    idSeleccionado = u.getIdUsuario();
+    txtNombre.setText(u.getNombreCompleto());
+    txtUsuario.setText(u.getNombreUsuario());
+    jPasswordField1.setText(u.getContrasenaHash());
+    jPasswordField2.setText(u.getContrasenaHash());
+    btnActualizar.setText("Actualizar");
+}
+
+private void cargarRoles() {
+    cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(
+        controlador.listarRoles().toArray(new String[0])
+    ));
+}
     
     
+    //Personalizacion
     private void personalizarDiseño() {
         Color colorFondo = new Color(20, 20, 20);
         Color colorDorado = new Color(212, 175, 55);
@@ -50,7 +123,7 @@ for (Rol r : repoRol.listarRoles()) {
         jLabel7.setFont(fuenteGeneral); jLabel7.setForeground(colorDorado);
 
         // Campos de texto (Limpiando textos por defecto)
-        javax.swing.JTextField[] campos = {jTextField1, jTextField2};
+        javax.swing.JTextField[] campos = {txtNombre, txtUsuario};
         for (javax.swing.JTextField campo : campos) {
             campo.setBackground(colorGrisOscuro);
             campo.setForeground(Color.WHITE);
@@ -69,24 +142,24 @@ for (Rol r : repoRol.listarRoles()) {
         }
 
         // ComboBox de Rol
-        jComboBox1.setBackground(colorGrisOscuro);
-        jComboBox1.setForeground(colorDorado);
-        jComboBox1.setBorder(BorderFactory.createLineBorder(colorDorado, 1));
+        cmbRol.setBackground(colorGrisOscuro);
+        cmbRol.setForeground(colorDorado);
+        cmbRol.setBorder(BorderFactory.createLineBorder(colorDorado, 1));
 
         // Botones (Guardar y Editar en dorado, Cancelar en gris, Eliminar en rojo)
-        estilizarBoton(jButton1, colorGrisOscuro, colorDorado); // Guardar
+        estilizarBoton(btnGuardar, colorGrisOscuro, colorDorado); // Guardar
         
-        jButton2.setBackground(new Color(50, 50, 50)); // Cancelar
-        jButton2.setForeground(Color.LIGHT_GRAY);
-        jButton2.setFocusPainted(false);
-        jButton2.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+        btnLimpiar.setBackground(new Color(50, 50, 50)); 
+         btnLimpiar.setForeground(Color.LIGHT_GRAY);
+         btnLimpiar.setFocusPainted(false);
+         btnLimpiar.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 
-        jButton3.setBackground(colorGrisOscuro); // Eliminar usuario (Rojo)
-        jButton3.setForeground(new Color(220, 20, 60));
-        jButton3.setFocusPainted(false);
-        jButton3.setBorder(BorderFactory.createLineBorder(new Color(220, 20, 60), 1));
+        btnEliminar.setBackground(colorGrisOscuro); // Eliminar usuario (Rojo)
+        btnEliminar.setForeground(new Color(220, 20, 60));
+        btnEliminar.setFocusPainted(false);
+        btnEliminar.setBorder(BorderFactory.createLineBorder(new Color(220, 20, 60), 1));
 
-        estilizarBoton(jButton4, colorGrisOscuro, colorDorado); // Editar
+        estilizarBoton(btnActualizar, colorGrisOscuro, colorDorado); // Editar
 
         // Tabla de usuarios
         tblUsuarios.setBackground(colorGrisOscuro);
@@ -117,18 +190,20 @@ for (Rol r : repoRol.listarRoles()) {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
-        jTextField2 = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
         jPasswordField2 = new javax.swing.JPasswordField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbRol = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,7 +219,7 @@ for (Rol r : repoRol.listarRoles()) {
 
         jLabel6.setText("Rol:");
 
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        txtNombre.addActionListener(this::txtNombreActionPerformed);
 
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -174,24 +249,33 @@ for (Rol r : repoRol.listarRoles()) {
         ));
         jScrollPane1.setViewportView(tblUsuarios);
 
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+        txtUsuario.addActionListener(this::txtUsuarioActionPerformed);
 
         jPasswordField1.setText("jPasswordField1");
 
         jPasswordField2.setText("jPasswordField1");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+        cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbRol.addActionListener(this::cmbRolActionPerformed);
 
         jLabel7.setText("Usuarios existentes:");
 
-        jButton1.setText("Guardar");
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
-        jButton2.setText("Cancelar");
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
-        jButton3.setText("Eliminar");
+        btnActualizar.setText("Editar");
+        btnActualizar.addActionListener(this::btnActualizarActionPerformed);
 
-        jButton4.setText("Editar");
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(this::btnLimpiarActionPerformed);
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
+
+        txtBuscar.addActionListener(this::txtBuscarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -207,41 +291,45 @@ for (Rol r : repoRol.listarRoles()) {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel2))
-                                        .addGap(64, 64, 64))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)))
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jTextField2)
+                                    .addComponent(txtNombre)
+                                    .addComponent(txtUsuario)
                                     .addComponent(jPasswordField1)
-                                    .addComponent(jPasswordField2)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jPasswordField2, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+                                    .addComponent(cmbRol, 0, 465, Short.MAX_VALUE))))
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(106, 106, 106)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(254, 254, 254)
-                        .addComponent(jLabel7)))
-                .addGap(0, 122, Short.MAX_VALUE))
+                        .addGap(248, 248, 248)
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(86, 86, 86)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44)
+                                .addComponent(btnLimpiar)
+                                .addGap(0, 13, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(94, 94, 94)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnBuscar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                        .addGap(96, 96, 96))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,11 +339,11 @@ for (Rol r : repoRol.listarRoles()) {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -264,47 +352,133 @@ for (Rol r : repoRol.listarRoles()) {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel6))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(18, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4)
-                                .addGap(90, 90, 90))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addGap(88, 88, 88))))
+                            .addComponent(btnGuardar)
+                            .addComponent(btnLimpiar)
+                            .addComponent(btnActualizar)
+                            .addComponent(btnEliminar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cmbRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRolActionPerformed
        
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cmbRolActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+          String pass = new String(jPasswordField1.getPassword());
+String confirmar = new String(jPasswordField2.getPassword());
+
+if (!pass.equals(confirmar)) {
+    JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+    jPasswordField2.requestFocus();
+    return; // esto es lo importante, para que no guarde
+}
+        
+        String mensaje = controlador.guardarUsuario(
+                txtNombre.getText(),
+                txtUsuario.getText(),
+                 jPasswordField1.getText(),
+                 cmbRol.getSelectedItem().toString());
+                
+        mostrarResultado(mensaje);
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        if (btnActualizar.getText().equals("Editar")) {
+        JOptionPane.showMessageDialog(this, "Seleccione un usuario de la tabla");
+        return;
+        }
+
+    // Si ya dice Actualizar, guarda de una
+    String mensaje = controlador.actualizarUsuario(
+            idSeleccionado,
+            txtNombre.getText(),
+            txtUsuario.getText(),
+            jPasswordField1.getText(),
+           jPasswordField2.getText());
+    mostrarResultado(mensaje);
+    btnActualizar.setText("Editar");
+    
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+         int fila = tblUsuarios.getSelectedRow();
+        if (fila == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione un usuario de la tabla");
+        return;
+    }
+
+    int idSeleccionado = usuariosEnTabla.get(fila).getIdUsuario();
+
+    int respuesta = JOptionPane.showConfirmDialog(this,
+            "¿Eliminar el usuario seleccionado?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+    if (respuesta == JOptionPane.YES_OPTION) {
+        mostrarResultado(controlador.desactivarUsuario(idSeleccionado));
+        cargarTabla(controlador.listaUsuario());
+    
+    }
+    
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+
+        txtBuscar.setText("");                 
+        limpiar();
+        cargarTabla(controlador.listaUsuario());
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
+        if (txtBuscar.getText().trim().isEmpty()) {
+            cargarTabla(controlador.listaUsuario());
+            return;
+        }
+
+        Usuario u = controlador.buscarUsuario(txtBuscar.getText());
+        ArrayList<Usuario> resultado = new ArrayList<>();
+        if (u != null) {
+            resultado.add(u);
+        } else {
+            JOptionPane.showMessageDialog(this, "No existe un usuario con ese nombre");
+        }
+        
+        cargarTabla(resultado);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
  
     public static void main(String args[]) {
@@ -326,15 +500,22 @@ for (Rol r : repoRol.listarRoles()) {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaUsuario().setVisible(true));
+     
+            
+            UsuarioRepositorio usuarios = new UsuarioRepositorio();                 
+            UsuarioControlador controlador = new UsuarioControlador(usuarios);    
+            new VentanaUsuario (controlador).setVisible(true);                      
+        
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JComboBox<String> cmbRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -345,8 +526,10 @@ for (Rol r : repoRol.listarRoles()) {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tblUsuarios;
+    private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
 }

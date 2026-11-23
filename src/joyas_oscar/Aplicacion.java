@@ -15,7 +15,7 @@ import joyas_oscar.repositorio.ClienteRepositorio;
 import joyas_oscar.repositorio.MaterialRepositorio;
 import joyas_oscar.repositorio.JoyaRepositorio;
 import joyas_oscar.controlador.JoyaControlador;
-
+import joyas_oscar.controlador.UsuarioControlador;
 
 /**
  * Coordina la aplicación: crea los repositorios y controladores necesarios
@@ -27,6 +27,7 @@ public class Aplicacion {
     private ClienteRepositorio clientes = new ClienteRepositorio();
     private MaterialRepositorio materiales = new MaterialRepositorio();
     private JoyaRepositorio joyas = new JoyaRepositorio();
+     
 
     public void iniciar() {
         new VentanaLogin(new LoginControlador(usuarios), this).setVisible(true);
@@ -45,7 +46,7 @@ public class Aplicacion {
 }
 
     public void abrirUsuario() {
-        new VentanaUsuario().setVisible(true);
+      new VentanaUsuario(new UsuarioControlador(usuarios)).setVisible(true);
     }
 
     public void abrirMaterial() {

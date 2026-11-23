@@ -77,7 +77,8 @@ public class VentanaJoya extends javax.swing.JFrame {
         txtTipo.setText("");
         txtPrecio.setText("");
         txtStock.setText("");
-        tblJoyas.clearSelection();            
+        tblJoyas.clearSelection();    
+btnEditar.setText("Editar");        
     }
         
     private void mostrarSeleccionado() {
@@ -91,6 +92,7 @@ public class VentanaJoya extends javax.swing.JFrame {
         txtTipo.setText(j.getMaterial());
         txtPrecio.setText(String.valueOf(j.getPrecio()));
         txtStock.setText(String.valueOf(j.getStock()));
+        btnEditar.setText("Actualizar");
     }   
     
     
@@ -346,6 +348,11 @@ public class VentanaJoya extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
+        
+           if (btnEditar.getText().equals("Editar")) {
+        JOptionPane.showMessageDialog(this, "Seleccione un cliente de la tabla");
+        return;
+    }
            String mensaje = controlador.actualizarJoya(
             idSeleccionado,
             txtNombre.getText(),
@@ -353,6 +360,7 @@ public class VentanaJoya extends javax.swing.JFrame {
             Double.parseDouble(txtPrecio.getText()),
             Integer.parseInt(txtStock.getText())
         );
+            btnEditar.setText("Editar");
         mostrarResultado(mensaje);
     
     }//GEN-LAST:event_btnEditarActionPerformed
