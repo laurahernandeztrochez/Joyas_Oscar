@@ -1,4 +1,4 @@
-//no se como se hce
+
 package joyas_oscar.repositorio;
 
 import java.sql.Connection;

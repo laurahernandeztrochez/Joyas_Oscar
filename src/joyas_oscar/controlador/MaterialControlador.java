@@ -78,7 +78,7 @@ public class MaterialControlador {
                 : "No se pudo desactivar el material";
     }
 
-    private String validarDatos(String nombre, String tipoMaterial, int stock,
+    public String validarDatos(String nombre, String tipoMaterial, int stock,
             double peso, double precio) {
         if (nombre == null || nombre.trim().isEmpty()
                 || tipoMaterial == null || tipoMaterial.trim().isEmpty()) {
