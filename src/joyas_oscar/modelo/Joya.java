@@ -92,7 +92,7 @@ public class Joya { //Ya completo, sirve
         
     }
     
-    //Método para validar que la cantidad que se va a vender sea mayor a 0 y menor o igual al stock disponible
+    //Método para regitsrar la venta
     public boolean registrarVenta(int cantidad) {
         if (validarStock(cantidad)) {  // Llama al método anterior
             this.stock -= cantidad;  // Si es true, descuenta la cantidad vendida
