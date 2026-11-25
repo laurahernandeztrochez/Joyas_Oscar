@@ -9,6 +9,7 @@ import joyas_oscar.vista.VentanaJoya;
 import joyas_oscar.vista.VentanaLogin;
 import joyas_oscar.vista.VentanaUsuario;
 import joyas_oscar.vista.VentanaMaterial;
+import joyas_oscar.vista.VentanaPedido;
 import joyas_oscar.controlador.ClienteControlador;
 import joyas_oscar.controlador.MaterialControlador;
 import joyas_oscar.repositorio.ClienteRepositorio;
@@ -51,5 +52,9 @@ public class Aplicacion {
 
     public void abrirMaterial() {
         new VentanaMaterial(new MaterialControlador(materiales)).setVisible(true);
+    }
+    
+    public void abrirPedido() {
+        new VentanaPedido(new PedidoControlador(pedidos)).setVisible(true);
     }
 }

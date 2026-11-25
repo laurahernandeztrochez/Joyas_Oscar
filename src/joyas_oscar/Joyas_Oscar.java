@@ -17,6 +17,7 @@ import joyas_oscar.modelo.Usuario;
 import joyas_oscar.modelo.Rol;
 import joyas_oscar.repositorio.ClienteRepositorio;
 import joyas_oscar.controlador.ClienteControlador;
+import joyas_oscar.vista.VentanaPedido;
 import joyas_oscar.vista.VentanaPagos;
  /*
 import joyas_oscar.vista.VentanaCliente;
@@ -38,6 +39,11 @@ public class Joyas_Oscar {
         
         java.awt.EventQueue.invokeLater(() -> {
             new VentanaPagos().setVisible(true);
+        });
+    
+    
+     java.awt.EventQueue.invokeLater(() -> {
+            new VentanaPedido().setVisible(true);
         });
     }
     

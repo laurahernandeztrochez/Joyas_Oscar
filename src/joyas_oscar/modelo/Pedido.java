@@ -20,6 +20,10 @@ public class Pedido { //Completado, sirve
     private List<DetallePedido> detalles; //Se usa para el subtotal que se encuentra en el detalle pedido y con esos calcular el total
   
     
+    //Contructor vacio
+    public Pedido() {
+        
+    }
     //Constructor
     public Pedido(int idPedido, Cliente cliente,String estado, String direccion, String fecha) {
         this.idPedido  = idPedido;
