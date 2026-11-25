@@ -34,7 +34,7 @@ public class DetallePedido { //Completo, sirve
         this.pedido = pedido;
     }
     
-    public double getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
