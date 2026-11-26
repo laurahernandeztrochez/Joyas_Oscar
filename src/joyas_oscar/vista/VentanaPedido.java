@@ -514,7 +514,6 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnCliente.setText("+ Nuevo cliente");
-        btnCliente.addActionListener(this::btnClienteActionPerformed);
 
         jLabel5.setText("Fecha");
 
@@ -545,7 +544,6 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         }
 
         btnJoya.setText("+ Agregar joya");
-        btnJoya.addActionListener(this::btnJoyaActionPerformed);
 
         jLabel8.setText("Detalle");
 
@@ -674,13 +672,10 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         );
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnEditar.setText("Editar");
-        btnEditar.addActionListener(this::btnEditarActionPerformed);
 
         btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
@@ -918,25 +913,15 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleActionPerformed
-        // Recupera desde la base de datos las líneas del pedido seleccionado.
-        if (pedidoSeleccionado < 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione un pedido de la tabla");
-            return;
-        }
 
-        try {
-            Pedido pedido = new PedidoRepositorio().buscarPorId(pedidoSeleccionado);
-            if (pedido == null) {
-                JOptionPane.showMessageDialog(this, "El pedido no existe");
-                return;
-            }
-            cargarDetalle(pedido.getDetalles() == null
-                    ? new ArrayList<>() : new ArrayList<>(pedido.getDetalles()));
-        } catch (RuntimeException ex) {
-            JOptionPane.showMessageDialog(this,
-                    "No fue posible cargar el detalle:\n" + ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    if (pedidoSeleccionado < 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione un pedido de la tabla");
+        return;
+    }
+    VentanaDetallePedido detalle = new VentanaDetallePedido(pedidoSeleccionado);
+    detalle.setVisible(true);
+
+
     }//GEN-LAST:event_btnDetalleActionPerformed
 
   
