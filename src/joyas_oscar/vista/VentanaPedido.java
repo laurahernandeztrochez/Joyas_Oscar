@@ -26,10 +26,7 @@ public class VentanaPedido extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPedido.class.getName());
 
-<<<<<<< HEAD
-    
-    
-=======
+
     // Controladores y repositorios usados para integrar la ventana con la base de datos.
     private PedidoControlador controlador;
     private ClienteRepositorio clienteRepositorio;
@@ -42,7 +39,7 @@ public class VentanaPedido extends javax.swing.JFrame {
     private DefaultTableModel modeloDetalles;
     private int pedidoSeleccionado = -1;
 
->>>>>>> 6eea4636bc3397fc6f0f6bc786b3e539abc85408
+
     public VentanaPedido(PedidoControlador controlador) {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
