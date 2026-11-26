@@ -146,14 +146,14 @@ public class PedidoRepositorio {
         return pedido;
     }
 
-    public ArrayList<Pedido> buscarPorCliente(String nombre) {
+    public ArrayList<Pedido> buscarPorCliente(int idCliente) {
         ArrayList<Pedido> lista = new ArrayList<>();
-        String sql = SELECT_BASE + "WHERE nombre = ? ORDER BY id_pedido";
+        String sql = SELECT_BASE + "WHERE id_cliente = ? ORDER BY id_pedido";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, nombre);
+            ps.setInt(1, idCliente);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     lista.add(crearPedido(rs));
