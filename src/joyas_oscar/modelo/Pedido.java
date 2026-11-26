@@ -13,7 +13,7 @@ public class Pedido { //Completado, sirve
     
     private int idPedido;  //PK en bsd para identificar cada pedido con su id
     private Cliente cliente; //Referencia a la clase Cliente antes echa y completa
-    private String estado; //Tipo string para registrar en que estado se encuentra el pedido (entregado, en proceso, pendiente, cancelado)
+    private String estado; // Estado del pedido: pendiente, proceso, enviado, entregado o cancelado.
     private String direccion; //Registrar la direccion del pedido por si se hace a domicilio
     private double total; //en double, int es muy pequeño para registrar cantidades grandes de dinero
     private String fecha; //Fecha para la base de datos en formato yyyy-MM-dd
@@ -95,7 +95,7 @@ public class Pedido { //Completado, sirve
     public boolean validarEstado(String estado) {
         if (estado==null) return false; //No deja no llenar el estado
         String e = estado.toLowerCase().trim();
-        return e.equals("pendiente") || e.equals("proceso") || e.equals("en proceso")
+        return e.equals("pendiente") || e.equals("proceso")
                 || e.equals("enviado") || e.equals("entregado") || e.equals("cancelado");
     }
     //para validar this.estado

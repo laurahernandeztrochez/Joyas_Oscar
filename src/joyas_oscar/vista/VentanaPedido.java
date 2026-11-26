@@ -4,6 +4,9 @@ package joyas_oscar.vista;
 //Personalizacion
 import java.awt.Color;
 import java.awt.Font;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -266,7 +269,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
             cmbCliente.setModel(modeloClientes);
 
             cmbEstado.setModel(new DefaultComboBoxModel<>(new String[]{
-                "Pendiente", "Proceso", "En proceso", "Enviado", "Entregado", "Cancelado"
+                "Pendiente", "Proceso", "Enviado", "Entregado", "Cancelado"
             }));
             cmbEstado.setSelectedItem("Pendiente");
 
@@ -411,6 +414,40 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         txtSubtotal.setText("");
         txtTotal.setText("");
         btnEditar.setText("Editar");
+    }
+
+    // Convierte las fechas ingresadas a ISO, formato que acepta java.sql.Date.
+    private String fechaParaBaseDeDatos(String fechaIngresada) {
+        String fecha = fechaIngresada.trim();
+        try {
+            return LocalDate.parse(fecha, DateTimeFormatter.ISO_LOCAL_DATE).toString();
+        } catch (DateTimeParseException ex) {
+            try {
+                return LocalDate.parse(fecha,
+                        DateTimeFormatter.ofPattern("dd/MM/uuuu")).toString();
+            } catch (DateTimeParseException formatoInvalido) {
+                throw new IllegalArgumentException(
+                        "Fecha no válida. Usa yyyy-MM-dd o dd/MM/yyyy.");
+            }
+        }
+    }
+
+    private String detalleError(RuntimeException ex) {
+        Throwable causa = ex;
+        while (causa.getCause() != null) {
+            causa = causa.getCause();
+        }
+        if (causa instanceof java.sql.SQLException) {
+            java.sql.SQLException errorSql = (java.sql.SQLException) causa;
+            String mensajeSql = errorSql.getMessage();
+            if (mensajeSql == null || mensajeSql.trim().isEmpty()) {
+                return "Error SQL (estado " + errorSql.getSQLState()
+                        + ", código " + errorSql.getErrorCode() + ")";
+            }
+        }
+        String mensaje = causa.getMessage();
+        return mensaje == null || mensaje.trim().isEmpty()
+                ? causa.toString() : mensaje;
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -745,14 +782,15 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
                     cliente,
                     cmbEstado.getSelectedItem().toString(),
                     txtDireccion.getText(),
-                    txtFecha.getText(),
+                    fechaParaBaseDeDatos(txtFecha.getText()),
                     detallesNuevos);
             JOptionPane.showMessageDialog(this, mensaje);
             limpiarFormulario();
             cargarPedidos();
         } catch (RuntimeException ex) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al guardar el pedido", ex);
             JOptionPane.showMessageDialog(this,
-                    "No fue posible guardar el pedido:\n" + ex.getMessage(),
+                    "No fue posible guardar el pedido:\n" + detalleError(ex),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -774,13 +812,14 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
                     clienteSeleccionado(),
                     cmbEstado.getSelectedItem().toString(),
                     txtDireccion.getText(),
-                    txtFecha.getText(),
+                    fechaParaBaseDeDatos(txtFecha.getText()),
                     detallesNuevos);
             JOptionPane.showMessageDialog(this, mensaje);
             cargarPedidos();
         } catch (RuntimeException ex) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al actualizar el pedido", ex);
             JOptionPane.showMessageDialog(this,
-                    "No fue posible actualizar el pedido:\n" + ex.getMessage(),
+                    "No fue posible actualizar el pedido:\n" + detalleError(ex),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
