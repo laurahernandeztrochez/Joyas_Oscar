@@ -25,6 +25,7 @@ public class VentanaPedido extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPedido.class.getName());
 
+    // Controladores y repositorios usados para integrar la ventana con la base de datos.
     private PedidoControlador controlador;
     private ClienteRepositorio clienteRepositorio;
     private JoyaRepositorio joyaRepositorio;
@@ -43,6 +44,7 @@ public class VentanaPedido extends javax.swing.JFrame {
         this.clienteRepositorio = new ClienteRepositorio();
         this.joyaRepositorio = new JoyaRepositorio();
 
+        // Modelos independientes para mostrar pedidos y sus detalles.
         modeloPedidos = new DefaultTableModel(
                 new String[]{"ID", "Cliente", "Estado", "Total"}, 0);
         tblPedidos.setModel(modeloPedidos);
@@ -56,12 +58,14 @@ public class VentanaPedido extends javax.swing.JFrame {
         tblPedidos.getTableHeader().setReorderingAllowed(false);
         tblDetalle.getTableHeader().setReorderingAllowed(false);
 
+        // Al seleccionar una fila se cargan los datos del pedido en el formulario.
         tblPedidos.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 mostrarPedidoSeleccionado();
             }
         });
 
+        // La búsqueda filtra pedidos mientras el usuario escribe.
         txtBuscar.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             @Override
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
@@ -250,6 +254,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
     });
 }
 
+    // Carga los clientes registrados y las joyas disponibles en los controles.
     private void cargarCombos() {
         try {
             clientesDisponibles = clienteRepositorio.listar();
@@ -273,6 +278,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         }
     }
 
+    // Consulta los pedidos y los presenta en la tabla principal.
     private void cargarPedidos() {
         try {
             cargarPedidosEnTabla(controlador.listarPedido());
@@ -295,6 +301,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         }
     }
 
+    // Busca pedidos cuyo cliente coincida con el texto ingresado.
     private void buscarPedidos() {
         String texto = txtBuscar.getText().trim().toLowerCase();
         if (texto.isEmpty()) {
@@ -323,6 +330,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         return clientesDisponibles.get(indice);
     }
 
+    // Convierte la selección actual de la tabla en los datos del formulario.
     private void mostrarPedidoSeleccionado() {
         int fila = tblPedidos.getSelectedRow();
         if (fila < 0) {
@@ -357,6 +365,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         calcularTotales();
     }
 
+    // Construye la tabla de detalles y actualiza los totales del pedido.
     private void cargarDetalle(List<DetallePedido> detalles) {
         modeloDetalles.setRowCount(0);
         detallesNuevos = detalles == null
@@ -377,6 +386,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         txtTotal.setText(String.format("%.2f", subtotal));
     }
 
+    // Calcula el subtotal y el total a partir de los detalles temporales.
     private void calcularTotales() {
         double subtotal = 0;
         for (DetallePedido detalle : detallesNuevos) {
@@ -386,6 +396,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         txtTotal.setText(String.format("%.2f", subtotal));
     }
 
+    // Restablece los campos y termina cualquier modo de edición.
     private void limpiarFormulario() {
         pedidoSeleccionado = -1;
         detallesNuevos = new ArrayList<>();
@@ -717,10 +728,12 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
     }//GEN-LAST:event_txtTotalActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // Limpia el formulario y elimina la selección actual.
         limpiarFormulario();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // Valida los datos básicos y delega el guardado al controlador.
         try {
             Cliente cliente = clienteSeleccionado();
             if (cliente == null) {
@@ -745,6 +758,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // Actualiza el pedido seleccionado sin modificar sus líneas de detalle.
         if (pedidoSeleccionado < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione un pedido de la tabla");
             return;
@@ -772,6 +786,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // Cancela el pedido mediante una confirmación y devuelve su stock.
         if (pedidoSeleccionado < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione un pedido de la tabla");
             return;
@@ -797,6 +812,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnJoyaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoyaActionPerformed
+        // Permite agregar una joya, valida la cantidad y recalcula los totales.
         if (joyasDisponibles.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay joyas disponibles");
             return;
@@ -847,6 +863,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
     }//GEN-LAST:event_btnJoyaActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
+        // Abre el registro de clientes y recarga el combo al cerrar esa ventana.
         VentanaCliente ventanaCliente = new VentanaCliente(new ClienteControlador(
                 new joyas_oscar.repositorio.ClienteRepositorio()));
         ventanaCliente.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -859,6 +876,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleActionPerformed
+        // Recupera desde la base de datos las líneas del pedido seleccionado.
         if (pedidoSeleccionado < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione un pedido de la tabla");
             return;
