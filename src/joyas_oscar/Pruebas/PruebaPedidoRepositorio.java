@@ -1,4 +1,4 @@
-package joyas_oscar.pruebas;
+package joyas_oscar.Pruebas;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
