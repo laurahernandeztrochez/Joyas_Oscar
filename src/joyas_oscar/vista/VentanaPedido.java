@@ -6,13 +6,14 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 
+import joyas_oscar.controlador.PedidoControlador;
 public class VentanaPedido extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPedido.class.getName());
 
     
     
-    public VentanaPedido() {
+    public VentanaPedido(PedidoControlador controlador) {
         initComponents();
         personalizarDiseño(); 
     }
@@ -506,7 +507,6 @@ try {
     logger.log(java.util.logging.Level.SEVERE, null, ex);
 }
  
-        java.awt.EventQueue.invokeLater(() -> new VentanaPedido().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
