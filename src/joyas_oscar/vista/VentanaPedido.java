@@ -136,12 +136,12 @@ public class VentanaPedido extends javax.swing.JFrame {
         jLabel9.setText("Resumen");
 
         // Etiquetas doradas
-        javax.swing.JLabel[] etiquetas = {jLabel2, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel10, jLabel11};
+        javax.swing.JLabel[] etiquetas = {jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel10, jLabel11};
         for (javax.swing.JLabel lbl : etiquetas) {
             lbl.setFont(fuenteGeneral);
             lbl.setForeground(colorDorado);
         }
-        jLabel2.setText("Buscar: por nombre");
+      
         jLabel4.setText("Cliente existente");
         jLabel5.setText("Fecha");
         jLabel6.setText("Estado");
@@ -207,6 +207,8 @@ estilizarEncabezado(tblDetalle, colorGrisOscuro, colorDorado);
         estilizarBoton(btnJoya, colorGrisOscuro, colorDorado);
         estilizarBoton(btnCliente, colorGrisOscuro, colorDorado);
         estilizarBoton(btnDetalle, colorGrisOscuro, colorDorado);
+        estilizarBoton(btnBuscar, colorGrisOscuro, colorDorado);
+        
 
         // Botones rojos
         btnEliminar.setBackground(colorGrisOscuro);
@@ -459,7 +461,6 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPedidos = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         Jpanel = new javax.swing.JPanel();
@@ -487,6 +488,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnDetalle = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -505,8 +507,6 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         ));
         jScrollPane1.setViewportView(tblPedidos);
 
-        jLabel2.setText("Buscar: por nombre");
-
         jLabel3.setText("Crear pedido");
 
         jLabel4.setText("Cliente existente");
@@ -514,7 +514,6 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnCliente.setText("+ Nuevo cliente");
-        btnCliente.addActionListener(this::btnClienteActionPerformed);
 
         jLabel5.setText("Fecha");
 
@@ -545,7 +544,6 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         }
 
         btnJoya.setText("+ Agregar joya");
-        btnJoya.addActionListener(this::btnJoyaActionPerformed);
 
         jLabel8.setText("Detalle");
 
@@ -674,19 +672,18 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         );
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnEditar.setText("Editar");
-        btnEditar.addActionListener(this::btnEditarActionPerformed);
 
         btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         btnDetalle.setText("Ver detalle");
-        btnDetalle.addActionListener(this::btnDetalleActionPerformed);
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -704,8 +701,8 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
-                                        .addGap(42, 42, 42)
-                                        .addComponent(jLabel2)
+                                        .addGap(70, 70, 70)
+                                        .addComponent(btnBuscar)
                                         .addGap(18, 18, 18)
                                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
@@ -734,8 +731,8 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -751,7 +748,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
                 .addComponent(Jpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -939,6 +936,14 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         }
     }//GEN-LAST:event_btnDetalleActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        // Le pide al controlador los productos que contienen el texto (RF6)
+        // y muestra en la tabla solo esos. Con el campo vacío, aparecen todos.
+        cargarPedidosEnTabla(controlador.buscarPedido(txtBuscar.getText()));
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
   
     public static void main(String args[]) {
         
@@ -957,6 +962,7 @@ try {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Jpanel;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCliente;
     private javax.swing.JButton btnDetalle;
@@ -969,7 +975,6 @@ try {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

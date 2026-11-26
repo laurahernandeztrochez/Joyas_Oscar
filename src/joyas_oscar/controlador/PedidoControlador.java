@@ -17,9 +17,9 @@ public class PedidoControlador {
     public ArrayList<Pedido> listarPedido() {
         return pedidos.listar();
     }
-
-    public ArrayList<Pedido> buscarPedido(int idCliente) {
-        return pedidos.buscarPorCliente(idCliente);
+    
+      public ArrayList<Pedido> buscarPedido(String nombre) {
+        return pedidos.buscarPorCliente(nombre);
     }
 
     public String guardarPedido(Cliente cliente, String estado, String direccion, String fecha, ArrayList<DetallePedido> detalles) {
@@ -83,4 +83,5 @@ public class PedidoControlador {
         pedidos.cancelar(idPedido);
         return "Pedido eliminado";
     }
+  
 }
