@@ -1,4 +1,4 @@
-package joyas_oscar.pruebas;
+package joyas_oscar.Pruebas;
 
 import joyas_oscar.controlador.PedidoControlador;
 import joyas_oscar.modelo.Cliente;

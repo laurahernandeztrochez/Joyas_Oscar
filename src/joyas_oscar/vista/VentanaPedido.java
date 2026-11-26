@@ -4,17 +4,88 @@ package joyas_oscar.vista;
 //Personalizacion
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import joyas_oscar.controlador.ClienteControlador;
+import joyas_oscar.controlador.PedidoControlador;
+import joyas_oscar.modelo.Cliente;
+import joyas_oscar.modelo.DetallePedido;
+import joyas_oscar.modelo.Joya;
+import joyas_oscar.modelo.Pedido;
+import joyas_oscar.repositorio.ClienteRepositorio;
+import joyas_oscar.repositorio.JoyaRepositorio;
+import joyas_oscar.repositorio.PedidoRepositorio;
 
 public class VentanaPedido extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPedido.class.getName());
 
-    
-    
-    public VentanaPedido() {
+    private PedidoControlador controlador;
+    private ClienteRepositorio clienteRepositorio;
+    private JoyaRepositorio joyaRepositorio;
+    private ArrayList<Pedido> pedidosEnTabla = new ArrayList<>();
+    private ArrayList<Cliente> clientesDisponibles = new ArrayList<>();
+    private ArrayList<Joya> joyasDisponibles = new ArrayList<>();
+    private ArrayList<DetallePedido> detallesNuevos = new ArrayList<>();
+    private DefaultTableModel modeloPedidos;
+    private DefaultTableModel modeloDetalles;
+    private int pedidoSeleccionado = -1;
+
+    public VentanaPedido(PedidoControlador controlador) {
         initComponents();
-        personalizarDiseño(); 
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.controlador = controlador;
+        this.clienteRepositorio = new ClienteRepositorio();
+        this.joyaRepositorio = new JoyaRepositorio();
+
+        modeloPedidos = new DefaultTableModel(
+                new String[]{"ID", "Cliente", "Estado", "Total"}, 0);
+        tblPedidos.setModel(modeloPedidos);
+
+        modeloDetalles = new DefaultTableModel(
+                new String[]{"Joya", "Precio unitario", "Cantidad", "Subtotal"}, 0);
+        tblDetalle.setModel(modeloDetalles);
+
+        tblPedidos.setDefaultEditor(Object.class, null);
+        tblDetalle.setDefaultEditor(Object.class, null);
+        tblPedidos.getTableHeader().setReorderingAllowed(false);
+        tblDetalle.getTableHeader().setReorderingAllowed(false);
+
+        tblPedidos.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                mostrarPedidoSeleccionado();
+            }
+        });
+
+        txtBuscar.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                buscarPedidos();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                buscarPedidos();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                buscarPedidos();
+            }
+        });
+
+        personalizarDiseño();
+        cargarCombos();
+        cargarPedidos();
+    }
+
+    public VentanaPedido() {
+        this(new PedidoControlador(new PedidoRepositorio()));
     }
     
     
@@ -83,8 +154,8 @@ public class VentanaPedido extends javax.swing.JFrame {
         txtTotal.setEditable(false);
 
         // Combos
-        javax.swing.JComboBox[] combos = {cmbCliente, cmbEstado};
-        for (javax.swing.JComboBox cmb : combos) {
+        javax.swing.JComboBox<?>[] combos = {cmbCliente, cmbEstado};
+        for (javax.swing.JComboBox<?> cmb : combos) {
             cmb.setBackground(colorGrisOscuro);
             cmb.setForeground(Color.WHITE);
             cmb.setBorder(BorderFactory.createLineBorder(colorDorado, 1));
@@ -178,8 +249,159 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         }
     });
 }
+
+    private void cargarCombos() {
+        try {
+            clientesDisponibles = clienteRepositorio.listar();
+            DefaultComboBoxModel<String> modeloClientes = new DefaultComboBoxModel<>();
+            for (Cliente cliente : clientesDisponibles) {
+                modeloClientes.addElement(cliente.getIdCliente() + " - "
+                        + cliente.getNombreCompleto());
+            }
+            cmbCliente.setModel(modeloClientes);
+
+            cmbEstado.setModel(new DefaultComboBoxModel<>(new String[]{
+                "Pendiente", "Proceso", "En proceso", "Enviado", "Entregado", "Cancelado"
+            }));
+            cmbEstado.setSelectedItem("Pendiente");
+
+            joyasDisponibles = joyaRepositorio.listar();
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "No fue posible cargar clientes o joyas:\n" + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cargarPedidos() {
+        try {
+            cargarPedidosEnTabla(controlador.listarPedido());
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "No fue posible cargar los pedidos:\n" + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cargarPedidosEnTabla(ArrayList<Pedido> pedidos) {
+        pedidosEnTabla = pedidos;
+        modeloPedidos.setRowCount(0);
+        for (Pedido pedido : pedidos) {
+            String nombreCliente = pedido.getCliente() == null
+                    ? "" : pedido.getCliente().getNombreCompleto();
+            modeloPedidos.addRow(new Object[]{
+                pedido.getIdPedido(), nombreCliente, pedido.getEstado(), pedido.getTotal()
+            });
+        }
+    }
+
+    private void buscarPedidos() {
+        String texto = txtBuscar.getText().trim().toLowerCase();
+        if (texto.isEmpty()) {
+            cargarPedidosEnTabla(controlador.listarPedido());
+            return;
+        }
+
+        ArrayList<Pedido> coincidencias = new ArrayList<>();
+        for (Pedido pedido : controlador.listarPedido()) {
+            Cliente cliente = pedido.getCliente();
+            if (cliente != null
+                    && (cliente.getNombre().toLowerCase().contains(texto)
+                    || cliente.getApellido().toLowerCase().contains(texto)
+                    || cliente.getNombreCompleto().toLowerCase().contains(texto))) {
+                coincidencias.add(pedido);
+            }
+        }
+        cargarPedidosEnTabla(coincidencias);
+    }
+
+    private Cliente clienteSeleccionado() {
+        int indice = cmbCliente.getSelectedIndex();
+        if (indice < 0 || indice >= clientesDisponibles.size()) {
+            return null;
+        }
+        return clientesDisponibles.get(indice);
+    }
+
+    private void mostrarPedidoSeleccionado() {
+        int fila = tblPedidos.getSelectedRow();
+        if (fila < 0) {
+            return;
+        }
+
+        Pedido pedido = pedidosEnTabla.get(fila);
+        pedidoSeleccionado = pedido.getIdPedido();
+        txtFecha.setText(pedido.getFecha());
+        txtDireccion.setText(pedido.getDireccion());
+        cmbEstado.setSelectedItem(pedido.getEstado());
+
+        for (int i = 0; i < clientesDisponibles.size(); i++) {
+            if (clientesDisponibles.get(i).getIdCliente()
+                    == pedido.getCliente().getIdCliente()) {
+                cmbCliente.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        try {
+            Pedido completo = new PedidoRepositorio().buscarPorId(pedidoSeleccionado);
+            if (completo != null) {
+                cargarDetalle(completo.getDetalles());
+            } else {
+                cargarDetalle(pedido.getDetalles());
+            }
+        } catch (RuntimeException ex) {
+            cargarDetalle(pedido.getDetalles());
+        }
+        btnEditar.setText("Actualizar");
+        calcularTotales();
+    }
+
+    private void cargarDetalle(List<DetallePedido> detalles) {
+        modeloDetalles.setRowCount(0);
+        detallesNuevos = detalles == null
+                ? new ArrayList<>()
+                : new ArrayList<>(detalles);
+        double subtotal = 0;
+        for (DetallePedido detalle : detallesNuevos) {
+            double importe = detalle.getSubTotal();
+            subtotal += importe;
+            modeloDetalles.addRow(new Object[]{
+                detalle.getJoya().getNombre(),
+                detalle.getPrecioUnitario(),
+                detalle.getCantidad(),
+                importe
+            });
+        }
+        txtSubtotal.setText(String.format("%.2f", subtotal));
+        txtTotal.setText(String.format("%.2f", subtotal));
+    }
+
+    private void calcularTotales() {
+        double subtotal = 0;
+        for (DetallePedido detalle : detallesNuevos) {
+            subtotal += detalle.calcularSubtotal();
+        }
+        txtSubtotal.setText(String.format("%.2f", subtotal));
+        txtTotal.setText(String.format("%.2f", subtotal));
+    }
+
+    private void limpiarFormulario() {
+        pedidoSeleccionado = -1;
+        detallesNuevos = new ArrayList<>();
+        tblPedidos.clearSelection();
+        modeloDetalles.setRowCount(0);
+        if (cmbCliente.getItemCount() > 0) {
+            cmbCliente.setSelectedIndex(0);
+        }
+        cmbEstado.setSelectedItem("Pendiente");
+        txtFecha.setText("yyyy-mm-dd");
+        txtDireccion.setText("");
+        txtSubtotal.setText("");
+        txtTotal.setText("");
+        btnEditar.setText("Editar");
+    }
     
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -241,6 +463,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnCliente.setText("+ Nuevo cliente");
+        btnCliente.addActionListener(this::btnClienteActionPerformed);
 
         jLabel5.setText("Fecha");
 
@@ -271,6 +494,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         }
 
         btnJoya.setText("+ Agregar joya");
+        btnJoya.addActionListener(this::btnJoyaActionPerformed);
 
         jLabel8.setText("Detalle");
 
@@ -399,15 +623,19 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         );
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(this::btnEditarActionPerformed);
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         btnDetalle.setText("Ver detalle");
+        btnDetalle.addActionListener(this::btnDetalleActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -489,8 +717,167 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
     }//GEN-LAST:event_txtTotalActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        limpiarFormulario();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            Cliente cliente = clienteSeleccionado();
+            if (cliente == null) {
+                JOptionPane.showMessageDialog(this, "Selecciona un cliente");
+                return;
+            }
+
+            String mensaje = controlador.guardarPedido(
+                    cliente,
+                    cmbEstado.getSelectedItem().toString(),
+                    txtDireccion.getText(),
+                    txtFecha.getText(),
+                    detallesNuevos);
+            JOptionPane.showMessageDialog(this, mensaje);
+            limpiarFormulario();
+            cargarPedidos();
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "No fue posible guardar el pedido:\n" + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (pedidoSeleccionado < 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione un pedido de la tabla");
+            return;
+        }
+        if (cmbEstado.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un estado");
+            return;
+        }
+
+        try {
+            String mensaje = controlador.actualizarPedido(
+                    pedidoSeleccionado,
+                    clienteSeleccionado(),
+                    cmbEstado.getSelectedItem().toString(),
+                    txtDireccion.getText(),
+                    txtFecha.getText(),
+                    detallesNuevos);
+            JOptionPane.showMessageDialog(this, mensaje);
+            cargarPedidos();
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "No fue posible actualizar el pedido:\n" + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (pedidoSeleccionado < 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione un pedido de la tabla");
+            return;
+        }
+
+        int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Desea cancelar el pedido seleccionado?",
+                "Cancelar pedido", JOptionPane.YES_NO_OPTION);
+        if (confirmar != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            String mensaje = controlador.desactivarPedido(pedidoSeleccionado);
+            JOptionPane.showMessageDialog(this, mensaje);
+            limpiarFormulario();
+            cargarPedidos();
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "No fue posible cancelar el pedido:\n" + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnJoyaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoyaActionPerformed
+        if (joyasDisponibles.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay joyas disponibles");
+            return;
+        }
+
+        Joya seleccionada = (Joya) JOptionPane.showInputDialog(
+                this,
+                "Seleccione la joya:",
+                "Agregar joya",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                joyasDisponibles.toArray(),
+                joyasDisponibles.get(0));
+        if (seleccionada == null) {
+            return;
+        }
+
+        String cantidadTexto = JOptionPane.showInputDialog(this,
+                "Cantidad:", "1");
+        if (cantidadTexto == null) {
+            return;
+        }
+
+        try {
+            int cantidad = Integer.parseInt(cantidadTexto.trim());
+            if (cantidad <= 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor que cero");
+                return;
+            }
+            if (!seleccionada.validarStock(cantidad)) {
+                JOptionPane.showMessageDialog(this,
+                        "Stock insuficiente. Disponible: " + seleccionada.getStock());
+                return;
+            }
+
+            DetallePedido detalle = new DetallePedido(null, seleccionada, cantidad);
+            detallesNuevos.add(detalle);
+            modeloDetalles.addRow(new Object[]{
+                seleccionada.getNombre(),
+                detalle.getPrecioUnitario(),
+                cantidad,
+                detalle.getSubTotal()
+            });
+            calcularTotales();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese una cantidad numérica válida");
+        }
+    }//GEN-LAST:event_btnJoyaActionPerformed
+
+    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
+        VentanaCliente ventanaCliente = new VentanaCliente(new ClienteControlador(
+                new joyas_oscar.repositorio.ClienteRepositorio()));
+        ventanaCliente.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                cargarCombos();
+            }
+        });
+        ventanaCliente.setVisible(true);
+    }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void btnDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleActionPerformed
+        if (pedidoSeleccionado < 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione un pedido de la tabla");
+            return;
+        }
+
+        try {
+            Pedido pedido = new PedidoRepositorio().buscarPorId(pedidoSeleccionado);
+            if (pedido == null) {
+                JOptionPane.showMessageDialog(this, "El pedido no existe");
+                return;
+            }
+            cargarDetalle(pedido.getDetalles() == null
+                    ? new ArrayList<>() : new ArrayList<>(pedido.getDetalles()));
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "No fue posible cargar el detalle:\n" + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDetalleActionPerformed
 
   
     public static void main(String args[]) {
