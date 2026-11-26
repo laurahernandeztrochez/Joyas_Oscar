@@ -42,12 +42,7 @@ public class Joyas_Oscar {
         });
     
     
-     java.awt.EventQueue.invokeLater(() -> {
-            new VentanaPedido().setVisible(true);
-        });
     }
-    
-    
 }
         
 //new VentanaCliente(new ClienteControlador(new ClienteRepositorio())).setVisible(true);

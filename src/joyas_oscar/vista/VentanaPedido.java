@@ -24,9 +24,11 @@ import joyas_oscar.repositorio.ClienteRepositorio;
 import joyas_oscar.repositorio.JoyaRepositorio;
 import joyas_oscar.repositorio.PedidoRepositorio;
 
+import joyas_oscar.controlador.PedidoControlador;
 public class VentanaPedido extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPedido.class.getName());
+
 
     // Controladores y repositorios usados para integrar la ventana con la base de datos.
     private PedidoControlador controlador;
@@ -39,6 +41,7 @@ public class VentanaPedido extends javax.swing.JFrame {
     private DefaultTableModel modeloPedidos;
     private DefaultTableModel modeloDetalles;
     private int pedidoSeleccionado = -1;
+
 
     public VentanaPedido(PedidoControlador controlador) {
         initComponents();
@@ -950,7 +953,6 @@ try {
     logger.log(java.util.logging.Level.SEVERE, null, ex);
 }
  
-        java.awt.EventQueue.invokeLater(() -> new VentanaPedido().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

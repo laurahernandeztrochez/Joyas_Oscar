@@ -17,6 +17,8 @@ import joyas_oscar.repositorio.MaterialRepositorio;
 import joyas_oscar.repositorio.JoyaRepositorio;
 import joyas_oscar.controlador.JoyaControlador;
 import joyas_oscar.controlador.UsuarioControlador;
+import joyas_oscar.controlador.PedidoControlador;
+import joyas_oscar.repositorio.PedidoRepositorio;
 
 /**
  * Coordina la aplicación: crea los repositorios y controladores necesarios
@@ -28,6 +30,7 @@ public class Aplicacion {
     private ClienteRepositorio clientes = new ClienteRepositorio();
     private MaterialRepositorio materiales = new MaterialRepositorio();
     private JoyaRepositorio joyas = new JoyaRepositorio();
+    private PedidoRepositorio pedidos = new PedidoRepositorio();
      
 
     public void iniciar() {
