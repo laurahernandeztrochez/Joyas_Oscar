@@ -82,7 +82,7 @@
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -102,7 +102,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
@@ -165,7 +165,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblVentas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="87" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -174,14 +174,14 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblVentas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="69" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel9">
+        <Component class="javax.swing.JLabel" name="lblVentas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ventas del d&#xed;a"/>
           </Properties>
@@ -195,7 +195,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPagos" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="49" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -204,14 +204,14 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPagos" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="45" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel11">
+        <Component class="javax.swing.JLabel" name="lblPagos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Pagos pendientes"/>
           </Properties>
@@ -225,7 +225,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPedidos" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="43" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -234,14 +234,14 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPedidos" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="57" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel10">
+        <Component class="javax.swing.JLabel" name="lblPedidos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Pedidos pendientes"/>
           </Properties>
@@ -253,7 +253,7 @@
         <Property name="text" type="java.lang.String" value="Resumen del d&#xed;a"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel13">
+    <Component class="javax.swing.JLabel" name="lblFecha">
       <Properties>
         <Property name="text" type="java.lang.String" value="(fecha del dia)"/>
       </Properties>

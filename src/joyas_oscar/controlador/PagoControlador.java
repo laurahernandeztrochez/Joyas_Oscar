@@ -7,7 +7,11 @@ import java.util.ArrayList;
 
 public class PagoControlador {
 
-    private final PagoRepositorio pagoRepo = new PagoRepositorio();
+private final PagoRepositorio pagoRepo;
+
+public PagoControlador(PagoRepositorio pagoRepo) {
+    this.pagoRepo = pagoRepo;
+}
 
     // 1. LISTAR - para llenar la tabla del Historial
     public ArrayList<Pago> listarPagos() {

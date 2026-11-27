@@ -10,6 +10,7 @@ import joyas_oscar.vista.VentanaLogin;
 import joyas_oscar.vista.VentanaUsuario;
 import joyas_oscar.vista.VentanaMaterial;
 import joyas_oscar.vista.VentanaPedido;
+import joyas_oscar.vista.VentanaPagos;
 import joyas_oscar.controlador.ClienteControlador;
 import joyas_oscar.controlador.MaterialControlador;
 import joyas_oscar.repositorio.ClienteRepositorio;
@@ -19,6 +20,8 @@ import joyas_oscar.controlador.JoyaControlador;
 import joyas_oscar.controlador.UsuarioControlador;
 import joyas_oscar.controlador.PedidoControlador;
 import joyas_oscar.repositorio.PedidoRepositorio;
+import joyas_oscar.repositorio.PagoRepositorio;
+import joyas_oscar.controlador.PagoControlador;
 
 /**
  * Coordina la aplicación: crea los repositorios y controladores necesarios
@@ -31,8 +34,9 @@ public class Aplicacion {
     private MaterialRepositorio materiales = new MaterialRepositorio();
     private JoyaRepositorio joyas = new JoyaRepositorio();
     private PedidoRepositorio pedidos = new PedidoRepositorio();
+    private PagoRepositorio pagos = new PagoRepositorio();
      
-
+    
     public void iniciar() {
         new VentanaLogin(new LoginControlador(usuarios), this).setVisible(true);
     }
@@ -60,4 +64,17 @@ public class Aplicacion {
     public void abrirPedido() {
         new VentanaPedido(new PedidoControlador(pedidos)).setVisible(true);
     }
+    
+    // public void abrirPago() {
+    //    new VentanaPagos(new PagoControlador(pagos)).setVisible(true);
+    //}
+    
+    public PagoRepositorio getPagos() {
+    return pagos;
+}
+
+public PedidoRepositorio getPedidos() {
+    return pedidos;
+}
+    
 }

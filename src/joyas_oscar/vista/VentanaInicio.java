@@ -5,6 +5,8 @@ import javax.swing.JOptionPane;
 import joyas_oscar.Aplicacion;                         
 import joyas_oscar.modelo.Usuario;                     
 import joyas_oscar.repositorio.UsuarioRepositorio;
+import joyas_oscar.modelo.Pago;
+import joyas_oscar.modelo.Pedido;
 
 //Personalizacion
 import java.awt.Color;
@@ -50,7 +52,37 @@ public class VentanaInicio extends javax.swing.JFrame {
 
        
         lblBienvenida.setText("Bienvenido, " + usuario.obtenerInformacion());   
+        
+        cargarResumen();
     }
+    
+    private void cargarResumen() {
+    java.time.LocalDate hoy = java.time.LocalDate.now();
+    lblFecha.setText(hoy.toString());
+
+    double ventas = 0;
+    int pagosPendientes = 0;
+
+    for (Pago p : app.getPagos().listar()) {
+        if (p.getFechaPago().equals(hoy.toString()) && p.getEstado().equalsIgnoreCase("Pagado")) {
+            ventas += p.getMonto();
+        }
+        if (p.getEstado().equalsIgnoreCase("Pendiente")) {
+            pagosPendientes++;
+        }
+    }
+
+    int pedidosPendientes = 0;
+    for (Pedido ped : app.getPedidos().listar()) {
+        if (ped.getEstado().equalsIgnoreCase("Pendiente")) {
+            pedidosPendientes++;
+        }
+    }
+
+    lblVentas.setText("Venta del dia $" + ventas);
+    lblPedidos.setText(pedidosPendientes + " Pedidos pendientes");
+    lblPagos.setText(pagosPendientes + " Pagos pendientes");
+}
     
     private void aplicarPermisos(Usuario usuario) {
     String rol = usuario.getRol().getNombre();
@@ -94,9 +126,9 @@ public class VentanaInicio extends javax.swing.JFrame {
         jLabel12.setForeground(dorado);
         jLabel12.setFont(new Font("Georgia", Font.BOLD, 18));
 
-        jLabel13.setForeground(Color.WHITE);
-        jLabel13.setFont(new Font("Georgia", Font.PLAIN, 13));
-        configurarIconoEnLabel(jLabel13, "/joyas_oscar/vista/calendario.png", 24, 24);
+        lblFecha.setForeground(Color.WHITE);
+        lblFecha.setFont(new Font("Georgia", Font.PLAIN, 13));
+        configurarIconoEnLabel(lblFecha, "/joyas_oscar/vista/calendario.png", 24, 24);
 
         // Botones de gestión (borde dorado, fondo oscuro, icono arriba y texto abajo)
         estilizarBotonModulo(btnJoyas, "/joyas_oscar/vista/diamante.png", 42, 42);
@@ -107,9 +139,9 @@ public class VentanaInicio extends javax.swing.JFrame {
         estilizarBotonModulo(btnMaterial, "/joyas_oscar/vista/material.png", 42, 42);
 
         // Tarjetas de resumen del día (icono a la izquierda)
-        estilizarTarjetaResumen(jPanel7, jLabel9, "/joyas_oscar/vista/mondea.png", 32, 32);
-        estilizarTarjetaResumen(jPanel8, jLabel10, "/joyas_oscar/vista/pedidos.png", 32, 32);
-        estilizarTarjetaResumen(jPanel9, jLabel11, "/joyas_oscar/vista/pago.png", 32, 32);
+        estilizarTarjetaResumen(jPanel7, lblVentas, "/joyas_oscar/vista/mondea.png", 32, 32);
+        estilizarTarjetaResumen(jPanel8, lblPedidos, "/joyas_oscar/vista/pedidos.png", 32, 32);
+        estilizarTarjetaResumen(jPanel9, lblPagos, "/joyas_oscar/vista/pago.png", 32, 32);
     }
 
     private void estilizarBotonModulo(JButton boton, String rutaIcono, int ancho, int alto) {
@@ -204,13 +236,13 @@ public class VentanaInicio extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel7 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        lblVentas = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
+        lblPagos = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        lblPedidos = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
         btnJoyas = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnPedidos = new javax.swing.JButton();
@@ -226,7 +258,7 @@ public class VentanaInicio extends javax.swing.JFrame {
 
         jLabel2.setText("Selecciona una opción para gestionar");
 
-        jLabel9.setText("Ventas del día");
+        lblVentas.setText("Ventas del día");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -234,18 +266,18 @@ public class VentanaInicio extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9)
+                .addComponent(lblVentas)
                 .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9)
+                .addComponent(lblVentas)
                 .addContainerGap(69, Short.MAX_VALUE))
         );
 
-        jLabel11.setText("Pagos pendientes");
+        lblPagos.setText("Pagos pendientes");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -253,18 +285,18 @@ public class VentanaInicio extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel11)
+                .addComponent(lblPagos)
                 .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel11)
+                .addComponent(lblPagos)
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
-        jLabel10.setText("Pedidos pendientes");
+        lblPedidos.setText("Pedidos pendientes");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -272,20 +304,20 @@ public class VentanaInicio extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10)
+                .addComponent(lblPedidos)
                 .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10)
+                .addComponent(lblPedidos)
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
         jLabel12.setText("Resumen del día");
 
-        jLabel13.setText("(fecha del dia)");
+        lblFecha.setText("(fecha del dia)");
 
         btnJoyas.setText("Gestionar joyas");
         btnJoyas.addActionListener(this::btnJoyasActionPerformed);
@@ -358,7 +390,7 @@ public class VentanaInicio extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel13))))
+                            .addComponent(lblFecha))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -372,7 +404,7 @@ public class VentanaInicio extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13)
+                        .addComponent(lblFecha)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42)
@@ -473,17 +505,17 @@ public class VentanaInicio extends javax.swing.JFrame {
     private javax.swing.JButton btnPagos;
     private javax.swing.JButton btnPedidos;
     private javax.swing.JButton btnUsRol;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblAdministrador;
     private javax.swing.JLabel lblBienvenida;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblPagos;
+    private javax.swing.JLabel lblPedidos;
+    private javax.swing.JLabel lblVentas;
     // End of variables declaration//GEN-END:variables
 }

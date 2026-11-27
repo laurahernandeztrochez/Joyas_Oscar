@@ -319,6 +319,7 @@ tblPagos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         );
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         txtBuscar.addActionListener(this::txtBuscarActionPerformed);
 
@@ -398,6 +399,10 @@ tblPagos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
 
     }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
    
     public static void main(String args[]) {
