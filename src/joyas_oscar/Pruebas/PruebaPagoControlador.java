@@ -5,10 +5,12 @@ import joyas_oscar.modelo.Pago;
 import joyas_oscar.modelo.Pedido;
 import joyas_oscar.repositorio.PedidoRepositorio;
 import java.util.ArrayList;
+import joyas_oscar.repositorio.PagoRepositorio;
+
 
 public class PruebaPagoControlador {
     public static void main(String[] args) {
-        PagoControlador controlador = new PagoControlador();
+        PagoControlador controlador = new PagoControlador(new PagoRepositorio());
         PedidoRepositorio pedidoRepo = new PedidoRepositorio();
 
         // 1. Necesitas un pedido que sí exista, igual que antes
@@ -56,7 +58,7 @@ public class PruebaPagoControlador {
         } catch (Exception e) {
             System.out.println("Bien, la validación sí sirve: " + e.getMessage());
         }
-
+        
         System.out.println("\n--- FIN DE LA PRUEBA ---");
     }
 }
