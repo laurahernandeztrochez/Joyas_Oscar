@@ -37,9 +37,9 @@ public class Joyas_Oscar {
             new Aplicacion().iniciar();
         });
         
-        java.awt.EventQueue.invokeLater(() -> {
-            new VentanaPagos().setVisible(true);
-        });
+       // java.awt.EventQueue.invokeLater(() -> {
+          //  new VentanaPagos().setVisible(true);
+       // });
     
     
     }

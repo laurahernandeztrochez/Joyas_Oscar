@@ -514,6 +514,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnCliente.setText("+ Nuevo cliente");
+        btnCliente.addActionListener(this::btnClienteActionPerformed);
 
         jLabel5.setText("Fecha");
 
@@ -544,6 +545,7 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         }
 
         btnJoya.setText("+ Agregar joya");
+        btnJoya.addActionListener(this::btnJoyaActionPerformed);
 
         jLabel8.setText("Detalle");
 
@@ -672,10 +674,13 @@ private void estilizarEncabezado(javax.swing.JTable tabla, Color fondo, Color te
         );
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(this::btnEditarActionPerformed);
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);

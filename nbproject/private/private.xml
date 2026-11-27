@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Lau04/OneDrive/Documentos/PI/Joyas_Oscar/src/joyas_oscar/Joyas_Oscar.java</file>
-            <file>file:/C:/Users/Lau04/OneDrive/Documentos/PI/Joyas_Oscar/src/joyas_oscar/controlador/ClienteControlador.java</file>
-            <file>file:/C:/Users/Lau04/OneDrive/Documentos/PI/Joyas_Oscar/src/joyas_oscar/vista/VentanaInicio.java</file>
             <file>file:/C:/Users/Lau04/OneDrive/Documentos/PI/Joyas_Oscar/src/joyas_oscar/Aplicacion.java</file>
-            <file>file:/C:/Users/Lau04/OneDrive/Documentos/PI/Joyas_Oscar/src/joyas_oscar/vista/VentanaLogin.java</file>
-            <file>file:/C:/Users/Lau04/OneDrive/Documentos/PI/Joyas_Oscar/src/joyas_oscar/repositorio/UsuarioRepositorio.java</file>
+            <file>file:/C:/Users/Lau04/OneDrive/Documentos/PI/Joyas_Oscar/src/joyas_oscar/modelo/Pedido.java</file>
+            <file>file:/C:/Users/Lau04/OneDrive/Documentos/PI/Joyas_Oscar/src/joyas_oscar/util/ConexionBD.java</file>
+            <file>file:/C:/Users/Lau04/OneDrive/Documentos/PI/Joyas_Oscar/src/joyas_oscar/vista/VentanaPedido.java</file>
+            <file>file:/C:/Users/Lau04/OneDrive/Documentos/PI/Joyas_Oscar/src/joyas_oscar/vista/VentanaDetallePedido.java</file>
         </group>
     </open-files>
 </project-private>
