@@ -309,6 +309,8 @@ public class VentanaMaterial extends JFrame {
         btnEditar = new javax.swing.JButton();
         scrollMateriales = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        btnBuscar = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -357,6 +359,9 @@ public class VentanaMaterial extends JFrame {
         tabla.getTableHeader().setReorderingAllowed(false);
         scrollMateriales.setViewportView(tabla);
 
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -364,21 +369,11 @@ public class VentanaMaterial extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitulo)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCalcular)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtTotal, 0, 400, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnGuardar)
-                        .addGap(45, 45, 45)
-                        .addComponent(btnCancelar))
-                    .addComponent(lblExistentes)
                     .addComponent(scrollMateriales)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnEliminar)
-                        .addGap(40, 40, 40)
-                        .addComponent(btnEditar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,7 +397,24 @@ public class VentanaMaterial extends JFrame {
                                 .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtNombre, 0, 500, Short.MAX_VALUE)))
-                        .addGap(24, 24, 24)))
+                        .addGap(24, 24, 24))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTitulo)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnGuardar)
+                                .addGap(45, 45, 45)
+                                .addComponent(btnCancelar))
+                            .addComponent(lblExistentes)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnEliminar)
+                                .addGap(40, 40, 40)
+                                .addComponent(btnEditar)
+                                .addGap(78, 78, 78)
+                                .addComponent(btnBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
@@ -445,17 +457,24 @@ public class VentanaMaterial extends JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
-                    .addComponent(btnEditar))
+                    .addComponent(btnEditar)
+                    .addComponent(btnBuscar)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
     private final NumberFormat formatoMoneda =
             NumberFormat.getCurrencyInstance(Locale.forLanguageTag("es-CO"));
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCalcular;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
@@ -470,6 +489,7 @@ public class VentanaMaterial extends JFrame {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JScrollPane scrollMateriales;
     private javax.swing.JTable tabla;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPeso;
     private javax.swing.JTextField txtPrecio;
